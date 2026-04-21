@@ -9,12 +9,24 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onCommand:worktime-video.music.hello",
+    "onCommand:worktime-video.bilibili.hello",
+    "onCommand:worktime-video.test.hello"
+  ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "worktime-video.helloWorld",
+        "command": "worktime-video.music.hello",
+        "title": "Music"
+      },
+      {
+        "command": "worktime-video.bilibili.hello",
+        "title": "Bilibili"
+      },
+      {
+        "command": "worktime-video.test.hello",
         "title": "Hello World"
       }
     ]
