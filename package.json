@@ -10,6 +10,7 @@
     "Other"
   ],
   "activationEvents": [
+    "onView:worktime-video.sidebarView",
     "onCommand:worktime-video.music.hello",
     "onCommand:worktime-video.bilibili.hello",
     "onCommand:worktime-video.test.hello"
@@ -29,7 +30,25 @@
         "command": "worktime-video.test.hello",
         "title": "Hello World"
       }
-    ]
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "worktime-video",
+          "title": "Worktime Video",
+          "icon": "media/worktime-video.svg"
+        }
+      ]
+    },
+    "views": {
+      "worktime-video": [
+        {
+          "type": "webview",
+          "id": "worktime-video.sidebarView",
+          "name": "Worktime Video"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "pnpm run package",
@@ -37,6 +56,10 @@
     "watch": "npm-run-all -p watch:*",
     "watch:esbuild": "node esbuild.js --watch",
     "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "watch:webview": "pnpm --dir webview dev",
+    "webview:dev": "pnpm --dir webview dev",
+    "webview:build": "pnpm --dir webview build",
+    "webview:check-types": "pnpm --dir webview check-types",
     "package": "pnpm run check-types && pnpm run lint && node esbuild.js --production",
     "compile-tests": "tsc -p . --outDir out",
     "watch-tests": "tsc -p . -w --outDir out",
@@ -46,15 +69,15 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.116.0",
+    "@types/node": "^24.9.1",
     "@types/mocha": "^10.0.10",
-    "@types/node": "22.x",
-    "typescript-eslint": "^8.56.1",
-    "eslint": "^9.39.3",
+    "@types/vscode": "^1.116.0",
+    "@vscode/test-cli": "^0.0.12",
+    "@vscode/test-electron": "^2.5.2",
     "esbuild": "^0.27.3",
+    "eslint": "^9.39.3",
     "npm-run-all": "^4.1.5",
     "typescript": "^5.9.3",
-    "@vscode/test-cli": "^0.0.12",
-    "@vscode/test-electron": "^2.5.2"
+    "typescript-eslint": "^8.56.1"
   }
 }

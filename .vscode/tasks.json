@@ -4,43 +4,67 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-            "label": "watch",
-            "dependsOn": [
-                "npm: watch:tsc",
-                "npm: watch:esbuild"
-            ],
-            "presentation": {
-                "reveal": "never"
-            },
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
-        },
-        {
-            "type": "npm",
-            "script": "watch:esbuild",
-            "group": "build",
-            "problemMatcher": "$esbuild-watch",
-            "isBackground": true,
-            "label": "npm: watch:esbuild",
-            "presentation": {
-                "group": "watch",
-                "reveal": "never"
-            }
-        },
+			"label": "watch:all",
+			"dependsOn": [
+				"npm: watch:tsc",
+				"npm: watch:esbuild",
+				"npm: watch:webview"
+			],
+			"presentation": {
+				"reveal": "never"
+			},
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
 		{
-            "type": "npm",
-            "script": "watch:tsc",
-            "group": "build",
-            "problemMatcher": "$tsc-watch",
-            "isBackground": true,
-            "label": "npm: watch:tsc",
-            "presentation": {
-                "group": "watch",
-                "reveal": "never"
-            }
-        },
+			"type": "npm",
+			"script": "watch:esbuild",
+			"group": "build",
+			"problemMatcher": "$esbuild-watch",
+			"isBackground": true,
+			"label": "npm: watch:esbuild",
+			"presentation": {
+				"group": "watch",
+				"reveal": "never"
+			}
+		},
+		{
+			"type": "npm",
+			"script": "watch:tsc",
+			"group": "build",
+			"problemMatcher": "$tsc-watch",
+			"isBackground": true,
+			"label": "npm: watch:tsc",
+			"presentation": {
+				"group": "watch",
+				"reveal": "never"
+			}
+		},
+		{
+			"type": "npm",
+			"script": "watch:webview",
+			"group": "build",
+			"isBackground": true,
+			"label": "npm: watch:webview",
+			"presentation": {
+				"group": "watch",
+				"reveal": "never"
+			},
+			"problemMatcher": {
+				"owner": "custom",
+				"fileLocation": "absolute",
+				"pattern": {
+					"regexp": "."
+				},
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": ".*vite.*",
+					"endsPattern": ".*Local:.*"
+				}
+			}
+		},
 		{
 			"type": "npm",
 			"script": "watch-tests",
@@ -55,7 +79,7 @@
 		{
 			"label": "tasks: watch-tests",
 			"dependsOn": [
-				"npm: watch",
+				"watch:all",
 				"npm: watch-tests"
 			],
 			"problemMatcher": []
