@@ -48,8 +48,8 @@ class Axios {
         );
     }
 }
-const request = new Axios({
+const http = new Axios({
     baseURL: 'http://localhost:3000',
     timeout: 30000
 });
-export default request;
+export default http;
