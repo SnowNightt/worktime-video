@@ -1,0 +1,12 @@
+html,
+body,
+#app {
+    min-width: 0;
+    min-height: 100%;
+    margin: 0;
+    background-color: #eef3f8;
+}
+
+* {
+    box-sizing: border-box;
+}

@@ -7,6 +7,7 @@ const DEV_SERVER_HOST = '127.0.0.1';
 const DEV_SERVER_PORT = 5173;
 
 export default defineConfig({
+	base: './',
 	plugins: [vue()],
 	resolve: {
 		alias: {

@@ -1,3 +1,7 @@
+<template>
+	<HomeView :state="state" :status="status" />
+</template>
+
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 
@@ -21,7 +25,3 @@ onMounted(() => {
 	extensionBridge.ready();
 });
 </script>
-
-<template>
-	<HomeView :state="state" :status="status" />
-</template>

@@ -55,6 +55,10 @@ export class WorktimeWebviewPanel implements vscode.WebviewViewProvider {
 		this.view = webviewView;
 		webviewView.webview.options = {
 			enableScripts: true,
+			localResourceRoots: [
+				vscode.Uri.joinPath(this.context.extensionUri, 'webview', 'dist'),
+				vscode.Uri.joinPath(this.context.extensionUri, 'webview', 'src', 'assets'),
+			],
 		};
 		webviewView.webview.html = await getWebviewHtml(
 			webviewView.webview,
