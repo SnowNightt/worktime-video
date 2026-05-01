@@ -38,7 +38,7 @@
 import { reactive, ref } from 'vue';
 import { ElMessage } from 'element-plus';
 
-import { loginApi } from '../api';
+import { getCaptchaApi, getDetailPlayList, getRecommendationPlayListApi } from '../api';
 
 const loginForm = reactive({
     phoneNum: '',
@@ -89,7 +89,7 @@ const requestCaptcha = async () => {
         return;
     }
 
-    const res = await loginApi({
+    const res = await getCaptchaApi({
         phone: loginForm.phoneNum,
     });
 
@@ -101,7 +101,7 @@ const requestCaptcha = async () => {
     }
 };
 
-const handleLogin = () => {
+const handleLogin = async () => {
     if (!loginForm.phoneNum.trim() || !loginForm.captcha.trim()) {
         ElMessage.warning('请填写手机号和验证码');
     }
