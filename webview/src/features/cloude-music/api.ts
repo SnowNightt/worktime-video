@@ -4,7 +4,10 @@ import {
   RecommendPlaylistResponse,
   DetailPlayListParams,
   PlaylistParams,
+  MusicUrlParams,
+  MusicUrlItem,
 } from "./type";
+import { ResponseResult } from "@/types/request";
 // 获取手机验证码登录
 export const getCaptchaApi = async (params: LoginParams) => {
   return http.request<{}>({
@@ -28,6 +31,14 @@ export const getRecommendationPlayListApi = async (
 export const getDetailPlayList = async (params: DetailPlayListParams) => {
   return http.request<DetailPlayListParams, any>({
     url: "/playlist/detail",
+    method: "GET",
+    params,
+  });
+};
+// 获取音乐url
+export const getMusicUrlApi = async (params: MusicUrlParams) => {
+  return http.request<DetailPlayListParams, ResponseResult<MusicUrlItem[]>>({
+    url: "/song/url/v1",
     method: "GET",
     params,
   });

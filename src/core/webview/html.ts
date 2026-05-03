@@ -124,7 +124,7 @@ function getDevServerHtml(
 		<meta charset="UTF-8" />
 		<meta
 			http-equiv="Content-Security-Policy"
-			content="default-src 'none'; img-src ${webview.cspSource} ${devServer.baseUrl} https: data:; style-src ${webview.cspSource} 'unsafe-inline' ${devServer.baseUrl}; script-src 'nonce-${nonce}' ${devServer.baseUrl}; connect-src ${getDevServerConnectSources(devServer.baseUrl)} ${LOCAL_API_SOURCES}; font-src ${webview.cspSource} ${devServer.baseUrl};"
+			content="default-src 'none'; img-src ${webview.cspSource} ${devServer.baseUrl} https: data:; style-src ${webview.cspSource} 'unsafe-inline' ${devServer.baseUrl}; script-src 'nonce-${nonce}' ${devServer.baseUrl}; connect-src ${getDevServerConnectSources(devServer.baseUrl)} ${LOCAL_API_SOURCES}; media-src ${webview.cspSource} http: https:; font-src ${webview.cspSource} ${devServer.baseUrl};"
 		/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Worktime Video</title>
@@ -189,7 +189,7 @@ export async function getWebviewHtml(
 		<meta charset="UTF-8" />
 		<meta
 			http-equiv="Content-Security-Policy"
-			content="default-src 'none'; img-src ${webview.cspSource} https: data:; style-src ${webview.cspSource} 'unsafe-inline'; script-src 'nonce-${nonce}'; connect-src ${LOCAL_API_SOURCES}; font-src ${webview.cspSource};"
+			content="default-src 'none'; img-src ${webview.cspSource} https: data:; style-src ${webview.cspSource} 'unsafe-inline'; script-src 'nonce-${nonce}'; connect-src ${LOCAL_API_SOURCES}; media-src ${webview.cspSource} http: https:; font-src ${webview.cspSource};"
 		/>
 		
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />

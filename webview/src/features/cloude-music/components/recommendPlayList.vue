@@ -5,19 +5,22 @@
             <span class="list-name" :data-list-id="item.id">{{ item.name }}</span>
         </div>
     </div>
-
+    <MusicListCard v-model="musicListVisible" :musicList="musicList"></MusicListCard>
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { getDetailPlayList } from '../api';
 import { RecommendPlaylistItem, SongItem } from '../type';
 import { ElMessage } from 'element-plus';
-
+import MusicListCard from './musicLIstCard.vue'
 interface Props {
     recommendPlayList: RecommendPlaylistItem[]
 }
-defineProps<Props>()
+defineProps<Props>();
+const musicListVisible = ref(false)
+// 歌曲列表
 const musicList = ref<SongItem[]>([])
+// 点击歌单获取歌曲列表
 const handleClickList = async (event: PointerEvent) => {
     const target = event.target as HTMLElement
     const id = Number(target.dataset.listId)
@@ -25,6 +28,7 @@ const handleClickList = async (event: PointerEvent) => {
     const res = await getDetailPlayList({ id })
     if (res.code) {
         musicList.value = res.playlist?.tracks
+        musicListVisible.value = true
     } else {
         musicList.value = []
         ElMessage.warning('获取歌曲列表失败~')
