@@ -15,12 +15,14 @@
             </el-tab-pane>
         </el-tabs>
     </section>
+    <AudioBar></AudioBar>
 </template>
 
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 import LoginCard from './components/loginCard.vue';
 import RecommendPlayList from './components/recommendPlayList.vue';
+import AudioBar from './components/audioBar.vue';
 import { getRecommendationPlayListApi } from './api';
 import { RecommendPlaylistItem } from './type';
 import { ElMessage } from 'element-plus';
