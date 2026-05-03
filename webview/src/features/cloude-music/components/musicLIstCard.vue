@@ -8,14 +8,13 @@
 
             </el-table-column>
         </el-table>
-        <audio ref="audioRef" controls />
     </el-dialog>
 </template>
 <script lang="ts" setup>
 import { reactive, ref, watch } from 'vue';
 import { SongItem } from '../type';
 import { TableConfigType } from '@/types/tableConfig';
-import { getMusicUrlApi } from '../api';
+import { useAudioPlayer } from '../hooks/useAudioPlayer';
 interface Props {
     musicList: SongItem[];
 }
@@ -39,6 +38,7 @@ const tableConfig = reactive<TableConfigType<MusicItem[]>>({
         { prop: 'duration', label: '时长', width: '120px' },
     ]
 })
+const { getMusicUrl } = useAudioPlayer()
 // 毫秒转分钟
 const formatDuration = (ms: number) => {
     const during = (ms / 1000 / 60).toFixed(2)
@@ -59,19 +59,14 @@ watch(
                 singer: item.ar[0].name
             }
         })
-        console.log(tableConfig.tableData);
-
     },
 )
 const handleClose = () => {
     dialogVisible.value = false
 }
-const audioRef = ref<HTMLAudioElement>()
 // 播放音乐
 const handleSelectMusic = async (row: MusicItem) => {
-    const res = await getMusicUrlApi({ id: row.id, level: 'higher' })
-    audioRef.value!.src = res.data[0].url
-    audioRef.value!.play()
+    getMusicUrl(row.id)
 }
 </script>
 <style lang="scss">
