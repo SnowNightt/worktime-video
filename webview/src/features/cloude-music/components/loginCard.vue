@@ -114,19 +114,23 @@ const handleLogin = async () => {
     width: min(100%, 420px);
     overflow: hidden;
     color: var(--login-text, #111827);
-    border: 1px solid var(--login-glass-border, rgba(255, 255, 255, 0.52));
-    border-radius: 22px;
+    border: 1px solid var(--login-glass-border, rgba(171, 178, 191, 0.22));
+    border-radius: 20px;
     background:
-        linear-gradient(145deg, rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.34)),
-        var(--login-glass-bg, rgba(255, 255, 255, 0.28));
+        radial-gradient(circle at 20% 0%, rgba(97, 175, 239, 0.14), transparent 34%),
+        radial-gradient(circle at 86% 10%, rgba(229, 192, 123, 0.1), transparent 30%),
+        linear-gradient(145deg, rgba(255, 255, 255, 0.105), rgba(255, 255, 255, 0.035) 42%),
+        var(--login-glass-bg, rgba(40, 44, 52, 0.62));
     box-shadow:
-        0 18px 44px rgba(255, 107, 122, 0.12),
-        0 10px 26px rgba(42, 49, 68, 0.08),
-        inset 0 1px 0 rgba(255, 255, 255, 0.78);
-    backdrop-filter: blur(16px) saturate(135%);
-    -webkit-backdrop-filter: blur(16px) saturate(135%);
+        0 26px 70px rgba(0, 0, 0, 0.36),
+        0 10px 28px rgba(12, 14, 18, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(20px) saturate(128%);
+    -webkit-backdrop-filter: blur(20px) saturate(128%);
     transition:
         transform 180ms ease,
+        border-color 180ms ease,
         box-shadow 180ms ease;
 
     &::before {
@@ -135,17 +139,33 @@ const handleLogin = async () => {
         pointer-events: none;
         content: '';
         background:
-            radial-gradient(circle at 18% 0%, rgba(255, 255, 255, 0.78), transparent 32%),
-            linear-gradient(120deg, rgba(255, 255, 255, 0.22), transparent 46%);
-        opacity: 0.82;
+            linear-gradient(118deg, rgba(255, 255, 255, 0.16), transparent 32%),
+            linear-gradient(250deg, transparent 22%, rgba(255, 255, 255, 0.05), transparent 68%);
+        opacity: 0.84;
+    }
+
+    &::after {
+        position: absolute;
+        inset: 1px;
+        pointer-events: none;
+        content: '';
+        border-radius: 19px;
+        background-image:
+            linear-gradient(rgba(171, 178, 191, 0.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(171, 178, 191, 0.035) 1px, transparent 1px);
+        background-size: 22px 22px;
+        mask-image: linear-gradient(180deg, #000, transparent 78%);
+        opacity: 0.54;
     }
 
     &:hover {
         transform: translateY(-2px);
+        border-color: rgba(171, 178, 191, 0.3);
         box-shadow:
-            0 22px 52px rgba(255, 107, 122, 0.16),
-            0 12px 30px rgba(42, 49, 68, 0.1),
-            inset 0 1px 0 rgba(255, 255, 255, 0.75);
+            0 30px 78px rgba(0, 0, 0, 0.42),
+            0 14px 34px rgba(12, 14, 18, 0.3),
+            0 0 0 1px rgba(97, 175, 239, 0.08),
+            inset 0 1px 0 rgba(255, 255, 255, 0.14);
     }
 
     :deep(.el-card__body) {
@@ -162,23 +182,24 @@ const handleLogin = async () => {
     height: 64px;
     margin: 0 auto 22px;
     place-items: center;
-    border: 2px solid rgba(255, 255, 255, 0.78);
-    border-radius: 24px 24px 18px 24px;
+    border: 1px solid rgba(171, 178, 191, 0.28);
+    border-radius: 20px;
     background:
-        radial-gradient(circle at 30% 22%, rgba(255, 255, 255, 0.82), transparent 20%),
-        linear-gradient(145deg, rgba(255, 255, 255, 0.58), rgba(255, 244, 248, 0.28));
+        radial-gradient(circle at 28% 18%, rgba(255, 255, 255, 0.22), transparent 22%),
+        linear-gradient(145deg, rgba(171, 178, 191, 0.16), rgba(24, 26, 31, 0.48));
     box-shadow:
-        0 12px 26px rgba(255, 107, 122, 0.16),
-        inset 0 1px 0 rgba(255, 255, 255, 0.72);
+        0 14px 30px rgba(0, 0, 0, 0.26),
+        0 0 34px rgba(97, 175, 239, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 .brand-mark__ring {
     width: 34px;
     height: 34px;
-    border: 7px solid var(--login-primary, #d73a31);
-    border-right-color: rgba(255, 107, 122, 0.22);
+    border: 7px solid rgba(171, 178, 191, 0.78);
+    border-right-color: rgba(97, 175, 239, 0.42);
     border-radius: 50%;
-    box-shadow: 0 7px 14px rgba(255, 107, 122, 0.18);
+    box-shadow: 0 7px 18px rgba(97, 175, 239, 0.16);
 }
 
 .brand-mark__note {
@@ -188,7 +209,7 @@ const handleLogin = async () => {
     width: 10px;
     height: 22px;
     border-radius: 999px;
-    background: var(--login-primary, #d73a31);
+    background: linear-gradient(180deg, #d7dae0, #61afef);
     transform: rotate(18deg);
 
     &::after {
@@ -210,7 +231,7 @@ const handleLogin = async () => {
 
 .eyebrow {
     margin: 0 0 8px;
-    color: var(--login-primary, #ff6b7a);
+    color: rgba(97, 175, 239, 0.92);
     font-size: 12px;
     font-weight: 700;
     letter-spacing: 0;
@@ -242,7 +263,7 @@ const handleLogin = async () => {
     :deep(.el-form-item__label) {
         height: auto;
         margin-bottom: 8px;
-        color: var(--login-text, #111827);
+        color: rgba(215, 218, 224, 0.82);
         font-size: 13px;
         font-weight: 650;
         line-height: 1.25;
@@ -255,25 +276,33 @@ const handleLogin = async () => {
     :deep(.el-input__wrapper) {
         min-height: 44px;
         padding: 0 14px;
-        border: 1px solid rgba(255, 255, 255, 0.76);
-        border-radius: 14px;
-        background: rgba(255, 255, 255, 0.58);
+        border: 1px solid rgba(171, 178, 191, 0.18);
+        border-radius: 12px;
+        background: rgba(24, 26, 31, 0.38);
         box-shadow:
-            inset 0 1px 0 rgba(255, 255, 255, 0.7),
-            0 8px 18px rgba(42, 49, 68, 0.06);
+            inset 0 1px 0 rgba(255, 255, 255, 0.06),
+            0 8px 18px rgba(0, 0, 0, 0.16);
         transition:
             border-color 160ms ease,
             background 160ms ease,
             box-shadow 160ms ease;
     }
 
+    :deep(.el-input__inner) {
+        color: #e5e8ee;
+    }
+
+    :deep(.el-input__inner::placeholder) {
+        color: rgba(215, 218, 224, 0.42);
+    }
+
     :deep(.el-input__wrapper:hover),
     :deep(.el-input__wrapper.is-focus) {
-        border-color: rgba(255, 107, 122, 0.42);
-        background: rgba(255, 255, 255, 0.78);
+        border-color: rgba(97, 175, 239, 0.46);
+        background: rgba(24, 26, 31, 0.52);
         box-shadow:
-            0 0 0 3px rgba(255, 107, 122, 0.12),
-            0 10px 22px rgba(42, 49, 68, 0.08);
+            0 0 0 3px rgba(97, 175, 239, 0.12),
+            0 10px 22px rgba(0, 0, 0, 0.2);
     }
 }
 
@@ -287,15 +316,15 @@ const handleLogin = async () => {
 .query-captcha-btn,
 .countdown {
     min-height: 44px;
-    border: 1px solid rgba(255, 107, 122, 0.2);
-    border-radius: 14px;
+    border: 1px solid rgba(171, 178, 191, 0.18);
+    border-radius: 12px;
     font-weight: 700;
 }
 
 .query-captcha-btn {
-    color: var(--login-primary, #ff6b7a);
-    background: rgba(255, 255, 255, 0.56);
-    box-shadow: 0 8px 18px rgba(255, 107, 122, 0.08);
+    color: rgba(215, 218, 224, 0.86);
+    background: rgba(24, 26, 31, 0.36);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.16);
     transition:
         color 160ms ease,
         background 160ms ease,
@@ -304,18 +333,20 @@ const handleLogin = async () => {
 
     &:hover,
     &:focus-visible {
-        color: #ffffff;
-        border-color: transparent;
-        background: var(--login-primary, #d73a31);
-        box-shadow: 0 12px 24px rgba(255, 107, 122, 0.2);
+        color: #f5f7fb;
+        border-color: rgba(97, 175, 239, 0.34);
+        background:
+            linear-gradient(135deg, rgba(97, 175, 239, 0.28), rgba(171, 178, 191, 0.12)),
+            rgba(24, 26, 31, 0.54);
+        box-shadow: 0 12px 24px rgba(97, 175, 239, 0.14);
         transform: translateY(-1px);
     }
 }
 
 .countdown {
     display: grid;
-    color: var(--login-muted, rgba(17, 24, 39, 0.62));
-    background: rgba(255, 255, 255, 0.42);
+    color: rgba(215, 218, 224, 0.64);
+    background: rgba(24, 26, 31, 0.38);
     place-items: center;
 }
 
@@ -327,13 +358,16 @@ const handleLogin = async () => {
 .login-btn {
     width: 100%;
     min-height: 46px;
-    border: 0;
-    border-radius: 15px;
+    border: 1px solid rgba(171, 178, 191, 0.16);
+    border-radius: 13px;
     background:
-        linear-gradient(135deg, var(--login-primary, #d73a31), var(--login-primary-strong, #b91f1a));
+        linear-gradient(135deg, rgba(97, 175, 239, 0.42), rgba(171, 178, 191, 0.2) 48%, rgba(127, 132, 142, 0.42)),
+        rgba(24, 26, 31, 0.34);
     box-shadow:
-        0 14px 28px rgba(255, 107, 122, 0.24),
-        inset 0 1px 0 rgba(255, 255, 255, 0.24);
+        0 14px 30px rgba(0, 0, 0, 0.26),
+        0 0 28px rgba(97, 175, 239, 0.14),
+        inset 0 1px 0 rgba(255, 255, 255, 0.14);
+    color: #f5f7fb;
     font-size: 15px;
     font-weight: 700;
     transition:
@@ -344,9 +378,11 @@ const handleLogin = async () => {
     &:hover,
     &:focus-visible {
         filter: brightness(1.04);
+        border-color: rgba(97, 175, 239, 0.32);
         box-shadow:
-            0 16px 32px rgba(255, 107, 122, 0.3),
-            inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            0 16px 34px rgba(0, 0, 0, 0.3),
+            0 0 34px rgba(97, 175, 239, 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 0.18);
         transform: translateY(-1px);
     }
 
