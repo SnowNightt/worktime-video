@@ -116,7 +116,6 @@ function getDevServerHtml(
   devServer: DevServerInfo,
 ): string {
   const nonce = createNonce();
-  const animeBackgroundUrl = `${devServer.baseUrl}/src/assets/anime-login-bg.png`;
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -128,11 +127,6 @@ function getDevServerHtml(
 		/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Worktime Video</title>
-		<style nonce="${nonce}">
-			:root {
-				--anime-login-bg-url: url("${animeBackgroundUrl}");
-			}
-		</style>
 	</head>
 	<body data-initial-state='${initialState}'>
 		<div id="app"></div>
@@ -167,16 +161,6 @@ export async function getWebviewHtml(
           `<link rel="stylesheet" href="${getAssetUri(webview, extensionUri, cssFile)}" />`,
       )
       .join("\n") ?? "";
-  const animeBackgroundAsset = entry?.assets?.find((asset) =>
-    asset.includes("anime-login-bg"),
-  );
-  const animeBackgroundStyle = animeBackgroundAsset
-    ? `<style nonce="${nonce}">
-			:root {
-				--anime-login-bg-url: url("${getAssetUri(webview, extensionUri, animeBackgroundAsset)}");
-			}
-		</style>`
-    : "";
   const body = entry
     ? '<div id="app"></div>'
     : getFallbackBody(
@@ -194,7 +178,6 @@ export async function getWebviewHtml(
 		
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Worktime Video</title>
-		${animeBackgroundStyle}
 		${styleTags}
 	</head>
 	<body data-initial-state='${initialState}'>
