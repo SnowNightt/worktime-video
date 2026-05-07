@@ -38,7 +38,7 @@
 import { reactive, ref } from 'vue';
 import { ElMessage } from 'element-plus';
 
-import { getCaptchaApi, getDetailPlayList, getRecommendationPlayListApi } from '../api';
+import { getCaptchaApi, getDetailPlayList, getRecommendationPlayListApi, loginApi, verifyCaptchaApi } from '../api';
 
 const loginForm = reactive({
     phoneNum: '',
@@ -100,11 +100,35 @@ const requestCaptcha = async () => {
         ElMessage.error('获取验证码失败');
     }
 };
-
-const handleLogin = async () => {
+// 验证验证码
+const verifyCaptcha = async () => {
     if (!loginForm.phoneNum.trim() || !loginForm.captcha.trim()) {
         ElMessage.warning('请填写手机号和验证码');
+        return
     }
+    const res = await verifyCaptchaApi({ phone: loginForm.phoneNum, captcha: loginForm.captcha, timestamp: new Date().getTime() })
+    if (res.code === 200 && res.data) {
+        getLogin()
+    } else {
+        ElMessage.error('验证码错误')
+    }
+}
+// 验证码正确后登录
+const getLogin = async () => {
+    const res = await loginApi({
+        phone: loginForm.phoneNum,
+        captcha: loginForm.captcha,
+        timestamp: new Date().getTime(),
+        password: ''
+    })
+    if (res.code === 200) {
+        ElMessage.success('登录成功~')
+    } else {
+        ElMessage.error(res.message || '登录失败，请稍后再试~')
+    }
+}
+const handleLogin = async () => {
+    verifyCaptcha()
 };
 </script>
 

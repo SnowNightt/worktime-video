@@ -6,13 +6,31 @@ import {
   PlaylistParams,
   MusicUrlParams,
   MusicUrlItem,
+  LoginResponse,
 } from "./type";
 import { ResponseResult } from "@/types/request";
-// 获取手机验证码登录
+// 获取手机验证码
 export const getCaptchaApi = async (params: LoginParams) => {
   return http.request<{}>({
     url: "/captcha/sent",
     method: "GET",
+    params,
+  });
+};
+
+// 验证验证码
+export const verifyCaptchaApi = async (params: LoginParams) => {
+  return http.request<LoginParams, ResponseResult<boolean>>({
+    url: "/captcha/verify",
+    method: "POST",
+    params,
+  });
+};
+// 登录
+export const loginApi = async (params: LoginParams) => {
+  return http.request<LoginParams, LoginResponse>({
+    url: "/login/cellphone",
+    method: "POST",
     params,
   });
 };
@@ -43,3 +61,4 @@ export const getMusicUrlApi = async (params: MusicUrlParams) => {
     params,
   });
 };
+

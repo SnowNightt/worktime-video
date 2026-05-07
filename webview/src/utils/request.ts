@@ -1,5 +1,6 @@
 import { ResponseResult } from "@/types/request";
-import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosRequestHeaders } from "axios";
+import { getToken, setToken } from "./token";
 
 class Axios {
   private instance: AxiosInstance;
@@ -27,10 +28,12 @@ class Axios {
     // 添加请求拦截器
     this.instance.interceptors.request.use(
       function (config) {
-        // config.headers = {
-        //   Authorization: `Bearer ${JSON.parse(localStorage.getItem(CacheEnum.TOKEN_NAME)!)[CacheEnum.TOKEN_NAME]}`
-        // } as AxiosRequestHeaders;
-        // 在发送请求之前做些什么
+        const token = getToken();
+        if (token) {
+          config.headers = {
+            Authorization: `Bearer ${token}`
+          } as AxiosRequestHeaders;
+        }
         return config;
       },
       function (error) {
@@ -42,6 +45,10 @@ class Axios {
     // 添加响应拦截器
     this.instance.interceptors.response.use(
       function (response) {
+        if (response.data?.token) {
+          console.log('token');
+          setToken(response.data.token);
+        }
         return response;
       },
       function (error) {
