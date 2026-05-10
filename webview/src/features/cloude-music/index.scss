@@ -19,12 +19,17 @@
   width: 100%;
   min-height: 100vh;
   overflow: hidden;
-  padding: 28px 0 96px;
+  padding: 15px 0 96px;
   background:
     radial-gradient(ellipse at 16% 12%, rgba(97, 175, 239, 0.18), transparent 34%),
     radial-gradient(ellipse at 86% 16%, rgba(152, 195, 121, 0.1), transparent 30%),
     radial-gradient(ellipse at 52% 92%, rgba(171, 178, 191, 0.16), transparent 44%),
-    linear-gradient(132deg, rgba(24, 26, 31, 0.98), rgba(40, 44, 52, 0.94) 44%, rgba(30, 34, 41, 0.98)),
+    linear-gradient(
+      132deg,
+      rgba(24, 26, 31, 0.98),
+      rgba(40, 44, 52, 0.94) 44%,
+      rgba(30, 34, 41, 0.98)
+    ),
     var(--page-bg);
   background-attachment: fixed;
   color: var(--login-text);
@@ -52,14 +57,11 @@
     radial-gradient(circle at 1px 1px, rgba(215, 218, 224, 0.09) 1px, transparent 0),
     linear-gradient(rgba(171, 178, 191, 0.055) 1px, transparent 1px),
     linear-gradient(90deg, rgba(171, 178, 191, 0.045) 1px, transparent 1px);
-  background-size: 24px 24px, 36px 36px, 36px 36px;
-  mask-image: linear-gradient(
-    180deg,
-    transparent 0,
-    #000 18%,
-    #000 72%,
-    transparent 100%
-  );
+  background-size:
+    24px 24px,
+    36px 36px,
+    36px 36px;
+  mask-image: linear-gradient(180deg, transparent 0, #000 18%, #000 72%, transparent 100%);
   opacity: 0.48;
 }
 
@@ -136,12 +138,11 @@
 @media (max-width: 520px) {
   .cloud-music-page {
     min-height: 100dvh;
-    padding: 20px 0 96px;
+    padding: 15px 0 96px;
     background:
       radial-gradient(ellipse at 18% 10%, rgba(97, 175, 239, 0.15), transparent 36%),
       radial-gradient(ellipse at 72% 84%, rgba(171, 178, 191, 0.12), transparent 42%),
-      linear-gradient(150deg, rgba(24, 26, 31, 0.99), rgba(40, 44, 52, 0.95)),
-      var(--page-bg);
+      linear-gradient(150deg, rgba(24, 26, 31, 0.99), rgba(40, 44, 52, 0.95)), var(--page-bg);
   }
 
   .music-tabs {

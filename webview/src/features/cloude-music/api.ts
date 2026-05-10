@@ -7,6 +7,8 @@ import {
   MusicUrlParams,
   MusicUrlItem,
   LoginResponse,
+  QRCodeParams,
+  LoginUserInfoResponse,
 } from "./type";
 import { ResponseResult } from "@/types/request";
 // 获取手机验证码
@@ -34,11 +36,32 @@ export const loginApi = async (params: LoginParams) => {
     params,
   });
 };
-
+// 生成二维码key
+export const queryQRCodeKeyApi = async (params: { timestamp: number }) => {
+  return http.request<{ timestamp: number }, ResponseResult<{ code: number; unikey: string }>>({
+    url: "/login/qr/key",
+    method: "GET",
+    params,
+  });
+};
+// 二维码生成
+export const queryQRCodeBase64Api = async (params: QRCodeParams) => {
+  return http.request<QRCodeParams, ResponseResult<{ qrimg: string; qrurl: string }>>({
+    url: "/login/qr/create",
+    method: "GET",
+    params,
+  });
+};
+// 二维码检测扫码状态
+export const checkQRCodeApi = async (params: QRCodeParams) => {
+  return http.request<QRCodeParams, { code: number; cookie: string; message: string }>({
+    url: "/login/qr/check",
+    method: "GET",
+    params,
+  });
+};
 // 推荐歌单
-export const getRecommendationPlayListApi = async (
-  params: PlaylistParams = { limit: 30 },
-) => {
+export const getRecommendationPlayListApi = async (params: PlaylistParams = { limit: 30 }) => {
   return http.request<PlaylistParams, RecommendPlaylistResponse>({
     url: "/personalized",
     method: "GET",
@@ -61,4 +84,19 @@ export const getMusicUrlApi = async (params: MusicUrlParams) => {
     params,
   });
 };
-
+// 登录状态
+export const getLoginStatusApi = async (params: { timestamp: number; ua: string }) => {
+  return http.request<{ timestamp: number; ua: string }, LoginUserInfoResponse>({
+    url: "/login/status",
+    method: "POST",
+    params,
+  });
+};
+// 获取用户详情
+export const getUserInfoApi = async (params: { timestamp: number; uid: number }) => {
+  return http.request<{ timestamp: number; uid: number }, any>({
+    url: "/user/detail",
+    method: "GET",
+    params,
+  });
+};

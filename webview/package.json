@@ -8,6 +8,7 @@
 		"check-types": "tsc --noEmit"
 	},
 	"dependencies": {
+		"@element-plus/icons-vue": "^2.3.2",
 		"axios": "^1.15.2",
 		"element-plus": "^2.13.7",
 		"vue": "^3.5.33"

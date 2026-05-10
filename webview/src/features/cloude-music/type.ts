@@ -272,3 +272,80 @@ export interface Binding {
   type?: number;
 }
 // 登录-end
+
+// 获取登录二维码
+export interface QRCodeParams {
+  timestamp: number;
+  key: string;
+  qrimg?: boolean;
+  ua?: string;
+  platform?: string;
+}
+
+// 登录状态-start
+export interface LoginUserInfoResponse {
+  data: LoginUserInfoData;
+}
+
+export interface LoginUserInfoData {
+  code: number;
+  account: LoginAccountInfo;
+  profile: LoginProfileInfo;
+}
+
+export interface LoginAccountInfo {
+  id: number;
+  userName: string;
+  type: number;
+  status: number;
+  whitelistAuthority: number;
+  createTime: number;
+  tokenVersion: number;
+  ban: number;
+  baoyueVersion: number;
+  donateVersion: number;
+  vipType: number;
+  anonimousUser: boolean;
+  paidFee: boolean;
+}
+
+export interface LoginProfileInfo {
+  userId: number;
+  userType: number;
+  nickname: string;
+  avatarImgId: number;
+  avatarUrl: string;
+  backgroundImgId: number;
+  backgroundUrl: string;
+  signature: string;
+  createTime: number;
+  userName: string;
+  accountType: number;
+  shortUserName: string;
+  birthday: number;
+  authority: number;
+  gender: number;
+  accountStatus: number;
+  province: number;
+  city: number;
+  authStatus: number;
+  description: string | null;
+  detailDescription: string | null;
+  defaultAvatar: boolean;
+  expertTags: string[] | null;
+  experts: unknown | null;
+  djStatus: number;
+  locationStatus: number;
+  vipType: number;
+  followed: boolean;
+  mutual: boolean;
+  authenticated: boolean;
+  lastLoginTime: number;
+  lastLoginIP: string;
+  remarkName: string | null;
+  viptypeVersion: number;
+  authenticationTypes: number;
+  avatarDetail: unknown | null;
+  anchor: boolean;
+}
+// 登录状态-end

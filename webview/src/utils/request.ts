@@ -12,9 +12,7 @@ class Axios {
     this.interceptorsRequest();
     this.interceptorsResponse();
   }
-  public request<T, D = ResponseResult<T>>(
-    config: AxiosRequestConfig,
-  ): Promise<D> {
+  public request<T, D = ResponseResult<T>>(config: AxiosRequestConfig): Promise<D> {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await this.instance.request<D>(config);
@@ -31,14 +29,15 @@ class Axios {
         const token = getToken();
         if (token) {
           config.headers = {
-            Authorization: `Bearer ${token}`
+            ...config.headers,
+            Authorization: `Bearer ${token}`,
           } as AxiosRequestHeaders;
         }
         return config;
       },
       function (error) {
         return Promise.reject(error);
-      },
+      }
     );
   }
   private interceptorsResponse() {
@@ -46,19 +45,20 @@ class Axios {
     this.instance.interceptors.response.use(
       function (response) {
         if (response.data?.token) {
-          console.log('token');
+          console.log("token");
           setToken(response.data.token);
         }
         return response;
       },
       function (error) {
         return Promise.reject(error);
-      },
+      }
     );
   }
 }
 const http = new Axios({
   baseURL: "http://127.0.0.1:3000",
   timeout: 30000,
+  withCredentials: true,
 });
 export default http;
