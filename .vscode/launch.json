@@ -1,44 +1,15 @@
-// A launch configuration that compiles the extension and then opens it inside a new window
+// A launch configuration that starts watchers and then opens the extension inside a new window.
 // Use IntelliSense to learn about possible attributes.
 // Hover to view descriptions of existing attributes.
 // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
 {
 	"version": "0.2.0",
-	"compounds": [
-		{
-			"name": "Run Extension With Watchers",
-			"configurations": [
-				"Watch Extension (esbuild)",
-				"Watch Extension (tsc)",
-				"Watch Webview",
-				"Run Extension"
-			],
-			"stopAll": true
-		}
-	],
 	"configurations": [
-		{
-			"name": "Watch Extension (esbuild)",
-			"type": "node-terminal",
-			"request": "launch",
-			"command": "pnpm run watch:esbuild"
-		},
-		{
-			"name": "Watch Extension (tsc)",
-			"type": "node-terminal",
-			"request": "launch",
-			"command": "pnpm run watch:tsc"
-		},
-		{
-			"name": "Watch Webview",
-			"type": "node-terminal",
-			"request": "launch",
-			"command": "pnpm run watch:webview"
-		},
 		{
 			"name": "Run Extension",
 			"type": "extensionHost",
 			"request": "launch",
+			"preLaunchTask": "watch:all",
 			"args": [
 				"--extensionDevelopmentPath=${workspaceFolder}"
 			],

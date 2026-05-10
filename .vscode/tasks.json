@@ -6,10 +6,12 @@
 		{
 			"label": "watch:all",
 			"dependsOn": [
-				"npm: watch:tsc",
-				"npm: watch:esbuild",
-				"npm: watch:webview"
+				"watch:tsc",
+				"watch:esbuild",
+				"watch:webview"
 			],
+			"dependsOrder": "parallel",
+			"problemMatcher": [],
 			"presentation": {
 				"reveal": "never"
 			},
@@ -19,41 +21,49 @@
 			}
 		},
 		{
-			"type": "npm",
-			"script": "watch:esbuild",
+			"label": "watch:esbuild",
+			"type": "shell",
+			"command": "pnpm",
+			"args": [
+				"run",
+				"watch:esbuild"
+			],
 			"group": "build",
+			"isBackground": true,
 			"problemMatcher": "$esbuild-watch",
-			"isBackground": true,
-			"label": "npm: watch:esbuild",
 			"presentation": {
 				"group": "watch",
 				"reveal": "never"
 			}
 		},
 		{
-			"type": "npm",
-			"script": "watch:tsc",
+			"label": "watch:tsc",
+			"type": "shell",
+			"command": "pnpm",
+			"args": [
+				"run",
+				"watch:tsc"
+			],
 			"group": "build",
+			"isBackground": true,
 			"problemMatcher": "$tsc-watch",
-			"isBackground": true,
-			"label": "npm: watch:tsc",
 			"presentation": {
 				"group": "watch",
 				"reveal": "never"
 			}
 		},
 		{
-			"type": "npm",
-			"script": "watch:webview",
+			"label": "watch:webview",
+			"type": "shell",
+			"command": "pnpm",
+			"args": [
+				"run",
+				"watch:webview"
+			],
 			"group": "build",
 			"isBackground": true,
-			"label": "npm: watch:webview",
-			"presentation": {
-				"group": "watch",
-				"reveal": "never"
-			},
 			"problemMatcher": {
-				"owner": "custom",
+				"owner": "vite",
 				"fileLocation": "absolute",
 				"pattern": {
 					"regexp": "."
@@ -63,25 +73,35 @@
 					"beginsPattern": ".*vite.*",
 					"endsPattern": ".*Local:.*"
 				}
+			},
+			"presentation": {
+				"group": "watch",
+				"reveal": "never"
 			}
 		},
 		{
-			"type": "npm",
-			"script": "watch-tests",
-			"problemMatcher": "$tsc-watch",
+			"label": "watch-tests",
+			"type": "shell",
+			"command": "pnpm",
+			"args": [
+				"run",
+				"watch-tests"
+			],
+			"group": "build",
 			"isBackground": true,
+			"problemMatcher": "$tsc-watch",
 			"presentation": {
 				"reveal": "never",
-				"group": "watchers"
-			},
-			"group": "build"
+				"group": "watch"
+			}
 		},
 		{
 			"label": "tasks: watch-tests",
 			"dependsOn": [
 				"watch:all",
-				"npm: watch-tests"
+				"watch-tests"
 			],
+			"dependsOrder": "parallel",
 			"problemMatcher": []
 		}
 	]
