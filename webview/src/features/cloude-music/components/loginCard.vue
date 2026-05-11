@@ -50,7 +50,9 @@
         </div>
       </el-tab-pane>
       <el-tab-pane label="二维码登录" name="QRCode">
-        <img :src="imgUrl" v-if="imgUrl" />
+        <div class="qr-code-panel">
+          <img class="qr-code-image" :src="imgUrl" v-if="imgUrl" />
+        </div>
       </el-tab-pane>
     </el-tabs>
   </el-dialog>
@@ -553,6 +555,19 @@ const handleClose = () => {
   color: rgba(215, 218, 224, 0.64);
   background: rgba(24, 26, 31, 0.38);
   place-items: center;
+}
+
+.qr-code-panel {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 18px 0 4px;
+}
+
+.qr-code-image {
+  display: block;
+  width: min(220px, 100%);
+  height: auto;
 }
 
 .dialog-footer {
