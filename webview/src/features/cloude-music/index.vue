@@ -1,6 +1,6 @@
 <template>
   <section class="cloud-music-page">
-    <TopBar @visibleLoginCard="handleVisibleLoginCard"></TopBar>
+    <TopBar @visibleLoginCard="handleVisibleLoginCard" @successLogout="handleLogout"></TopBar>
     <el-tabs v-model="activeName" class="music-tabs" @tab-click="handleClick">
       <el-tab-pane label="歌单广场" name="playLists">
         <RecommendPlayList :recommendPlayList="recommendPlayList"></RecommendPlayList>
@@ -18,16 +18,18 @@ import { onMounted, ref } from "vue";
 import LoginCard from "./components/loginCard.vue";
 import RecommendPlayList from "./components/recommendPlayList.vue";
 import AudioBar from "./components/audioBar.vue";
-import { getRecommendationPlayListApi } from "./api";
+import { getAccountInfoApi, getRecommendationPlayListApi, getUserInfoApi } from "./api";
 import { RecommendPlaylistItem } from "./type";
 import { ElMessage } from "element-plus";
 import TopBar from "./components/topBar.vue";
+import { useUserStore } from "./hooks/useUserStore";
+
+const { setUserInfo } = useUserStore();
 const activeName = ref("playLists");
 const handleClick = () => {};
+// 控制登录弹窗
 const isVisible = ref(false);
 const handleVisibleLoginCard = () => {
-  console.log(111);
-
   isVisible.value = true;
 };
 // 推荐歌单
@@ -41,7 +43,25 @@ const getRecommendationPlayList = async () => {
     ElMessage.warning("获取推荐歌单失败~");
   }
 };
+// 退出登录成功
+const handleLogout = () => {
+  getRecommendationPlayList();
+};
+// 获取用户详情
+// const getUserInfo = async (id: number) => {
+//   const res = await getUserInfoApi({ timestamp: new Date().getTime(), uid: id });
+// };
+// 获取账号详情
+const getAccountInfo = async () => {
+  const res = await getAccountInfoApi({ timestamp: new Date().getTime() });
+  if (res.code === 200) {
+    setUserInfo({ account: res.account, profile: res.profile });
+  } else {
+    ElMessage.error("获取用户信息失败~");
+  }
+};
 onMounted(() => {
+  getAccountInfo();
   getRecommendationPlayList();
 });
 </script>

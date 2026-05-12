@@ -9,8 +9,16 @@ import {
   LoginResponse,
   QRCodeParams,
   LoginUserInfoResponse,
+  AccountDetailResult,
 } from "./type";
 import { ResponseResult } from "@/types/request";
+// 退出登录
+export const logoutApi = async () => {
+  return http.request({
+    url: "/logout",
+    method: "POST",
+  });
+};
 // 获取手机验证码
 export const getCaptchaApi = async (params: LoginParams) => {
   return http.request<{}>({
@@ -96,6 +104,14 @@ export const getLoginStatusApi = async (params: { timestamp: number; ua: string 
 export const getUserInfoApi = async (params: { timestamp: number; uid: number }) => {
   return http.request<{ timestamp: number; uid: number }, any>({
     url: "/user/detail",
+    method: "GET",
+    params,
+  });
+};
+// 获取账号信息
+export const getAccountInfoApi = async (params: { timestamp: number }) => {
+  return http.request<{ timestamp: number }, AccountDetailResult>({
+    url: "/user/account",
     method: "GET",
     params,
   });
