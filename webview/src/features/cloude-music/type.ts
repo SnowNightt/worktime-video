@@ -349,3 +349,14 @@ export interface LoginProfileInfo {
   anchor: boolean;
 }
 // 登录状态-end
+
+// 账号信息
+export interface AccountDetail {
+  account: LoginAccountInfo;
+  profile: LoginProfileInfo;
+}
+export interface AccountDetailResult {
+  code: number;
+  account: LoginAccountInfo;
+  profile: LoginProfileInfo;
+}
