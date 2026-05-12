@@ -116,3 +116,11 @@ export const getAccountInfoApi = async (params: { timestamp: number }) => {
     params,
   });
 };
+//
+export const getUserPlayList = async (params: { timestamp: number }) => {
+  return http.request<{ timestamp: number }, any>({
+    url: "/user/subcount",
+    method: "GET",
+    params,
+  });
+};
