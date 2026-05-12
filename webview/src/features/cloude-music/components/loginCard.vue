@@ -77,12 +77,15 @@ import {
 const dialogVisible = defineModel({
   default: false,
 });
+// 验证码登录表单
 const loginForm = reactive({
   phoneNum: "",
   captcha: "",
 });
 const activeName = ref("captcha");
+// 是否正在获取验证码
 const isRequestCaptcha = ref<boolean>(false);
+// 倒计时
 const countDown = ref(60);
 const isCounting = ref(false);
 let timer: ReturnType<typeof setInterval> | null = null;
@@ -262,6 +265,7 @@ const handleLogin = async () => {
   verifyCaptcha();
 };
 const handleClose = () => {
+  activeName.value = "captcha";
   clearPoll();
 };
 </script>
