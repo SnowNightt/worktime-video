@@ -75,8 +75,9 @@ import {
   verifyCaptchaApi,
 } from "../api";
 import { useUserStore } from "../hooks/useUserStore";
-
+import { useCountDown } from "../hooks/useCountDown";
 const { getLoginStatus } = useUserStore();
+const { isRequestCaptcha, countDown, startCountDown } = useCountDown();
 const dialogVisible = defineModel({
   default: false,
 });
@@ -89,42 +90,6 @@ const loginForm = reactive({
   captcha: "",
 });
 const activeName = ref("captcha");
-// 是否正在获取验证码
-const isRequestCaptcha = ref<boolean>(false);
-// 倒计时
-const countDown = ref(60);
-const isCounting = ref(false);
-let timer: ReturnType<typeof setInterval> | null = null;
-let endTime = 0;
-const startCountDown = () => {
-  if (isCounting.value) {
-    return;
-  }
-  isCounting.value = true;
-  endTime = Date.now() + 60 * 1000;
-  updateCountDown();
-  timer = setInterval(updateCountDown, 250);
-};
-const updateCountDown = () => {
-  const diff = endTime - Date.now();
-  if (diff <= 0) {
-    clearCountDown();
-    return;
-  }
-
-  countDown.value = Math.ceil(diff / 1000);
-};
-
-const clearCountDown = () => {
-  if (timer) {
-    clearInterval(timer);
-    timer = null;
-  }
-
-  isCounting.value = false;
-  isRequestCaptcha.value = false;
-  countDown.value = 60;
-};
 // 用于判断当前是否还在轮询，轮询接口还没返回若关闭登录弹窗当接口返回后await后的代码还会执行，会继续轮询，因此要加个判断
 const isPolling = ref(false);
 // 清除上一轮轮询
