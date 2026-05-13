@@ -2,7 +2,7 @@
   <div class="top-bar-container">
     <div class="search-box"></div>
     <div class="login-status">
-      <el-icon @click="visibleLoginCard" v-if="!userInfo">
+      <el-icon @click="visibleLoginCard" v-if="!userInfo?.profile">
         <UserFilled />
       </el-icon>
       <el-dropdown placement="bottom" size="small" popper-class="cloud-music-user-dropdown" v-else>
