@@ -10,7 +10,7 @@
     </el-tabs>
   </section>
   <AudioBar></AudioBar>
-  <LoginCard v-model="isVisible"></LoginCard>
+  <LoginCard v-model="isVisible" @loginSuccess="getRecommendationPlayList"></LoginCard>
 </template>
 
 <script lang="ts" setup>
@@ -24,7 +24,7 @@ import { ElMessage } from "element-plus";
 import TopBar from "./components/topBar.vue";
 import { useUserStore } from "./hooks/useUserStore";
 
-const { setUserInfo } = useUserStore();
+const { getLoginStatus } = useUserStore();
 const activeName = ref("playLists");
 const handleClick = () => {};
 // 控制登录弹窗
@@ -47,21 +47,8 @@ const getRecommendationPlayList = async () => {
 const handleLogout = () => {
   getRecommendationPlayList();
 };
-// 获取用户详情
-// const getUserInfo = async (id: number) => {
-//   const res = await getUserInfoApi({ timestamp: new Date().getTime(), uid: id });
-// };
-// 获取账号详情
-const getAccountInfo = async () => {
-  const res = await getAccountInfoApi({ timestamp: new Date().getTime() });
-  if (res.code === 200) {
-    setUserInfo({ account: res.account, profile: res.profile });
-  } else {
-    ElMessage.error("获取用户信息失败~");
-  }
-};
 onMounted(() => {
-  getAccountInfo();
+  getLoginStatus();
   getRecommendationPlayList();
 });
 </script>

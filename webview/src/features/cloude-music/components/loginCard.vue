@@ -74,9 +74,15 @@ import {
   queryQRCodeKeyApi,
   verifyCaptchaApi,
 } from "../api";
+import { useUserStore } from "../hooks/useUserStore";
+
+const { getLoginStatus } = useUserStore();
 const dialogVisible = defineModel({
   default: false,
 });
+const emit = defineEmits<{
+  loginSuccess: [];
+}>();
 // 验证码登录表单
 const loginForm = reactive({
   phoneNum: "",
@@ -119,16 +125,6 @@ const clearCountDown = () => {
   isRequestCaptcha.value = false;
   countDown.value = 60;
 };
-const getUserInfo = async (uid: number) => {
-  const res = await getUserInfoApi({ timestamp: new Date().getTime(), uid });
-};
-// 获取登录状态
-const getLoginStatus = async () => {
-  const res = await getLoginStatusApi({ timestamp: new Date().getTime(), ua: "pc" });
-  if (res.data.code === 200) {
-    getUserInfo(res.data.account.id);
-  }
-};
 // 用于判断当前是否还在轮询，轮询接口还没返回若关闭登录弹窗当接口返回后await后的代码还会执行，会继续轮询，因此要加个判断
 const isPolling = ref(false);
 // 清除上一轮轮询
@@ -168,7 +164,10 @@ const startQrLoginPoll = () => {
         case 803:
           console.log("授权成功");
           clearPoll();
-          getLoginStatus();
+          // 获取登录状态
+          await getLoginStatus();
+          emit("loginSuccess");
+          dialogVisible.value = false;
           break;
       }
     } catch (error) {
