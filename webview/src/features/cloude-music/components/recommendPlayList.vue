@@ -24,7 +24,7 @@ import { ref } from 'vue';
 import { getDetailPlayList } from '../api';
 import { RecommendPlaylistItem, SongItem } from '../type';
 import { ElMessage } from 'element-plus';
-import MusicListCard from './musicLIstCard.vue'
+import MusicListCard from './musicListCard/index.vue'
 
 interface Props {
     recommendPlayList: RecommendPlaylistItem[]
