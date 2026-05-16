@@ -9,5 +9,5 @@ interface TableColumn {
 }
 export interface TableConfigType<T> {
   tableData: T;
-  columns: TableColumn[];
+  columns?: TableColumn[];
 }

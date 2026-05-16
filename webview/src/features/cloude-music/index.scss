@@ -19,7 +19,6 @@
   width: 100%;
   min-height: 100vh;
   overflow: hidden;
-  padding: 15px 0 96px;
   background:
     radial-gradient(ellipse at 16% 12%, rgba(97, 175, 239, 0.18), transparent 34%),
     radial-gradient(ellipse at 86% 16%, rgba(152, 195, 121, 0.1), transparent 30%),
@@ -138,7 +137,6 @@
 @media (max-width: 520px) {
   .cloud-music-page {
     min-height: 100dvh;
-    padding: 15px 0 96px;
     background:
       radial-gradient(ellipse at 18% 10%, rgba(97, 175, 239, 0.15), transparent 36%),
       radial-gradient(ellipse at 72% 84%, rgba(171, 178, 191, 0.12), transparent 42%),

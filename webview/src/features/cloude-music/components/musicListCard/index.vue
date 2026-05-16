@@ -28,9 +28,13 @@
         width="100%"
         empty-text="暂无歌曲"
         @row-dblclick="handleSelectMusic"
+        :tooltip-options="{
+          appendTo: 'body',
+          popperClass: 'music-table-tooltip',
+        }"
       >
-        <el-table-column type="index" label="#" width="64" align="center"></el-table-column>
-        <el-table-column prop="title" label="歌曲" min-width="280" :show-overflow-tooltip="true">
+        <!-- <el-table-column type="index" label="#" width="64" align="center"></el-table-column> -->
+        <el-table-column prop="title" label="歌曲" min-width="150" :show-overflow-tooltip="true">
           <template #default="{ row }">
             <div class="song-cell">
               <img v-if="row.albumPic" class="song-cover" :src="row.albumPic" alt="" />
@@ -45,10 +49,10 @@
         <el-table-column
           prop="album"
           label="专辑"
-          min-width="220"
+          min-width="100"
           :show-overflow-tooltip="true"
         ></el-table-column>
-        <el-table-column prop="duration" label="时长" width="110" align="right">
+        <el-table-column prop="duration" label="时长" min-width="90" align="right">
           <template #default="{ row }">
             <span class="song-duration">{{ row.duration }}</span>
           </template>
@@ -84,11 +88,11 @@ const dialogVisible = defineModel<boolean>({
 
 const tableConfig = reactive<TableConfigType<MusicItem[]>>({
   tableData: [],
-  columns: [
-    { prop: "title", label: "标题", width: "250px" },
-    { prop: "album", label: "专辑", width: "220px" },
-    { prop: "duration", label: "时长", width: "120px" },
-  ],
+  // columns: [
+  //   { prop: "title", label: "标题", width: "150px" },
+  //   { prop: "album", label: "专辑", width: "150px" },
+  //   { prop: "duration", label: "时长", width: "120px" },
+  // ],
 });
 
 const { getMusicUrl } = useAudioPlayer();
