@@ -14,6 +14,9 @@
   --login-muted: rgba(215, 218, 224, 0.62);
   --login-glass-bg: rgba(40, 44, 52, 0.62);
   --login-glass-border: rgba(171, 178, 191, 0.22);
+  --music-scrollbar-track: rgba(12, 14, 18, 0.2);
+  --music-scrollbar-thumb: rgba(171, 178, 191, 0.34);
+  --music-scrollbar-thumb-hover: rgba(97, 175, 239, 0.54);
 
   position: relative;
   width: 100%;
@@ -33,6 +36,104 @@
   background-attachment: fixed;
   color: var(--login-text);
   isolation: isolate;
+}
+// 设置音乐模块下的滚动条样式
+:global(.cloud-music-page),
+:global(.music-dialog) {
+  --music-scrollbar-track: rgba(12, 14, 18, 0.2);
+  --music-scrollbar-thumb: rgba(171, 178, 191, 0.34);
+  --music-scrollbar-thumb-hover: rgba(97, 175, 239, 0.54);
+
+  scrollbar-color: var(--music-scrollbar-thumb) transparent;
+  scrollbar-width: thin;
+}
+
+:global(.cloud-music-page *),
+:global(.music-dialog *) {
+  scrollbar-color: var(--music-scrollbar-thumb) transparent;
+  scrollbar-width: thin;
+}
+
+:global(.cloud-music-page::-webkit-scrollbar),
+:global(.cloud-music-page *::-webkit-scrollbar),
+:global(.music-dialog::-webkit-scrollbar),
+:global(.music-dialog *::-webkit-scrollbar) {
+  width: 8px;
+  height: 8px;
+}
+
+:global(.cloud-music-page::-webkit-scrollbar-track),
+:global(.cloud-music-page *::-webkit-scrollbar-track),
+:global(.music-dialog::-webkit-scrollbar-track),
+:global(.music-dialog *::-webkit-scrollbar-track) {
+  border-radius: 999px;
+  background: var(--music-scrollbar-track);
+}
+
+:global(.cloud-music-page::-webkit-scrollbar-thumb),
+:global(.cloud-music-page *::-webkit-scrollbar-thumb),
+:global(.music-dialog::-webkit-scrollbar-thumb),
+:global(.music-dialog *::-webkit-scrollbar-thumb) {
+  min-height: 42px;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(215, 218, 224, 0.42), var(--music-scrollbar-thumb));
+  background-clip: padding-box;
+}
+
+:global(.cloud-music-page::-webkit-scrollbar-thumb:hover),
+:global(.cloud-music-page *::-webkit-scrollbar-thumb:hover),
+:global(.music-dialog::-webkit-scrollbar-thumb:hover),
+:global(.music-dialog *::-webkit-scrollbar-thumb:hover) {
+  background: linear-gradient(180deg, rgba(97, 175, 239, 0.62), var(--music-scrollbar-thumb-hover));
+  background-clip: padding-box;
+}
+
+:global(.cloud-music-page::-webkit-scrollbar-corner),
+:global(.cloud-music-page *::-webkit-scrollbar-corner),
+:global(.music-dialog::-webkit-scrollbar-corner),
+:global(.music-dialog *::-webkit-scrollbar-corner) {
+  background: transparent;
+}
+
+:global(.cloud-music-page .el-scrollbar__bar.is-vertical) {
+  right: 3px;
+  width: 8px;
+}
+
+:global(.music-dialog .el-scrollbar__bar.is-vertical) {
+  right: 3px;
+  width: 8px;
+}
+
+:global(.cloud-music-page .el-scrollbar__bar.is-horizontal),
+:global(.music-dialog .el-scrollbar__bar.is-horizontal) {
+  bottom: 3px;
+  height: 8px;
+}
+
+:global(.cloud-music-page .el-scrollbar__thumb),
+:global(.music-dialog .el-scrollbar__thumb) {
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(215, 218, 224, 0.42), var(--music-scrollbar-thumb));
+  opacity: 1;
+}
+
+:global(.cloud-music-page .el-scrollbar__thumb:hover),
+:global(.music-dialog .el-scrollbar__thumb:hover) {
+  background: linear-gradient(180deg, rgba(97, 175, 239, 0.62), var(--music-scrollbar-thumb-hover));
+}
+
+:global(.cloud-music-page .el-scrollbar__wrap),
+:global(.music-dialog .el-scrollbar__wrap) {
+  scrollbar-width: none;
+}
+
+:global(.cloud-music-page .el-scrollbar__wrap::-webkit-scrollbar),
+:global(.music-dialog .el-scrollbar__wrap::-webkit-scrollbar) {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 .cloud-music-page::before {
