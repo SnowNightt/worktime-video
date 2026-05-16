@@ -35,7 +35,7 @@ const handleVisibleLoginCard = () => {
 // 推荐歌单
 const recommendPlayList = ref<RecommendPlaylistItem[]>([]);
 const getRecommendationPlayList = async () => {
-  const res = await getRecommendationPlayListApi({ limit: 30, timestamp: new Date().getTime() });
+  const res = await getRecommendationPlayListApi({ limit: 30 });
   if (res.code === 200) {
     recommendPlayList.value = res.result;
   } else {

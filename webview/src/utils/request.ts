@@ -1,6 +1,9 @@
-import { ResponseResult } from "@/types/request";
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosRequestHeaders } from "axios";
-import { getToken, setToken } from "./token";
+import {
+  CustomAxiosRequestConfig,
+  CustomInternalAxiosRequestConfig,
+  ResponseResult,
+} from "@/types/request";
+import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 
 class Axios {
   private instance: AxiosInstance;
@@ -12,7 +15,7 @@ class Axios {
     this.interceptorsRequest();
     this.interceptorsResponse();
   }
-  public request<T, D = ResponseResult<T>>(config: AxiosRequestConfig): Promise<D> {
+  public request<T, D = ResponseResult<T>>(config: CustomAxiosRequestConfig): Promise<D> {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await this.instance.request<D>(config);
@@ -25,13 +28,26 @@ class Axios {
   private interceptorsRequest() {
     // 添加请求拦截器
     this.instance.interceptors.request.use(
-      function (config) {
-        const token = getToken();
-        if (token) {
-          config.headers = {
-            ...config.headers,
-            Authorization: `Bearer ${token}`,
-          } as AxiosRequestHeaders;
+      function (config: CustomInternalAxiosRequestConfig) {
+        console.log("interceptors.request", JSON.parse(JSON.stringify(config)));
+        // 判断是否需要加时间戳
+        const currentTime = new Date().getTime();
+        if (config.isTimestamp) {
+          const appendTimestamp = {
+            get: () => {
+              config.params = {
+                ...config.params,
+                timestamp: currentTime,
+              };
+            },
+            post: () => {
+              config.data = {
+                ...config.data,
+                timestamp: currentTime,
+              };
+            },
+          }[config.method as "get" | "post"];
+          appendTimestamp?.();
         }
         return config;
       },
@@ -44,10 +60,6 @@ class Axios {
     // 添加响应拦截器
     this.instance.interceptors.response.use(
       function (response) {
-        if (response.data?.token) {
-          console.log("token");
-          setToken(response.data.token);
-        }
         return response;
       },
       function (error) {

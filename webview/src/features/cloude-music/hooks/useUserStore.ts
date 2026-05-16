@@ -14,14 +14,14 @@ const clearUserInfo = () => {
 };
 // 获取登录状态
 const getLoginStatus = async () => {
-  const res = await getLoginStatusApi({ timestamp: new Date().getTime(), ua: "pc" });
+  const res = await getLoginStatusApi({ ua: "pc" });
   if (res.data.code === 200 && res.data.profile) {
     await getAccountInfo();
   }
 };
 // 获取账号详情-暂时不用
 const getAccountInfo = async () => {
-  const res = await getAccountInfoApi({ timestamp: new Date().getTime() });
+  const res = await getAccountInfoApi();
   if (res.code === 200 && res.profile) {
     setUserInfo({ account: res.account, profile: res.profile });
   } else {
@@ -30,7 +30,7 @@ const getAccountInfo = async () => {
 };
 // 获取用户详细
 const getUserInfo = async (uid: number) => {
-  const res = await getUserInfoApi({ timestamp: new Date().getTime(), uid });
+  const res = await getUserInfoApi({ uid });
 };
 export const useUserStore = () => {
   return {

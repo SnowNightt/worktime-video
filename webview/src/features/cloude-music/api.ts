@@ -29,27 +29,27 @@ export const getCaptchaApi = async (params: LoginParams) => {
 };
 
 // 验证验证码
-export const verifyCaptchaApi = async (params: LoginParams) => {
+export const verifyCaptchaApi = async (data: LoginParams) => {
   return http.request<LoginParams, ResponseResult<boolean>>({
     url: "/captcha/verify",
     method: "POST",
-    params,
+    data,
   });
 };
 // 登录
-export const loginApi = async (params: LoginParams) => {
+export const loginApi = async (data: LoginParams) => {
   return http.request<LoginParams, LoginResponse>({
     url: "/login/cellphone",
     method: "POST",
-    params,
+    data,
   });
 };
 // 生成二维码key
-export const queryQRCodeKeyApi = async (params: { timestamp: number }) => {
-  return http.request<{ timestamp: number }, ResponseResult<{ code: number; unikey: string }>>({
+export const queryQRCodeKeyApi = async () => {
+  return http.request<{}, ResponseResult<{ code: number; unikey: string }>>({
     url: "/login/qr/key",
     method: "GET",
-    params,
+    isTimestamp: true,
   });
 };
 // 二维码生成
@@ -93,34 +93,36 @@ export const getMusicUrlApi = async (params: MusicUrlParams) => {
   });
 };
 // 登录状态
-export const getLoginStatusApi = async (params: { timestamp: number; ua: string }) => {
-  return http.request<{ timestamp: number; ua: string }, LoginUserInfoResponse>({
+export const getLoginStatusApi = async (data: { ua: string }) => {
+  return http.request<{ ua: string }, LoginUserInfoResponse>({
     url: "/login/status",
     method: "POST",
-    params,
+    data,
+    isTimestamp: true,
   });
 };
 // 获取用户详情
-export const getUserInfoApi = async (params: { timestamp: number; uid: number }) => {
-  return http.request<{ timestamp: number; uid: number }, any>({
+export const getUserInfoApi = async (params: { uid: number }) => {
+  return http.request<{ uid: number }, any>({
     url: "/user/detail",
     method: "GET",
     params,
+    isTimestamp: true,
   });
 };
 // 获取账号信息
-export const getAccountInfoApi = async (params: { timestamp: number }) => {
-  return http.request<{ timestamp: number }, AccountDetailResult>({
+export const getAccountInfoApi = async () => {
+  return http.request<{}, AccountDetailResult>({
     url: "/user/account",
     method: "GET",
-    params,
+    isTimestamp: true,
   });
 };
 // 获取用户信息 , 歌单，收藏，mv, dj 数量
-export const getUserPlayList = async (params: { timestamp: number }) => {
-  return http.request<{ timestamp: number }, any>({
+export const getUserPlayList = async () => {
+  return http.request<{}, any>({
     url: "/user/subcount",
     method: "GET",
-    params,
+    isTimestamp: true,
   });
 };

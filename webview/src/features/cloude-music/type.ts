@@ -2,14 +2,14 @@
 export interface LoginParams {
   phone: string;
   captcha?: string;
-  timestamp?: number;
+  // timestamp?: number;
   password?: string;
 }
 
 // 推荐歌单
 export interface PlaylistParams {
   limit: number;
-  timestamp?: number;
+  // timestamp?: number;
 }
 export interface RecommendPlaylistResponse {
   hasTaste: boolean;
@@ -35,7 +35,7 @@ export interface RecommendPlaylistItem {
 // 获取歌单详情
 export interface DetailPlayListParams {
   id: number;
-  timestamp?: number;
+  // timestamp?: number;
 }
 
 // 歌单歌曲-start
@@ -275,7 +275,7 @@ export interface Binding {
 
 // 获取登录二维码
 export interface QRCodeParams {
-  timestamp: number;
+  // timestamp: number;
   key: string;
   qrimg?: boolean;
   ua?: string;

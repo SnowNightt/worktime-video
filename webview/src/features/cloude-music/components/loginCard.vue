@@ -108,7 +108,6 @@ const startQrLoginPoll = () => {
     if (!isPolling.value) return;
     try {
       const res = await checkQRCodeApi({
-        timestamp: new Date().getTime(),
         key: qrCodeKey.value,
         ua: "pc",
       });
@@ -149,7 +148,6 @@ const imgUrl = ref("");
 const getQRCode = async () => {
   const res = await queryQRCodeBase64Api({
     key: qrCodeKey.value,
-    timestamp: new Date().getTime(),
     qrimg: true,
     ua: "pc",
     platform: "web",
@@ -164,7 +162,7 @@ const getQRCode = async () => {
 const qrCodeKey = ref("");
 // 获取登录二维码
 const getQRCodeKey = async () => {
-  const res = await queryQRCodeKeyApi({ timestamp: new Date().getTime() });
+  const res = await queryQRCodeKeyApi();
   if (res.code === 200) {
     qrCodeKey.value = res.data.unikey;
     getQRCode();
@@ -201,7 +199,6 @@ const verifyCaptcha = async () => {
   const res = await verifyCaptchaApi({
     phone: loginForm.phoneNum,
     captcha: loginForm.captcha,
-    timestamp: new Date().getTime(),
   });
   if (res.code === 200 && res.data) {
     setTimeout(() => {
@@ -216,7 +213,6 @@ const getLogin = async () => {
   const res = await loginApi({
     phone: loginForm.phoneNum,
     captcha: loginForm.captcha,
-    timestamp: new Date().getTime(),
     password: "",
   });
   if (res.code === 200) {
