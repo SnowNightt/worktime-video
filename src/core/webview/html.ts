@@ -31,7 +31,7 @@ function readManifest(extensionUri: vscode.Uri): ViteManifest | undefined {
     "webview",
     "dist",
     ".vite",
-    "manifest.json",
+    "manifest.json"
   );
 
   try {
@@ -42,20 +42,9 @@ function readManifest(extensionUri: vscode.Uri): ViteManifest | undefined {
   }
 }
 
-function getAssetUri(
-  webview: vscode.Webview,
-  extensionUri: vscode.Uri,
-  assetPath: string,
-): string {
+function getAssetUri(webview: vscode.Webview, extensionUri: vscode.Uri, assetPath: string): string {
   return webview
-    .asWebviewUri(
-      vscode.Uri.joinPath(
-        extensionUri,
-        "webview",
-        "dist",
-        ...assetPath.split("/"),
-      ),
-    )
+    .asWebviewUri(vscode.Uri.joinPath(extensionUri, "webview", "dist", ...assetPath.split("/")))
     .toString();
 }
 
@@ -70,9 +59,7 @@ function getFallbackBody(message: string): string {
 }
 
 function getDevServerBaseUrl(): string {
-  return (
-    process.env.WORKTIME_VIDEO_WEBVIEW_DEV_SERVER_URL ?? DEFAULT_DEV_SERVER_URL
-  );
+  return process.env.WORKTIME_VIDEO_WEBVIEW_DEV_SERVER_URL ?? DEFAULT_DEV_SERVER_URL;
 }
 
 function getDevServerConnectSources(baseUrl: string): string {
@@ -83,7 +70,7 @@ function getDevServerConnectSources(baseUrl: string): string {
 }
 
 async function tryGetDevServer(
-  extensionMode: vscode.ExtensionMode,
+  extensionMode: vscode.ExtensionMode
 ): Promise<DevServerInfo | undefined> {
   if (extensionMode !== vscode.ExtensionMode.Development) {
     return undefined;
@@ -113,7 +100,7 @@ async function tryGetDevServer(
 function getDevServerHtml(
   webview: vscode.Webview,
   initialState: string,
-  devServer: DevServerInfo,
+  devServer: DevServerInfo
 ): string {
   const nonce = createNonce();
 
@@ -123,7 +110,7 @@ function getDevServerHtml(
 		<meta charset="UTF-8" />
 		<meta
 			http-equiv="Content-Security-Policy"
-			content="default-src 'none'; img-src ${webview.cspSource} ${devServer.baseUrl} https: data:; style-src ${webview.cspSource} 'unsafe-inline' ${devServer.baseUrl}; script-src 'nonce-${nonce}' ${devServer.baseUrl}; connect-src ${getDevServerConnectSources(devServer.baseUrl)} ${LOCAL_API_SOURCES}; media-src ${webview.cspSource} http: https:; font-src ${webview.cspSource} ${devServer.baseUrl};"
+			content="default-src 'none'; img-src ${webview.cspSource} ${devServer.baseUrl} https: http://p1.music.126.net http://p2.music.126.net http://p3.music.126.net http://p4.music.126.net data:; style-src ${webview.cspSource} 'unsafe-inline' ${devServer.baseUrl}; script-src 'nonce-${nonce}' ${devServer.baseUrl}; connect-src ${getDevServerConnectSources(devServer.baseUrl)} ${LOCAL_API_SOURCES}; media-src ${webview.cspSource} http: https:; font-src ${webview.cspSource} ${devServer.baseUrl};"
 		/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Worktime Video</title>
@@ -140,7 +127,7 @@ export async function getWebviewHtml(
   webview: vscode.Webview,
   extensionUri: vscode.Uri,
   initialState: string,
-  options: WebviewHtmlOptions,
+  options: WebviewHtmlOptions
 ): Promise<string> {
   const devServer = await tryGetDevServer(options.extensionMode);
   if (devServer) {
@@ -157,15 +144,12 @@ export async function getWebviewHtml(
   const styleTags =
     entry?.css
       ?.map(
-        (cssFile) =>
-          `<link rel="stylesheet" href="${getAssetUri(webview, extensionUri, cssFile)}" />`,
+        cssFile => `<link rel="stylesheet" href="${getAssetUri(webview, extensionUri, cssFile)}" />`
       )
       .join("\n") ?? "";
   const body = entry
     ? '<div id="app"></div>'
-    : getFallbackBody(
-        `No built webview assets were found in ${path.join("webview", "dist")}.`,
-      );
+    : getFallbackBody(`No built webview assets were found in ${path.join("webview", "dist")}.`);
 
   return `<!DOCTYPE html>
 <html lang="en">
