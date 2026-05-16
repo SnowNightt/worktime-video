@@ -15,7 +15,7 @@ class Axios {
     this.interceptorsRequest();
     this.interceptorsResponse();
   }
-  public request<T, D = ResponseResult<T>>(config: CustomAxiosRequestConfig): Promise<D> {
+  public request<D>(config: CustomAxiosRequestConfig): Promise<D> {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await this.instance.request<D>(config);
@@ -29,7 +29,6 @@ class Axios {
     // 添加请求拦截器
     this.instance.interceptors.request.use(
       function (config: CustomInternalAxiosRequestConfig) {
-        console.log("interceptors.request", JSON.parse(JSON.stringify(config)));
         // 判断是否需要加时间戳
         const currentTime = new Date().getTime();
         if (config.isTimestamp) {
