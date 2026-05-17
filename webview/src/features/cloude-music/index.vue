@@ -15,7 +15,7 @@
 
 <script lang="ts" setup>
 import { onMounted, ref } from "vue";
-import LoginCard from "./components/loginCard.vue";
+import LoginCard from "./components/loginCard/index.vue";
 import RecommendPlayList from "./components/recommendPlayList.vue";
 import AudioBar from "./components/audioBar.vue";
 import { getAccountInfoApi, getRecommendationPlayListApi, getUserInfoApi } from "./api";
