@@ -10,11 +10,11 @@
     </el-tabs>
   </section>
   <AudioBar></AudioBar>
-  <LoginCard v-model="isVisible" @loginSuccess="getRecommendationPlayList"></LoginCard>
+  <LoginCard v-model="isVisible" @loginSuccess="handleLoginSuccess"></LoginCard>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from "vue";
+import { nextTick, onMounted, ref } from "vue";
 import LoginCard from "./components/loginCard/index.vue";
 import RecommendPlayList from "./components/recommendPlayList.vue";
 import AudioBar from "./components/audioBar.vue";
@@ -23,33 +23,28 @@ import { RecommendPlaylistItem } from "./type";
 import { ElMessage } from "element-plus";
 import TopBar from "./components/topBar.vue";
 import { useUserStore } from "./hooks/useUserStore";
+import { useMusicTabs } from "./hooks/useMusicTabs";
 
 const { getLoginStatus } = useUserStore();
-const activeName = ref("playLists");
+const { activeName, recommendPlayList, collectList, favoriteList, loadCurrentList } =
+  useMusicTabs();
+// const activeName = ref("playLists");
 const handleClick = () => {};
 // 控制登录弹窗
 const isVisible = ref(false);
 const handleVisibleLoginCard = () => {
   isVisible.value = true;
 };
-// 推荐歌单
-const recommendPlayList = ref<RecommendPlaylistItem[]>([]);
-const getRecommendationPlayList = async () => {
-  const res = await getRecommendationPlayListApi({ limit: 30 });
-  if (res.code === 200) {
-    recommendPlayList.value = res.result;
-  } else {
-    recommendPlayList.value = [];
-    ElMessage.warning("获取推荐歌单失败~");
-  }
+const handleLoginSuccess = () => {
+  loadCurrentList();
 };
 // 退出登录成功
 const handleLogout = () => {
-  getRecommendationPlayList();
+  loadCurrentList();
 };
 onMounted(() => {
   getLoginStatus();
-  getRecommendationPlayList();
+  loadCurrentList();
 });
 </script>
 

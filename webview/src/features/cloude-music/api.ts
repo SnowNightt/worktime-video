@@ -10,6 +10,7 @@ import {
   QRCodeParams,
   LoginUserInfoResponse,
   AccountDetailResult,
+  UserPlaylistResponse,
 } from "./type";
 import { ResponseResult } from "@/types/request";
 // 退出登录
@@ -75,6 +76,7 @@ export const getRecommendationPlayListApi = async (params: PlaylistParams = { li
     url: "/personalized",
     method: "GET",
     params,
+    isTimestamp: true,
   });
 };
 // 歌单详情
@@ -120,10 +122,19 @@ export const getAccountInfoApi = async () => {
   });
 };
 // 获取用户信息 , 歌单，收藏，mv, dj 数量
-export const getUserPlayList = async () => {
-  return http.request<any>({
-    url: "/user/subcount",
+// export const getUserPlayList = async () => {
+//   return http.request<any>({
+//     url: "/user/subcount",
+//     method: "GET",
+//     isTimestamp: true,
+//   });
+// };
+
+// 获取用户歌单
+export const getPlayList = async (params: { uid: number }) => {
+  return http.request<UserPlaylistResponse>({
+    url: "/user/playlist",
     method: "GET",
-    isTimestamp: true,
+    params,
   });
 };

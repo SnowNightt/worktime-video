@@ -360,3 +360,92 @@ export interface AccountDetailResult {
   account: LoginAccountInfo;
   profile: LoginProfileInfo;
 }
+
+// 用户歌单-start
+export interface UserPlaylistResponse {
+  code: number;
+  more: boolean;
+  playlist: UserPlaylistItem[];
+}
+
+export interface UserPlaylistItem {
+  subscribers: unknown[];
+  subscribed: boolean;
+  creator: PlaylistCreator;
+  artists: null;
+  tracks: null;
+  top: boolean;
+  updateFrequency: string | null;
+  backgroundCoverId: number;
+  backgroundCoverUrl: string | null;
+  titleImage: number;
+  titleImageUrl: string | null;
+  englishTitle: string | null;
+  opRecommend: boolean;
+  recommendInfo: unknown | null;
+  subscribedCount: number;
+  cloudTrackCount: number;
+  userId: number;
+  totalDuration: number;
+  coverImgId: number;
+  privacy: number;
+  trackUpdateTime: number;
+  trackCount: number;
+  updateTime: number;
+  commentThreadId: string;
+  coverImgUrl: string;
+  specialType: number;
+  anonimous: boolean;
+  createTime: number;
+  highQuality: boolean;
+  newImported: boolean;
+  trackNumberUpdateTime: number;
+  playCount: number;
+  adType: number;
+  description: string | null;
+  tags: string[];
+  ordered: boolean;
+  status: number;
+  name: string;
+  id: number;
+  coverImgId_str?: string;
+  sharedUsers: unknown | null;
+  shareStatus: unknown | null;
+  copied: boolean;
+  containsTracks: boolean;
+}
+
+export interface PlaylistCreator {
+  defaultAvatar: boolean;
+  province: number;
+  authStatus: number;
+  followed: boolean;
+  avatarUrl: string;
+  accountStatus: number;
+  gender: number;
+  city: number;
+  birthday: number;
+  userId: number;
+  userType: number;
+  nickname: string;
+  signature: string;
+  description: string;
+  detailDescription: string;
+  avatarImgId: number;
+  backgroundImgId: number;
+  backgroundUrl: string;
+  authority: number;
+  mutual: boolean;
+  expertTags: string[] | null;
+  experts: Record<string, unknown> | null;
+  djStatus: number;
+  vipType: number;
+  remarkName: string | null;
+  authenticationTypes: number;
+  avatarDetail: unknown | null;
+  backgroundImgIdStr?: string;
+  anchor: boolean;
+  avatarImgIdStr?: string;
+  avatarImgId_str?: string;
+}
+// 用户歌单-end
