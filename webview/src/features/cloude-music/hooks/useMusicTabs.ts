@@ -4,11 +4,11 @@ import { ElMessage } from "element-plus";
 import { RecommendPlaylistItem, UserPlaylistItem } from "../type";
 import { useUserStore } from "./useUserStore";
 
-const activeName = ref<"playLists" | "collect" | "favorite">("playLists");
+const activeName = ref<"playLists" | "myPlayList" | "favorite">("playLists");
 // 歌单广场
 const recommendPlayList = ref<RecommendPlaylistItem[]>([]);
-// 我的收藏
-const collectList = ref<UserPlaylistItem[]>([]);
+// 我的歌单
+const myPlayList = ref<UserPlaylistItem[]>([]);
 // 我喜欢
 const favoriteList = ref<UserPlaylistItem[]>([]);
 export const useMusicTabs = () => {
@@ -25,15 +25,15 @@ export const useMusicTabs = () => {
       }
     },
     // todo: 区分我喜欢和我的歌单和我收藏歌单
-    collect: async () => {
+    myPlayList: async () => {
       if (!uid) {
         return;
       }
       const res = await getPlayList({ uid });
       if (res.code === 200) {
-        favoriteList.value = res.playlist;
+        myPlayList.value = res.playlist;
       } else {
-        favoriteList.value = [];
+        myPlayList.value = [];
         ElMessage.warning("获取我的歌单失败~");
       }
     },
@@ -54,12 +54,14 @@ export const useMusicTabs = () => {
     await queryMusicList[activeName.value]();
   };
   // 监听tab是否切换
-  watch(activeName, loadCurrentList);
+  watch(activeName, () => {
+    loadCurrentList();
+  });
   return {
     activeName,
     favoriteList,
     recommendPlayList,
-    collectList,
+    myPlayList,
     loadCurrentList,
   };
 };
