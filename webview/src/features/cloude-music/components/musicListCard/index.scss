@@ -1,121 +1,83 @@
 .music-dialog {
   --music-dialog-text: var(--login-text, #d7dae0);
   --music-dialog-muted: var(--login-muted, rgba(215, 218, 224, 0.62));
-  --music-dialog-border: rgba(171, 178, 191, 0.2);
 
   position: relative;
-  border: 1px solid var(--music-dialog-border);
-  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(171, 178, 191, 0.2);
+  border-radius: 14px;
   color: var(--music-dialog-text);
   background:
-    radial-gradient(circle at 16% 0%, rgba(97, 175, 239, 0.18), transparent 34%),
-    radial-gradient(circle at 88% 6%, rgba(229, 192, 123, 0.08), transparent 28%),
-    linear-gradient(145deg, rgba(255, 255, 255, 0.095), rgba(255, 255, 255, 0.03) 42%),
+    radial-gradient(circle at 16% 0%, rgba(97, 175, 239, 0.16), transparent 34%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.03) 42%),
     rgba(40, 44, 52, 0.72);
   box-shadow:
-    0 30px 78px rgba(0, 0, 0, 0.42),
-    0 12px 32px rgba(12, 14, 18, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.12),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.28);
-  backdrop-filter: blur(22px) saturate(124%);
-  -webkit-backdrop-filter: blur(22px) saturate(124%);
-  overflow: hidden;
-}
-
-.music-dialog::before {
-  position: absolute;
-  inset: 1px;
-  pointer-events: none;
-  content: "";
-  border-radius: 17px;
-  background:
-    linear-gradient(118deg, rgba(255, 255, 255, 0.13), transparent 31%),
-    linear-gradient(250deg, transparent 20%, rgba(255, 255, 255, 0.045), transparent 70%);
-  opacity: 0.78;
+    0 24px 56px rgba(0, 0, 0, 0.36),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(18px) saturate(120%);
+  -webkit-backdrop-filter: blur(18px) saturate(120%);
 }
 
 .music-dialog-overlay {
-  background: rgba(12, 14, 18, 0.46);
-  backdrop-filter: blur(7px);
-  -webkit-backdrop-filter: blur(7px);
+  background: rgba(12, 14, 18, 0.48);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
 }
 
 .music-dialog .el-dialog__header,
 .music-dialog .el-dialog__body {
-  position: relative;
-  z-index: 1;
   background: transparent;
 }
 
 .music-dialog .el-dialog__header {
-  padding: 20px 22px 14px;
+  padding: 16px 16px 12px;
   margin: 0;
 }
 
 .music-dialog .el-dialog__body {
-  padding: 0 22px 22px;
+  padding: 0 16px 16px;
 }
 
 .music-dialog .el-dialog__headerbtn {
-  top: 0px;
-  right: 18px;
-  width: 34px;
-  height: 34px;
-  border: 1px solid rgba(171, 178, 191, 0.16);
-  border-radius: 10px;
+  top: 8px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  border: 1px solid rgba(171, 178, 191, 0.14);
+  border-radius: 8px;
   background: rgba(24, 26, 31, 0.36);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
-  transition:
-    background 160ms ease,
-    border-color 160ms ease,
-    transform 160ms ease;
 }
 
 .music-dialog .el-dialog__headerbtn:hover,
 .music-dialog .el-dialog__headerbtn:focus-visible {
-  border-color: rgba(97, 175, 239, 0.38);
-  background: rgba(24, 26, 31, 0.58);
-  // transform: translateY(-1px);
+  border-color: rgba(97, 175, 239, 0.34);
+  background: rgba(24, 26, 31, 0.54);
 }
 
 .music-dialog .el-dialog__close {
   color: rgba(215, 218, 224, 0.72);
-  vertical-align: middle;
-  transform: rotate(0);
-  transition: all 0.6s;
-}
-// 叉号转圈
-.music-dialog .el-dialog__headerbtn:hover .el-dialog__close {
-  color: rgba(215, 218, 224, 0.72);
-  vertical-align: middle;
-  transform: rotate(180deg);
 }
 
 .music-dialog-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
-  padding-right: 42px;
+  gap: 12px;
+  padding-right: 32px;
 }
 
 .music-dialog-title-group {
-  display: flex;
   min-width: 0;
-  align-items: center;
-  gap: 12px;
 }
 
 .music-dialog h2 {
   margin: 0;
   overflow: hidden;
   color: #f0f3f8;
-  font-size: 20px;
-  font-weight: 750;
-  letter-spacing: 0;
+  font-size: 18px;
+  font-weight: 700;
   line-height: 1.2;
   text-overflow: ellipsis;
-  text-wrap: pretty;
   white-space: nowrap;
 }
 
@@ -123,41 +85,38 @@
   display: inline-flex;
   flex: 0 0 auto;
   align-items: baseline;
-  gap: 5px;
-  min-width: 72px;
-  padding: 8px 12px;
-  border: 1px solid rgba(171, 178, 191, 0.16);
-  border-radius: 12px;
-  background: rgba(24, 26, 31, 0.38);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  gap: 4px;
+  padding: 6px 9px;
+  border: 1px solid rgba(171, 178, 191, 0.14);
+  border-radius: 10px;
+  background: rgba(24, 26, 31, 0.42);
 }
 
 .music-dialog-stat strong {
   color: #f5f7fb;
-  font-size: 18px;
-  font-weight: 760;
+  font-size: 16px;
+  font-weight: 700;
   line-height: 1;
 }
 
 .music-dialog-stat span {
   color: var(--music-dialog-muted);
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 650;
 }
 
 .music-list-panel {
-  position: relative;
-  height: min(68vh, 620px);
-  min-height: 360px;
+  height: min(70vh, 560px);
+  min-height: 320px;
   overflow: hidden;
-  border: 1px solid rgba(171, 178, 191, 0.16);
-  border-radius: 15px;
+  border: 1px solid rgba(171, 178, 191, 0.14);
+  border-radius: 10px;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.02)),
     rgba(24, 26, 31, 0.42);
   box-shadow:
-    0 18px 42px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    0 14px 34px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
 .music-dialog .el-table {
@@ -181,43 +140,21 @@
 .music-dialog .el-table .el-table__cell,
 .music-dialog .el-table__inner-wrapper,
 .music-dialog .el-table__body-wrapper,
-.music-dialog .el-table__header-wrapper,
-.music-dialog .el-table__fixed,
-.music-dialog .el-table__fixed-right {
-  background: transparent;
-  border-bottom: none;
-}
-
 .music-dialog .el-table__header-wrapper {
-  position: relative;
-}
-
-.music-dialog .el-table__header-wrapper::after {
-  position: absolute;
-  right: 18px;
-  bottom: 0;
-  left: 18px;
-  height: 1px;
-  content: "";
-  background: linear-gradient(90deg, transparent, rgba(171, 178, 191, 0.18), transparent);
+  border-bottom: none;
+  background: transparent;
 }
 
 .music-dialog .el-table th.el-table__cell {
-  height: 44px;
+  height: 40px;
   color: rgba(215, 218, 224, 0.62);
   font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0;
-}
-
-.music-dialog .el-table .cell {
-  min-width: 0;
-  line-height: 1.35;
 }
 
 .music-dialog .el-table td.el-table__cell {
-  height: 58px;
-  color: rgba(215, 218, 224, 0.8);
+  height: 56px;
+  color: rgba(215, 218, 224, 0.82);
 }
 
 .music-dialog .el-table::before {
@@ -228,38 +165,26 @@
   background: rgba(97, 175, 239, 0.12) !important;
 }
 
-.music-dialog .el-table .el-table__body tr {
-  transition: background 160ms ease;
-}
-
 .music-dialog .el-table .el-table__body tr:hover .song-cover {
-  border-color: rgba(97, 175, 239, 0.42);
-  box-shadow:
-    0 10px 20px rgba(0, 0, 0, 0.24),
-    0 0 0 3px rgba(97, 175, 239, 0.12);
+  border-color: rgba(97, 175, 239, 0.38);
 }
 
 .song-cell {
   display: flex;
   min-width: 0;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .song-cover {
   flex: 0 0 auto;
-  width: 38px;
-  height: 38px;
+  width: 34px;
+  height: 34px;
   object-fit: cover;
-  border: 1px solid rgba(171, 178, 191, 0.18);
-  border-radius: 10px;
+  border: 1px solid rgba(171, 178, 191, 0.16);
+  border-radius: 8px;
   background: rgba(24, 26, 31, 0.5);
-  box-shadow:
-    0 8px 18px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  transition:
-    border-color 160ms ease,
-    box-shadow 160ms ease;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
 }
 
 .song-cover-placeholder {
@@ -291,26 +216,23 @@
 .song-artist {
   color: rgba(215, 218, 224, 0.56);
   font-size: 12px;
-  font-weight: 560;
 }
 
 .song-duration {
   display: inline-flex;
   justify-content: center;
-  min-width: 54px;
-  padding: 5px 8px;
-  border: 1px solid rgba(171, 178, 191, 0.14);
+  min-width: 48px;
+  padding: 4px 6px;
   border-radius: 999px;
   color: rgba(215, 218, 224, 0.7);
-  background: rgba(24, 26, 31, 0.36);
+  background: rgba(24, 26, 31, 0.5);
   font-size: 12px;
-  font-weight: 700;
   font-variant-numeric: tabular-nums;
   line-height: 1;
 }
 
 .music-dialog .el-table__empty-block {
-  min-height: 320px;
+  min-height: 280px;
 }
 
 .music-dialog .el-table__empty-text {
@@ -322,44 +244,20 @@
   cursor: pointer;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 360px) {
   .music-dialog {
-    width: calc(100vw - 20px) !important;
+    width: calc(100vw - 16px) !important;
   }
 
   .music-dialog .el-dialog__header {
-    padding: 16px 16px 12px;
+    padding: 14px 12px 10px;
   }
 
   .music-dialog .el-dialog__body {
-    padding: 0 16px 16px;
-  }
-
-  .music-dialog-header {
-    gap: 12px;
-    padding-right: 38px;
-  }
-
-  .music-dialog h2 {
-    font-size: 18px;
+    padding: 0 12px 12px;
   }
 
   .music-dialog-stat {
     display: none;
-  }
-
-  .music-list-panel {
-    height: min(70vh, 560px);
-    min-height: 320px;
-  }
-
-  .song-cell {
-    gap: 10px;
-  }
-
-  .song-cover {
-    width: 34px;
-    height: 34px;
-    border-radius: 9px;
   }
 }

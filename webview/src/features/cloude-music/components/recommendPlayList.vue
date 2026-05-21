@@ -77,10 +77,10 @@ const handleClickList = async (event: PointerEvent) => {
 <style lang="scss" scoped>
 .play-list-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
-  gap: 18px;
-  padding: 4px 2px 24px;
-  height: calc(100vh - 130px);
+  grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
+  gap: 10px;
+  height: calc(100dvh - 122px);
+  padding: 2px 2px 18px;
   grid-auto-rows: max-content;
   overflow-y: auto;
 }
@@ -91,30 +91,15 @@ const handleClickList = async (event: PointerEvent) => {
   overflow: hidden;
   cursor: pointer;
   border: 1px solid rgba(171, 178, 191, 0.14);
-  border-radius: 14px;
-  background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.075), transparent 34%), rgba(24, 26, 31, 0.42);
-  box-shadow:
-    0 14px 34px rgba(0, 0, 0, 0.22),
-    inset 0 1px 0 rgba(255, 255, 255, 0.075);
-  backdrop-filter: blur(14px) saturate(118%);
-  -webkit-backdrop-filter: blur(14px) saturate(118%);
+  border-radius: 10px;
+  background: rgba(24, 26, 31, 0.42);
   transition:
     border-color 180ms ease,
-    box-shadow 180ms ease,
-    transform 180ms ease;
+    background 180ms ease;
 
   &:hover {
     border-color: rgba(97, 175, 239, 0.34);
-    box-shadow:
-      0 18px 42px rgba(0, 0, 0, 0.3),
-      0 0 0 1px rgba(97, 175, 239, 0.1),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    transform: translateY(-3px);
-  }
-
-  &:hover .cover {
-    transform: scale(1.045);
+    background: rgba(24, 26, 31, 0.58);
   }
 
   &:hover .playlist-meta span:last-child {
@@ -134,7 +119,6 @@ const handleClickList = async (event: PointerEvent) => {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 220ms ease;
 }
 
 .cover-shade {
@@ -149,23 +133,19 @@ const handleClickList = async (event: PointerEvent) => {
 .play-count {
   max-width: 100%;
   overflow: hidden;
-  padding: 4px 8px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 3px 7px;
   border-radius: 999px;
   color: rgba(245, 247, 251, 0.92);
-  background: rgba(24, 26, 31, 0.52);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  background: rgba(24, 26, 31, 0.58);
   font-size: 11px;
   font-weight: 650;
   line-height: 1.2;
   text-overflow: ellipsis;
   white-space: nowrap;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
 }
 
 .playlist-info {
-  padding: 11px 11px 13px;
+  padding: 10px;
 }
 
 .list-name {
@@ -205,17 +185,6 @@ const handleClickList = async (event: PointerEvent) => {
 
   span:last-child {
     transition: color 180ms ease;
-  }
-}
-
-@media (max-width: 420px) {
-  .play-list-container {
-    grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
-    gap: 14px;
-  }
-
-  .playlist-info {
-    padding: 10px;
   }
 }
 </style>

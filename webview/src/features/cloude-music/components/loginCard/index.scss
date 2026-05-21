@@ -1,10 +1,9 @@
 :global(.cloud-music-login-overlay) {
   background:
-    radial-gradient(circle at 26% 22%, rgba(97, 175, 239, 0.16), transparent 34%),
-    radial-gradient(circle at 76% 18%, rgba(229, 192, 123, 0.08), transparent 28%),
-    rgba(12, 14, 18, 0.46);
-  backdrop-filter: blur(8px) saturate(112%);
-  -webkit-backdrop-filter: blur(8px) saturate(112%);
+    radial-gradient(circle at 26% 22%, rgba(97, 175, 239, 0.14), transparent 34%),
+    rgba(12, 14, 18, 0.48);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
 }
 
 :global(.cloud-music-login-dialog.el-dialog) {
@@ -12,150 +11,97 @@
 
   position: relative;
   overflow: hidden;
-  color: var(--login-text, #111827);
+  color: var(--login-text, #d7dae0);
   border: 1px solid var(--login-glass-border, rgba(171, 178, 191, 0.22));
-  border-radius: 20px;
+  border-radius: 16px;
   background:
     radial-gradient(circle at 20% 0%, rgba(97, 175, 239, 0.14), transparent 34%),
-    radial-gradient(circle at 86% 10%, rgba(229, 192, 123, 0.1), transparent 30%),
-    linear-gradient(145deg, rgba(255, 255, 255, 0.105), rgba(255, 255, 255, 0.035) 42%),
-    var(--login-glass-bg, rgba(40, 44, 52, 0.62));
+    linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.035) 42%),
+    var(--login-glass-bg, rgba(40, 44, 52, 0.72));
   box-shadow:
-    0 26px 70px rgba(0, 0, 0, 0.36),
-    0 10px 28px rgba(12, 14, 18, 0.28),
-    inset 0 1px 0 rgba(255, 255, 255, 0.12),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(20px) saturate(128%);
-  -webkit-backdrop-filter: blur(20px) saturate(128%);
-  transition:
-    transform 180ms ease,
-    border-color 180ms ease,
-    box-shadow 180ms ease;
-}
-
-:global(.cloud-music-login-dialog.el-dialog::before) {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  content: "";
-  background:
-    linear-gradient(118deg, rgba(255, 255, 255, 0.16), transparent 32%),
-    linear-gradient(250deg, transparent 22%, rgba(255, 255, 255, 0.05), transparent 68%);
-  opacity: 0.84;
-}
-
-:global(.cloud-music-login-dialog.el-dialog::after) {
-  position: absolute;
-  inset: 1px;
-  pointer-events: none;
-  content: "";
-  border-radius: 19px;
-  background-image:
-    linear-gradient(rgba(171, 178, 191, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(171, 178, 191, 0.035) 1px, transparent 1px);
-  background-size: 22px 22px;
-  mask-image: linear-gradient(180deg, #000, transparent 78%);
-  opacity: 0.54;
-}
-
-:global(.cloud-music-login-dialog.el-dialog:hover) {
-  transform: translateY(-2px);
-  border-color: rgba(171, 178, 191, 0.3);
-  box-shadow:
-    0 30px 78px rgba(0, 0, 0, 0.42),
-    0 14px 34px rgba(12, 14, 18, 0.3),
-    0 0 0 1px rgba(97, 175, 239, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+    0 24px 56px rgba(0, 0, 0, 0.36),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(18px) saturate(120%);
+  -webkit-backdrop-filter: blur(18px) saturate(120%);
 }
 
 :global(.cloud-music-login-dialog .el-dialog__header) {
   position: absolute;
-  top: 12px;
-  right: 12px;
-  z-index: 3;
-  width: 32px;
-  height: 32px;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  width: 30px;
+  height: 30px;
   padding: 0;
   margin: 0;
 }
 
 :global(.cloud-music-login-dialog .el-dialog__headerbtn) {
   position: static;
-  display: grid;
-  width: 32px;
-  height: 32px;
-  border: 1px solid rgba(171, 178, 191, 0.16);
-  border-radius: 10px;
-  background: rgba(24, 26, 31, 0.34);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
-  place-items: center;
-  transition:
-    background 160ms ease,
-    border-color 160ms ease,
-    transform 160ms ease;
+  width: 30px;
+  height: 30px;
+  border: 1px solid rgba(171, 178, 191, 0.14);
+  border-radius: 8px;
+  background: rgba(24, 26, 31, 0.36);
 }
 
 :global(.cloud-music-login-dialog .el-dialog__headerbtn:hover),
 :global(.cloud-music-login-dialog .el-dialog__headerbtn:focus-visible) {
-  border-color: rgba(97, 175, 239, 0.36);
-  background: rgba(24, 26, 31, 0.58);
-  transform: translateY(-1px);
+  border-color: rgba(97, 175, 239, 0.34);
+  background: rgba(24, 26, 31, 0.54);
 }
 
 :global(.cloud-music-login-dialog .el-dialog__close) {
   color: rgba(215, 218, 224, 0.72);
-  font-size: 17px;
+  font-size: 16px;
 }
 
 :global(.cloud-music-login-dialog .el-dialog__body) {
-  position: relative;
-  z-index: 1;
-  padding: 34px 34px 32px;
+  padding: 30px 24px 24px;
 }
 
 .brand-mark {
   position: relative;
   display: grid;
-  width: 64px;
-  height: 64px;
-  margin: 0 auto 22px;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 18px;
   place-items: center;
-  border: 1px solid rgba(171, 178, 191, 0.28);
-  border-radius: 20px;
+  border: 1px solid rgba(171, 178, 191, 0.22);
+  border-radius: 16px;
   background:
-    radial-gradient(circle at 28% 18%, rgba(255, 255, 255, 0.22), transparent 22%),
-    linear-gradient(145deg, rgba(171, 178, 191, 0.16), rgba(24, 26, 31, 0.48));
+    radial-gradient(circle at 28% 18%, rgba(255, 255, 255, 0.2), transparent 22%),
+    linear-gradient(145deg, rgba(171, 178, 191, 0.16), rgba(24, 26, 31, 0.46));
   box-shadow:
-    0 14px 30px rgba(0, 0, 0, 0.26),
-    0 0 34px rgba(97, 175, 239, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    0 12px 26px rgba(0, 0, 0, 0.24),
+    0 0 28px rgba(97, 175, 239, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .brand-mark__ring {
-  width: 34px;
-  height: 34px;
-  border: 7px solid rgba(171, 178, 191, 0.78);
-  border-right-color: rgba(97, 175, 239, 0.42);
+  width: 30px;
+  height: 30px;
+  border: 6px solid rgba(171, 178, 191, 0.78);
+  border-right-color: rgba(97, 175, 239, 0.48);
   border-radius: 50%;
-  box-shadow: 0 7px 18px rgba(97, 175, 239, 0.16);
 }
 
 .brand-mark__note {
   position: absolute;
-  right: 17px;
-  bottom: 14px;
-  width: 10px;
-  height: 22px;
+  right: 15px;
+  bottom: 12px;
+  width: 9px;
+  height: 20px;
   border-radius: 999px;
   background: linear-gradient(180deg, #d7dae0, #61afef);
   transform: rotate(18deg);
 
   &::after {
     position: absolute;
-    right: -8px;
+    right: -7px;
     bottom: -3px;
-    width: 15px;
-    height: 10px;
+    width: 14px;
+    height: 9px;
     content: "";
     border-radius: 999px;
     background: inherit;
@@ -163,7 +109,7 @@
 }
 
 .login-header {
-  margin-bottom: 28px;
+  margin-bottom: 24px;
   text-align: center;
 }
 
@@ -172,30 +118,26 @@
   color: rgba(97, 175, 239, 0.92);
   font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0;
 }
 
 .title {
   margin: 0;
-  color: var(--login-text, #111827);
-  font-size: 25px;
+  color: var(--login-text, #d7dae0);
+  font-size: 22px;
   font-weight: 700;
-  letter-spacing: 0;
-  line-height: 1.22;
-  text-wrap: pretty;
+  line-height: 1.25;
 }
 
 .subtitle {
-  margin: 10px 0 0;
-  color: var(--login-muted, rgba(17, 24, 39, 0.62));
-  font-size: 14px;
-  line-height: 1.7;
-  text-wrap: pretty;
+  margin: 8px 0 0;
+  color: var(--login-muted, rgba(215, 218, 224, 0.62));
+  font-size: 13px;
+  line-height: 1.6;
 }
 
 .login-form {
   :deep(.el-form-item) {
-    margin-bottom: 18px;
+    margin-bottom: 16px;
   }
 
   :deep(.el-form-item__label) {
@@ -212,18 +154,14 @@
   width: 100%;
 
   :deep(.el-input__wrapper) {
-    min-height: 44px;
-    padding: 0 14px;
+    min-height: 42px;
+    padding: 0 12px;
     border: 1px solid rgba(171, 178, 191, 0.18);
-    border-radius: 12px;
-    background: rgba(24, 26, 31, 0.38);
+    border-radius: 10px;
+    background: rgba(24, 26, 31, 0.42);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.06),
-      0 8px 18px rgba(0, 0, 0, 0.16);
-    transition:
-      border-color 160ms ease,
-      background 160ms ease,
-      box-shadow 160ms ease;
+      0 8px 18px rgba(0, 0, 0, 0.12);
   }
 
   :deep(.el-input__inner) {
@@ -239,45 +177,36 @@
     border-color: rgba(97, 175, 239, 0.46);
     background: rgba(24, 26, 31, 0.52);
     box-shadow:
-      0 0 0 3px rgba(97, 175, 239, 0.12),
-      0 10px 22px rgba(0, 0, 0, 0.2);
+      0 0 0 3px rgba(97, 175, 239, 0.1),
+      0 10px 22px rgba(0, 0, 0, 0.16);
   }
 }
 
 .captcha-box {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 116px;
-  gap: 10px;
+  grid-template-columns: minmax(0, 1fr) 104px;
+  gap: 8px;
   width: 100%;
 }
 
 .query-captcha-btn,
 .countdown {
-  min-height: 44px;
+  min-height: 42px;
   border: 1px solid rgba(171, 178, 191, 0.18);
-  border-radius: 12px;
+  border-radius: 10px;
   font-weight: 700;
 }
 
 .query-captcha-btn {
   color: rgba(215, 218, 224, 0.86);
-  background: rgba(24, 26, 31, 0.36);
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.16);
-  transition:
-    color 160ms ease,
-    background 160ms ease,
-    box-shadow 160ms ease,
-    transform 160ms ease;
+  background: rgba(24, 26, 31, 0.42);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
 
   &:hover,
   &:focus-visible {
     color: #f5f7fb;
     border-color: rgba(97, 175, 239, 0.34);
-    background:
-      linear-gradient(135deg, rgba(97, 175, 239, 0.28), rgba(171, 178, 191, 0.12)),
-      rgba(24, 26, 31, 0.54);
-    box-shadow: 0 12px 24px rgba(97, 175, 239, 0.14);
-    transform: translateY(-1px);
+    background: rgba(97, 175, 239, 0.18);
   }
 }
 
@@ -292,80 +221,48 @@
   display: flex;
   justify-content: center;
   width: 100%;
-  padding: 18px 0 4px;
+  padding: 16px 0 4px;
 }
 
 .qr-code-image {
   display: block;
-  width: min(220px, 100%);
+  width: min(200px, 100%);
   height: auto;
 }
 
 .dialog-footer {
   display: flex;
-  margin-top: 26px;
+  margin-top: 22px;
 }
 
 .login-btn {
   width: 100%;
-  min-height: 46px;
-  border: 1px solid rgba(171, 178, 191, 0.16);
-  border-radius: 13px;
+  min-height: 44px;
+  border: 1px solid rgba(97, 175, 239, 0.3);
+  border-radius: 11px;
+  color: #f5f7fb;
   background:
-    linear-gradient(
-      135deg,
-      rgba(97, 175, 239, 0.42),
-      rgba(171, 178, 191, 0.2) 48%,
-      rgba(127, 132, 142, 0.42)
-    ),
+    linear-gradient(135deg, rgba(97, 175, 239, 0.38), rgba(171, 178, 191, 0.18)),
     rgba(24, 26, 31, 0.34);
   box-shadow:
-    0 14px 30px rgba(0, 0, 0, 0.26),
-    0 0 28px rgba(97, 175, 239, 0.14),
-    inset 0 1px 0 rgba(255, 255, 255, 0.14);
-  color: #f5f7fb;
+    0 12px 26px rgba(0, 0, 0, 0.22),
+    0 0 24px rgba(97, 175, 239, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
   font-size: 15px;
   font-weight: 700;
-  transition:
-    filter 160ms ease,
-    box-shadow 160ms ease,
-    transform 160ms ease;
 
   &:hover,
   &:focus-visible {
-    filter: brightness(1.04);
-    border-color: rgba(97, 175, 239, 0.32);
-    box-shadow:
-      0 16px 34px rgba(0, 0, 0, 0.3),
-      0 0 34px rgba(97, 175, 239, 0.2),
-      inset 0 1px 0 rgba(255, 255, 255, 0.18);
-    transform: translateY(-1px);
-  }
-
-  &:active {
-    transform: translateY(0);
+    background: rgba(97, 175, 239, 0.36);
   }
 }
 
-@media (max-width: 420px) {
-  :global(.cloud-music-login-dialog.el-dialog) {
-    border-radius: 16px;
-  }
-
-  :global(.cloud-music-login-dialog.el-dialog::after) {
-    border-radius: 15px;
-  }
-
+@media (max-width: 340px) {
   :global(.cloud-music-login-dialog .el-dialog__body) {
-    padding: 28px 22px 24px;
+    padding: 28px 18px 22px;
   }
 
   .captcha-box {
     grid-template-columns: 1fr;
-  }
-
-  .query-captcha-btn,
-  .countdown {
-    width: 100%;
   }
 }

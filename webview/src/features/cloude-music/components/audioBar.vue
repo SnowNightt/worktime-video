@@ -22,9 +22,10 @@ watch(currentUrl, (newVal) => {
     justify-content: center;
 
     .audio {
-        width: 95%;
+        width: calc(100% - 24px);
+        max-width: 440px;
         position: fixed;
-        bottom: 20px;
+        bottom: 12px;
     }
 }
 </style>

@@ -46,7 +46,9 @@ const handleLogout = async () => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 10px;
+  min-height: 42px;
+  padding: 0 12px;
+
   .login-status {
     display: flex;
     align-items: center;
@@ -70,23 +72,12 @@ const handleLogout = async () => {
       border-radius: 50%;
       border: 1px solid rgba(171, 178, 191, 0.32);
       background: rgba(24, 26, 31, 0.62);
-      box-shadow:
-        0 8px 24px rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.12);
-      transition:
-        border-color 0.18s ease,
-        box-shadow 0.18s ease,
-        transform 0.18s ease;
+      transition: border-color 0.18s ease;
     }
 
     .avatar:hover,
     .avatar:focus-visible {
       border-color: rgba(97, 175, 239, 0.62);
-      box-shadow:
-        0 10px 28px rgba(0, 0, 0, 0.36),
-        0 0 0 3px rgba(97, 175, 239, 0.16),
-        inset 0 1px 0 rgba(255, 255, 255, 0.14);
-      transform: translateY(-1px);
     }
   }
 }
@@ -95,13 +86,8 @@ const handleLogout = async () => {
 :global(.cloud-music-user-dropdown.el-popper.is-light) {
   border: 1px solid rgba(171, 178, 191, 0.2);
   border-radius: 10px;
-  background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.08), transparent 42%), rgba(24, 26, 31, 0.92);
-  box-shadow:
-    0 18px 44px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(16px) saturate(120%);
-  -webkit-backdrop-filter: blur(16px) saturate(120%);
+  background: rgba(24, 26, 31, 0.96);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.36);
 }
 
 :global(.cloud-music-user-dropdown .el-dropdown-menu) {
@@ -117,7 +103,6 @@ const handleLogout = async () => {
   border-radius: 7px;
   color: rgba(215, 218, 224, 0.78);
   font-weight: 600;
-  letter-spacing: 0;
   transition:
     color 0.18s ease,
     background-color 0.18s ease;
@@ -131,7 +116,6 @@ const handleLogout = async () => {
 
 :global(.cloud-music-user-dropdown.el-popper.is-light .el-popper__arrow::before) {
   border-color: rgba(171, 178, 191, 0.2);
-  background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.08), transparent 42%), rgba(24, 26, 31, 0.92);
+  background: rgba(24, 26, 31, 0.96);
 }
 </style>

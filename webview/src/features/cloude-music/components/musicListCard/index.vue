@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     v-model="dialogVisible"
-    width="min(920px, calc(100vw - 32px))"
+    width="min(440px, calc(100vw - 20px))"
     :before-close="handleClose"
     top="24px"
     class="music-dialog"
