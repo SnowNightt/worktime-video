@@ -4,19 +4,16 @@ export const fallbackFeatures: FeatureDescriptor[] = [
 	{
 		id: 'music',
 		title: 'Music',
-		description: 'Keeps the current simple information message command behavior.',
-		commandId: 'worktime-video.music.hello',
+		description: 'Music playback inside the webview.',
 	},
 	{
 		id: 'bilibili',
 		title: 'Bilibili',
-		description: 'Keeps the current simple information message command behavior.',
-		commandId: 'worktime-video.bilibili.hello',
+		description: 'Bilibili content inside the webview.',
 	},
 	{
 		id: 'test',
 		title: 'Test',
-		description: 'Keeps the current simple information message command behavior.',
-		commandId: 'worktime-video.test.hello',
+		description: 'Test area inside the webview.',
 	},
 ];

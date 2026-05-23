@@ -7,7 +7,6 @@ export interface FeatureDescriptor {
 	id: FeatureId;
 	title: string;
 	description: string;
-	commandId: string;
 }
 
 
@@ -23,13 +22,7 @@ export interface WebviewReadyMessage {
 }
 
 
-export interface OpenCommandMessage {
-	type: 'ui/open-command';
-	commandId: string;
-}
-
-
-export type WebviewToExtensionMessage = WebviewReadyMessage | OpenCommandMessage;
+export type WebviewToExtensionMessage = WebviewReadyMessage;
 
 
 export interface InitStateMessage {

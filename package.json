@@ -10,27 +10,10 @@
     "Other"
   ],
   "activationEvents": [
-    "onView:worktime-video.sidebarView",
-    "onCommand:worktime-video.music.hello",
-    "onCommand:worktime-video.bilibili.hello",
-    "onCommand:worktime-video.test.hello"
+    "onView:worktime-video.sidebarView"
   ],
   "main": "./dist/extension.js",
   "contributes": {
-    "commands": [
-      {
-        "command": "worktime-video.music.hello",
-        "title": "Music"
-      },
-      {
-        "command": "worktime-video.bilibili.hello",
-        "title": "Bilibili"
-      },
-      {
-        "command": "worktime-video.test.hello",
-        "title": "Hello World"
-      }
-    ],
     "viewsContainers": {
       "activitybar": [
         {

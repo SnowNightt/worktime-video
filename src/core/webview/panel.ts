@@ -2,7 +2,6 @@ import * as vscode from 'vscode';
 
 import {
 	type ExtensionToWebviewMessage,
-	type FeatureDescriptor,
 	type WebviewToExtensionMessage,
 	type WorktimeWebviewState,
 } from '../../../shared/protocol';
@@ -10,25 +9,22 @@ import { getWebviewHtml } from './html';
 
 const DEFAULT_STATE: WorktimeWebviewState = {
 	title: 'Worktime Video',
-	description: 'Vue scaffold for future work. Existing commands still use simple information messages.',
+	description: 'Vue webview for worktime media.',
 	features: [
 		{
 			id: 'music',
 			title: 'Music',
-			description: 'Currently still handled by the extension command popup.',
-			commandId: 'worktime-video.music.hello',
+			description: 'Music playback inside the webview.',
 		},
 		{
 			id: 'bilibili',
 			title: 'Bilibili',
-			description: 'Currently still handled by the extension command popup.',
-			commandId: 'worktime-video.bilibili.hello',
+			description: 'Bilibili content inside the webview.',
 		},
 		{
 			id: 'test',
 			title: 'Test',
-			description: 'Currently still handled by the extension command popup.',
-			commandId: 'worktime-video.test.hello',
+			description: 'Test area inside the webview.',
 		},
 	],
 };
@@ -93,12 +89,5 @@ export class WorktimeWebviewPanel implements vscode.WebviewViewProvider {
 			return;
 		}
 
-		if (message.type === 'ui/open-command') {
-			await vscode.commands.executeCommand(message.commandId);
-		}
 	}
-}
-
-export function getDefaultWebviewFeatures(): FeatureDescriptor[] {
-	return DEFAULT_STATE.features;
 }

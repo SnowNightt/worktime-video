@@ -24,14 +24,6 @@ class ExtensionBridge {
 		
 		postMessage({ type: 'ui/ready' });
 	}
-
-	public openCommand(commandId: string): void {
-		
-		postMessage({
-			type: 'ui/open-command',
-			commandId,
-		});
-	}
 }
 
 export const extensionBridge = new ExtensionBridge();
