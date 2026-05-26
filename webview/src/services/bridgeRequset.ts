@@ -12,7 +12,7 @@ const createRequestId = () => {
 };
 window.addEventListener("message", (event: MessageEvent) => {
   const data = event.data;
-  if (data.type !== "bridge/response") {
+  if (data.type !== "response/api") {
     return;
   }
   const reqId = data.reqId;

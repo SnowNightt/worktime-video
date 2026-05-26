@@ -83,7 +83,27 @@ export class WorktimeWebviewPanel implements vscode.WebviewViewProvider {
     return this.view?.webview.postMessage(message) ?? false;
   }
   private async handleBridgeRequest(message: BridgeRequestMessage) {
-    const bridgeRes = await this.bridgeRequest.request(message.payload);
+    try {
+      const bridgeRes = await this.bridgeRequest.request(message.payload);
+      this.postMessage({
+        type: "response/api",
+        reqId: message.reqId,
+        payload: {
+          ok: true,
+          status: 200,
+          data: bridgeRes,
+        },
+      });
+    } catch (error) {
+      await this.postMessage({
+        type: "response/api",
+        reqId: message.reqId,
+        payload: {
+          ok: false,
+          message: error instanceof Error ? error.message : String(error),
+        },
+      });
+    }
   }
   private async handleMessage(message: WebviewToExtensionMessage): Promise<void> {
     if (message.type === "ui/ready") {
