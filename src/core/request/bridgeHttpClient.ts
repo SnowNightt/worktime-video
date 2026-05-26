@@ -1,7 +1,6 @@
 import * as vscode from "vscode";
 import axios from "axios";
 import type { AxiosInstance, AxiosRequestConfig, InternalAxiosRequestConfig } from "axios";
-import type { BridgeRequestPayload } from "../../../shared/protocol";
 
 interface CustomAxiosRequestConfig extends AxiosRequestConfig {
   isTimestamp?: boolean;
@@ -9,7 +8,7 @@ interface CustomAxiosRequestConfig extends AxiosRequestConfig {
 interface CustomInternalAxiosRequestConfig extends InternalAxiosRequestConfig {
   isTimestamp?: boolean;
 }
-
+const COOKIE_KEY = "music.cookie";
 export class BridgeHttpClient {
   private instance: AxiosInstance;
   constructor(private readonly secrets: vscode.SecretStorage) {
@@ -36,7 +35,7 @@ export class BridgeHttpClient {
   private interceptorsRequest() {
     // 添加请求拦截器
     this.instance.interceptors.request.use(
-      function (config: CustomInternalAxiosRequestConfig) {
+      async (config: CustomInternalAxiosRequestConfig) => {
         // 判断是否需要加时间戳
         const currentTime = new Date().getTime();
         if (config.isTimestamp) {
@@ -56,9 +55,14 @@ export class BridgeHttpClient {
           }[config.method as "get" | "post"];
           appendTimestamp?.();
         }
+        // 请求头加cookie
+        const cookie = await this.secrets.get(COOKIE_KEY);
+        if (cookie) {
+          config.headers.Cookie = cookie;
+        }
         return config;
       },
-      function (error) {
+      error => {
         return Promise.reject(error);
       }
     );
@@ -66,10 +70,15 @@ export class BridgeHttpClient {
   private interceptorsResponse() {
     // 添加响应拦截器
     this.instance.interceptors.response.use(
-      function (response) {
+      async (response: axios.AxiosResponse) => {
+        const setCookie = response.headers["set-cookie"];
+        if (setCookie) {
+          const cookie = setCookie.map(item => item.split(";")[0]).join("; ");
+          await this.secrets.store(COOKIE_KEY, cookie);
+        }
         return response;
       },
-      function (error) {
+      error => {
         return Promise.reject(error);
       }
     );
