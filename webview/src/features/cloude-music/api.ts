@@ -13,6 +13,7 @@ import {
   UserPlaylistResponse,
 } from "./type";
 import { ResponseResult } from "@/types/request";
+import { bridgeRequest } from "@/services/bridgeRequset";
 // 退出登录
 export const logoutApi = async () => {
   return http.request<{ code: number }>({
@@ -97,7 +98,7 @@ export const getMusicUrlApi = async (params: MusicUrlParams) => {
 };
 // 登录状态
 export const getLoginStatusApi = async (data: { ua: string }) => {
-  return http.request<LoginUserInfoResponse>({
+  return bridgeRequest({
     url: "/login/status",
     method: "POST",
     data,
