@@ -16,7 +16,7 @@ import { ResponseResult } from "@/types/request";
 import { bridgeRequest } from "@/services/bridgeRequset";
 // 退出登录
 export const logoutApi = async () => {
-  return http.request<{ code: number }>({
+  return bridgeRequest<{ code: number }>({
     url: "/logout",
     method: "POST",
   });
@@ -73,7 +73,7 @@ export const checkQRCodeApi = async (params: QRCodeParams) => {
 };
 // 推荐歌单
 export const getRecommendationPlayListApi = async (params: PlaylistParams = { limit: 30 }) => {
-  return http.request<RecommendPlaylistResponse>({
+  return bridgeRequest<RecommendPlaylistResponse>({
     url: "/personalized",
     method: "GET",
     params,
@@ -82,7 +82,7 @@ export const getRecommendationPlayListApi = async (params: PlaylistParams = { li
 };
 // 歌单详情
 export const getDetailPlayList = async (params: DetailPlayListParams) => {
-  return http.request<any>({
+  return bridgeRequest<any>({
     url: "/playlist/detail",
     method: "GET",
     params,
@@ -90,7 +90,7 @@ export const getDetailPlayList = async (params: DetailPlayListParams) => {
 };
 // 获取音乐url
 export const getMusicUrlApi = async (params: MusicUrlParams) => {
-  return http.request<ResponseResult<MusicUrlItem[]>>({
+  return bridgeRequest<ResponseResult<MusicUrlItem[]>>({
     url: "/song/url/v1",
     method: "GET",
     params,
@@ -98,7 +98,7 @@ export const getMusicUrlApi = async (params: MusicUrlParams) => {
 };
 // 登录状态
 export const getLoginStatusApi = async (data: { ua: string }) => {
-  return bridgeRequest({
+  return bridgeRequest<LoginUserInfoResponse>({
     url: "/login/status",
     method: "POST",
     data,
@@ -107,7 +107,7 @@ export const getLoginStatusApi = async (data: { ua: string }) => {
 };
 // 获取用户详情
 export const getUserInfoApi = async (params: { uid: number }) => {
-  return http.request<any>({
+  return bridgeRequest<any>({
     url: "/user/detail",
     method: "GET",
     params,
@@ -116,7 +116,7 @@ export const getUserInfoApi = async (params: { uid: number }) => {
 };
 // 获取账号信息
 export const getAccountInfoApi = async () => {
-  return http.request<AccountDetailResult>({
+  return bridgeRequest<AccountDetailResult>({
     url: "/user/account",
     method: "GET",
     isTimestamp: true,
@@ -133,7 +133,7 @@ export const getAccountInfoApi = async () => {
 
 // 获取用户歌单
 export const getPlayList = async (params: { uid: number }) => {
-  return http.request<UserPlaylistResponse>({
+  return bridgeRequest<UserPlaylistResponse>({
     url: "/user/playlist",
     method: "GET",
     params,
