@@ -30,7 +30,7 @@ export interface HostErrorMessage {
 export interface BridgeRequestPayload {
   url: string;
   method: "GET" | "POST";
-  params?: Record<string, unknown>;
+  params?: object;
   data?: Record<string, unknown>;
   isTimestamp?: boolean;
 }
