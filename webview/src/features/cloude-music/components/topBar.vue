@@ -22,7 +22,6 @@ import { ref } from "vue";
 import { useUserStore } from "../hooks/useUserStore";
 import { logoutApi } from "../api";
 import { ElMessage } from "element-plus";
-import { removeCookie } from "@/utils/cookie";
 
 const { userInfo, clearUserInfo } = useUserStore();
 const emit = defineEmits<{
@@ -36,7 +35,6 @@ const visibleLoginCard = () => {
 const handleLogout = async () => {
   const res = await logoutApi();
   if (res.code) {
-    removeCookie();
     ElMessage.success("退出登录成功~");
     clearUserInfo();
     emit("successLogout");
