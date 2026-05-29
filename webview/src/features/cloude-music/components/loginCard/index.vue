@@ -129,7 +129,6 @@ const startQrLoginPoll = () => {
         case 803:
           console.log("授权成功");
           setCookie(res.cookie);
-        }
           clearPoll();
           // 获取登录状态
           await getLoginStatus();
