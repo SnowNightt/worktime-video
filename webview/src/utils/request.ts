@@ -4,6 +4,7 @@ import {
   ResponseResult,
 } from "@/types/request";
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+import { getCookie, setCookie } from "./cookie";
 
 class Axios {
   private instance: AxiosInstance;
@@ -47,6 +48,11 @@ class Axios {
             },
           }[config.method as "get" | "post"];
           appendTimestamp?.();
+        }
+        // 设置cookie
+        const cookie = getCookie();
+        if (cookie) {
+          config.headers.Cookie = cookie;
         }
         return config;
       },

@@ -76,6 +76,7 @@ import {
 } from "../../api";
 import { useUserStore } from "../../hooks/useUserStore";
 import { useCountDown } from "../../hooks/useCountDown";
+import { setCookie } from "@/utils/cookie";
 const { getLoginStatus } = useUserStore();
 const { isRequestCaptcha, countDown, startCountDown } = useCountDown();
 const dialogVisible = defineModel({
@@ -127,6 +128,7 @@ const startQrLoginPoll = () => {
           break;
         case 803:
           console.log("授权成功");
+          setCookie(res.cookie);
           clearPoll();
           // 获取登录状态
           await getLoginStatus();
