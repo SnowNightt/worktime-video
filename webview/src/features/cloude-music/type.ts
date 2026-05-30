@@ -38,86 +38,6 @@ export interface DetailPlayListParams {
   // timestamp?: number;
 }
 
-// 歌单歌曲-start
-export interface SongItem {
-  name: string;
-  mainTitle: string;
-  additionalTitle: string;
-  id: number;
-  pst: number;
-  t: number;
-  ar: Artist[];
-  alia: string[];
-  pop: number;
-  st: number;
-  rt: string;
-  fee: number;
-  v: number;
-  crbt: null;
-  cf: string;
-  al: Album;
-  dt: number;
-  h: SongQuality;
-  m: SongQuality;
-  l: SongQuality;
-  sq: SongQuality;
-  hr: null;
-  a: null;
-  cd: string;
-  no: number;
-  rtUrl: null;
-  ftype: number;
-  rtUrls: string[];
-  djId: number;
-  copyright: number;
-  s_id: number;
-  mark: number;
-  originCoverType: number;
-  originSongSimpleData: null;
-  tagPicList: null;
-  resourceState: boolean;
-  version: number;
-  songJumpInfo: null;
-  entertainmentTags: null;
-  awardTags: null;
-  displayTags: null;
-  single: number;
-  noCopyrightRcmd: null;
-  alg: null;
-  displayReason: null;
-  pubDJProgramData: null;
-  rtype: number;
-  rurl: null;
-  mst: number;
-  cp: number;
-  mv: number;
-  publishTime: number;
-}
-
-export interface Artist {
-  id: number;
-  name: string;
-  tns: string[];
-  alias: string[];
-}
-
-export interface Album {
-  id: number;
-  name: string;
-  picUrl: string;
-  tns: string[];
-  pic_str: string;
-  pic: number;
-}
-
-export interface SongQuality {
-  br: number;
-  fid: number;
-  size: number;
-  vd: number;
-}
-// 歌单歌曲-end
-
 // 获取音乐url
 export interface MusicUrlParams {
   id: number;
@@ -520,3 +440,264 @@ export interface ArtistToplist {
   updateFrequency: string;
 }
 // 获取榜单-end
+
+// 歌单详情-start
+export interface PlaylistDetailResponse {
+  code: number;
+  relatedVideos: unknown[] | null;
+  playlist: Playlist;
+  urls: unknown[] | null;
+  privileges: Privilege[];
+  sharedPrivilege: unknown | null;
+  resEntrance: unknown | null;
+  fromUsers: unknown[] | null;
+  fromUserCount: number;
+  songFromUsers: unknown[] | null;
+}
+
+export interface Playlist {
+  id: number;
+  name: string;
+  coverImgId: number;
+  coverImgUrl: string;
+  coverImgId_str: string;
+  adType: number;
+  userId: number;
+  createTime: number;
+  status: number;
+  opRecommend: boolean;
+  highQuality: boolean;
+  newImported: boolean;
+  updateTime: number;
+  trackCount: number;
+  specialType: number;
+  privacy: number;
+  trackUpdateTime: number;
+  commentThreadId: string;
+  playCount: number;
+  trackNumberUpdateTime: number;
+  subscribedCount: number;
+  cloudTrackCount: number;
+  ordered: boolean;
+  description: string | null;
+  tags: string[];
+  updateFrequency: string | null;
+  backgroundCoverId: number;
+  backgroundCoverUrl: string | null;
+  titleImage: number;
+  titleImageUrl: string | null;
+  detailPageTitle: string | null;
+  englishTitle: string | null;
+  officialPlaylistType: string | null;
+  copied: boolean;
+  relateResType: string | null;
+  coverStatus: number;
+  mix: boolean;
+  subscribers: unknown[];
+  subscribed: boolean;
+  creator: Creator;
+  tracks: Song[];
+  videoIds: unknown[] | null;
+  videos: unknown[] | null;
+  trackIds: TrackId[];
+  bannedTrackIds: unknown[] | null;
+  mvResourceInfos: unknown[] | null;
+  shareCount: number;
+  commentCount: number;
+  remixVideo: unknown | null;
+  newDetailPageRemixVideo: unknown | null;
+  sharedUsers: unknown[] | null;
+  historySharedUsers: unknown[] | null;
+  gradeStatus: string;
+  score: number | null;
+  algTags: string[] | null;
+  distributeTags: string[];
+  trialMode: number;
+  displayTags: string[] | null;
+  displayUserInfoAsTagOnly: boolean;
+  playlistType: string;
+  uiPlaylistType: string;
+  bizExtInfo: Record<string, unknown>;
+  promptedMgcInfo: unknown | null;
+  mixPodcastPlaylist: boolean;
+  podcastTrackCount: number;
+  mixInfo: unknown | null;
+}
+
+export interface Creator {
+  defaultAvatar: boolean;
+  province: number;
+  authStatus: number;
+  followed: boolean;
+  avatarUrl: string;
+  accountStatus: number;
+  gender: number;
+  city: number;
+  birthday: number;
+  userId: number;
+  userType: number;
+  nickname: string;
+  signature: string;
+  description: string;
+  detailDescription: string;
+  avatarImgId: number;
+  backgroundImgId: number;
+  backgroundUrl: string;
+  authority: number;
+  mutual: boolean;
+  expertTags: string[] | null;
+  experts: Record<string, unknown> | null;
+  djStatus: number;
+  vipType: number;
+  remarkName: string | null;
+  authenticationTypes: number;
+  avatarDetail: unknown | null;
+  avatarImgIdStr: string;
+  backgroundImgIdStr: string;
+  anchor: boolean;
+  avatarImgId_str: string;
+}
+
+export interface Song {
+  name: string;
+  mainTitle: string | null;
+  additionalTitle: string | null;
+  id: number;
+  pst: number;
+  t: number;
+  ar: Artist[];
+  alia: string[];
+  pop: number;
+  st: number;
+  rt: string;
+  fee: number;
+  v: number;
+  crbt: unknown | null;
+  cf: string;
+  al: Album;
+  dt: number;
+  h: SongQuality | null;
+  m: SongQuality | null;
+  l: SongQuality | null;
+  sq: SongQuality | null;
+  hr: SongQuality | null;
+  a: unknown | null;
+  cd: string;
+  no: number;
+  rtUrl: string | null;
+  ftype: number;
+  rtUrls: string[];
+  djId: number;
+  copyright: number;
+  s_id: number;
+  mark: number;
+  originCoverType: number;
+  originSongSimpleData: unknown | null;
+  tagPicList: unknown[] | null;
+  resourceState: boolean;
+  version: number;
+  songJumpInfo: unknown | null;
+  entertainmentTags: string[] | null;
+  awardTags: string[] | null;
+  displayTags: string[] | null;
+  markTags: string[];
+  songFeature: unknown | null;
+  single: number;
+  noCopyrightRcmd: unknown | null;
+  alg: string | null;
+  displayReason: string | null;
+  pubDJProgramData: unknown | null;
+  rtype: number;
+  rurl: string | null;
+  mst: number;
+  cp: number;
+  mv: number;
+  publishTime: number;
+  tns?: string[];
+}
+
+export interface Artist {
+  id: number;
+  name: string;
+  tns: string[];
+  alias: string[];
+}
+
+export interface Album {
+  id: number;
+  name: string;
+  picUrl: string;
+  tns: string[];
+  pic_str: string;
+  pic: number;
+}
+
+export interface SongQuality {
+  br: number;
+  fid: number;
+  size: number;
+  vd: number;
+  sr: number;
+}
+
+export interface TrackId {
+  id: number;
+  v: number;
+  t: number;
+  at: number;
+  alg: string | null;
+  uid: number;
+  rcmdReason: string;
+  rcmdReasonTitle: string;
+  sc: unknown | null;
+  f: unknown | null;
+  sr: unknown | null;
+  dpr: unknown | null;
+  tr: number;
+}
+
+export interface Privilege {
+  id: number;
+  fee: number;
+  payed: number;
+  realPayed: number;
+  st: number;
+  pl: number;
+  dl: number;
+  sp: number;
+  cp: number;
+  subp: number;
+  cs: boolean;
+  maxbr: number;
+  fl: number;
+  pc: unknown | null;
+  toast: boolean;
+  flag: number;
+  paidBigBang: boolean;
+  preSell: boolean;
+  playMaxbr: number;
+  downloadMaxbr: number;
+  maxBrLevel: string;
+  playMaxBrLevel: string;
+  downloadMaxBrLevel: string;
+  plLevel: string;
+  dlLevel: string;
+  flLevel: string;
+  rscl: unknown | null;
+  freeTrialPrivilege: FreeTrialPrivilege;
+  rightSource: number;
+  chargeInfoList: ChargeInfo[];
+  code: number;
+  message: string | null;
+  plLevels: unknown | null;
+  dlLevels: unknown | null;
+  ignoreCache: unknown | null;
+  bd: unknown | null;
+}
+export interface ChargeInfo {
+  rate: number;
+  chargeUrl: string | null;
+  chargeMessage: string | null;
+  chargeType: number;
+}
+// 歌单详情-end

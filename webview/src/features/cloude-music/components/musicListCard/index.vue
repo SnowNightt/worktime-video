@@ -66,10 +66,10 @@
 import { reactive, watch } from "vue";
 import { TableConfigType } from "@/types/tableConfig";
 import { useAudioPlayer } from "../../hooks/useAudioPlayer";
-import { SongItem } from "../../type";
+import { Song } from "../../type";
 
 interface Props {
-  musicList: SongItem[];
+  musicList: Song[];
 }
 
 interface MusicItem {
@@ -88,11 +88,6 @@ const dialogVisible = defineModel<boolean>({
 
 const tableConfig = reactive<TableConfigType<MusicItem[]>>({
   tableData: [],
-  // columns: [
-  //   { prop: "title", label: "标题", width: "150px" },
-  //   { prop: "album", label: "专辑", width: "150px" },
-  //   { prop: "duration", label: "时长", width: "120px" },
-  // ],
 });
 
 const { getMusicUrl } = useAudioPlayer();
@@ -127,7 +122,7 @@ const handleClose = () => {
 
 // 播放音乐
 const handleSelectMusic = async (row: MusicItem) => {
-  getMusicUrl(row.id);
+  getMusicUrl(row.id, props.musicList);
 };
 </script>
 

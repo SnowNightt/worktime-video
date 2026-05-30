@@ -55,7 +55,7 @@ import { computed, ref } from "vue";
 import { ElMessage } from "element-plus";
 import { FolderOpened, Headset, List } from "@element-plus/icons-vue";
 import { getDetailPlayList } from "../../api";
-import { SongItem, UserPlaylistItem } from "../../type";
+import { Song, UserPlaylistItem } from "../../type";
 import MusicListCard from "../musicListCard/index.vue";
 
 const props = defineProps<{
@@ -63,7 +63,7 @@ const props = defineProps<{
 }>();
 
 const musicListVisible = ref(false);
-const musicList = ref<SongItem[]>([]);
+const musicList = ref<Song[]>([]);
 
 const playlists = computed(() => props.myPlayList ?? []);
 const hasPlaylists = computed(() => {

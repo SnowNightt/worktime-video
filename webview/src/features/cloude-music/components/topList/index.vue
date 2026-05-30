@@ -104,7 +104,7 @@ import { computed, ref } from "vue";
 import { ElMessage } from "element-plus";
 import { VideoPlay } from "@element-plus/icons-vue";
 import { getDetailPlayList } from "../../api";
-import type { SongItem, ToplistItem } from "../../type";
+import type { Song, ToplistItem } from "../../type";
 import MusicListCard from "../musicListCard/index.vue";
 
 interface ToplistPreviewTrack {
@@ -117,7 +117,7 @@ const props = defineProps<{
 }>();
 
 const musicListVisible = ref(false);
-const musicList = ref<SongItem[]>([]);
+const musicList = ref<Song[]>([]);
 
 const lists = computed(() => props.topList ?? []);
 
@@ -156,7 +156,9 @@ const officialIds = computed(() => new Set(officialTopLists.value.map(item => it
 
 const styleTopLists = computed(() => {
   return lists.value.filter(item => {
-    return !officialIds.value.has(item.id) && styleKeywords.some(keyword => item.name.includes(keyword));
+    return (
+      !officialIds.value.has(item.id) && styleKeywords.some(keyword => item.name.includes(keyword))
+    );
   });
 });
 
