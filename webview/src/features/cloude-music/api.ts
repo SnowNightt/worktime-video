@@ -12,6 +12,7 @@ import {
   AccountDetailResult,
   UserPlaylistResponse,
   ToplistResponse,
+  PlaylistDetailResponse,
 } from "./type";
 import { ResponseResult } from "@/types/request";
 import { bridgeRequest } from "@/services/bridgeRequset";
@@ -83,7 +84,7 @@ export const getRecommendationPlayListApi = async (params: PlaylistParams = { li
 };
 // 歌单详情
 export const getDetailPlayList = async (params: DetailPlayListParams) => {
-  return http.request<any>({
+  return http.request<PlaylistDetailResponse>({
     url: "/playlist/detail",
     method: "GET",
     params,
@@ -138,6 +139,7 @@ export const getPlayList = async (params: { uid: number }) => {
     url: "/user/playlist",
     method: "GET",
     params,
+    isTimestamp: true,
   });
 };
 // 获取所有榜单
