@@ -449,3 +449,74 @@ export interface PlaylistCreator {
   avatarImgId_str?: string;
 }
 // 用户歌单-end
+
+// 获取榜单-start
+export interface ToplistResponse {
+  code: number;
+  list: ToplistItem[];
+  artistToplist: ArtistToplist;
+}
+
+export interface ToplistItem {
+  subscribers: unknown[];
+  subscribed: boolean | null;
+  creator: unknown | null;
+  artists: unknown | null;
+  tracks: unknown | null;
+  updateFrequency: string;
+  backgroundCoverId: number;
+  backgroundCoverUrl: string | null;
+  titleImage: number;
+  coverText: string | null;
+  titleImageUrl: string | null;
+  coverImageUrl: string | null;
+  iconImageUrl: string | null;
+  englishTitle: string | null;
+  opRecommend: boolean;
+  recommendInfo: unknown | null;
+  socialPlaylistCover: string | null;
+  tsSongCount: number;
+  algType: string | null;
+  originalCoverId: number;
+  topTrackIds: unknown | null;
+  promptedMgcInfo: unknown | null;
+  playlistType: string;
+  uiPlaylistType: string;
+  coverImgUrl: string;
+  updateTime: number;
+  newImported: boolean;
+  anonimous: boolean;
+  coverImgId: number;
+  totalDuration: number;
+  playCount: number;
+  trackCount: number;
+  commentThreadId: string;
+  trackUpdateTime: number;
+  highQuality: boolean;
+  specialType: number;
+  privacy: number;
+  trackNumberUpdateTime: number;
+  mix: boolean;
+  adType: number;
+  subscribedCount: number;
+  cloudTrackCount: number;
+  createTime: number;
+  ordered: boolean;
+  description: string;
+  status: number;
+  tags: string[];
+  userId: number;
+  name: string;
+  id: number;
+  coverImgId_str: string;
+  ToplistType: string;
+}
+
+export interface ArtistToplist {
+  coverUrl: string;
+  name: string;
+  upateFrequency: string;
+  position: number;
+  updateFrequency: string;
+}
+// 获取榜单-end

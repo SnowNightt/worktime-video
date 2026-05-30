@@ -1,14 +1,16 @@
 <template>
   <section class="cloud-music-page">
     <TopBar @visibleLoginCard="handleVisibleLoginCard" @successLogout="handleLogout"></TopBar>
-    <el-tabs v-model="activeName" class="music-tabs" @tab-click="handleClick">
+    <el-tabs v-model="activeName" class="music-tabs">
       <el-tab-pane label="歌单广场" name="playLists">
         <RecommendPlayList :recommendPlayList="recommendPlayList"></RecommendPlayList>
       </el-tab-pane>
+      <el-tab-pane label="排行榜" name="topList"
+        ><TopList :topList="topList"></TopList
+      ></el-tab-pane>
       <el-tab-pane label="我的歌单" name="myPlayList">
         <MyPlayList :myPlayList="myPlayList"></MyPlayList>
       </el-tab-pane>
-      <el-tab-pane label="我喜欢" name="favorite">我喜欢</el-tab-pane>
     </el-tabs>
   </section>
   <AudioBar></AudioBar>
@@ -20,14 +22,14 @@ import { onMounted, ref } from "vue";
 import LoginCard from "./components/loginCard/index.vue";
 import RecommendPlayList from "./components/recommendPlayList.vue";
 import MyPlayList from "./components/myPlayList/index.vue";
+import TopList from "./components/topList/index.vue";
 import AudioBar from "./components/audioBar.vue";
 import TopBar from "./components/topBar.vue";
 import { useUserStore } from "./hooks/useUserStore";
 import { useMusicTabs } from "./hooks/useMusicTabs";
 
 const { getLoginStatus } = useUserStore();
-const { activeName, recommendPlayList, myPlayList, loadCurrentList } = useMusicTabs();
-const handleClick = () => {};
+const { activeName, recommendPlayList, myPlayList, topList, loadCurrentList } = useMusicTabs();
 const isVisible = ref(false);
 
 const handleVisibleLoginCard = () => {

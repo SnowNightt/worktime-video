@@ -1,16 +1,16 @@
 import { ref, watch } from "vue";
-import { getPlayList, getRecommendationPlayListApi } from "../api";
+import { getPlayList, getRecommendationPlayListApi, getTopList } from "../api";
 import { ElMessage } from "element-plus";
-import { RecommendPlaylistItem, UserPlaylistItem } from "../type";
+import { RecommendPlaylistItem, ToplistItem, UserPlaylistItem } from "../type";
 import { useUserStore } from "./useUserStore";
 
-const activeName = ref<"playLists" | "myPlayList" | "favorite">("playLists");
+const activeName = ref<"playLists" | "myPlayList" | "topList">("playLists");
 // 歌单广场
 const recommendPlayList = ref<RecommendPlaylistItem[]>([]);
 // 我的歌单
 const myPlayList = ref<UserPlaylistItem[]>([]);
-// 我喜欢
-const favoriteList = ref<UserPlaylistItem[]>([]);
+// 排行榜
+const topList = ref<ToplistItem[]>([]);
 export const useMusicTabs = () => {
   const { userInfo } = useUserStore();
   const uid = userInfo.value?.account.id;
@@ -37,20 +37,22 @@ export const useMusicTabs = () => {
         ElMessage.warning("获取我的歌单失败~");
       }
     },
-    favorite: async () => {
+    topList: async () => {
       if (!uid) {
         return;
       }
-      const res = await getPlayList({ uid });
+      const res = await getTopList();
       if (res.code === 200) {
-        favoriteList.value = res.playlist;
+        topList.value = res.list;
       } else {
-        favoriteList.value = [];
-        ElMessage.warning("获取喜欢歌曲失败~");
+        topList.value = [];
+        ElMessage.warning("获取榜单失败~");
       }
     },
   };
   const loadCurrentList = async () => {
+    console.log(queryMusicList[activeName.value]);
+
     await queryMusicList[activeName.value]();
   };
   // 监听tab是否切换
@@ -59,7 +61,7 @@ export const useMusicTabs = () => {
   });
   return {
     activeName,
-    favoriteList,
+    topList,
     recommendPlayList,
     myPlayList,
     loadCurrentList,
