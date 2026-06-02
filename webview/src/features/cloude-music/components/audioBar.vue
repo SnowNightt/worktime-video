@@ -1,7 +1,7 @@
 <template>
   <div class="audio-container">
     <audio ref="audioRef" class="audio" @timeupdate="handleTimeUpdate" />
-    <div class="progress-bar">
+    <div class="progress-bar" @mousedown="handleMouseDown" ref="progressBar">
       <div class="progress-active" :style="{ width: progressPercent + '%' }"></div>
     </div>
     <div class="prev controler" @click="handlePrevMusic">
@@ -44,6 +44,22 @@ const handleTimeUpdate = () => {
 const handleSwitchStatus = () => {
   switchPlayingStatus();
   isPlaying.value ? audioRef.value?.play() : audioRef.value?.pause();
+};
+const progressBar = ref<HTMLElement>();
+// 点击进度条
+const handleMouseDown = (event: MouseEvent) => {
+  const clientX = event.clientX;
+  const { left, width } = progressBar.value!.getBoundingClientRect();
+  const activeWith = clientX - left;
+  console.log(activeWith);
+  const activePercent = (activeWith / width).toFixed(2);
+  console.log("activePercent", activePercent);
+  progressPercent.value = activePercent;
+  if (currentSong.value?.time) {
+    const currentTime = (Number(activePercent) * (currentSong.value.time / 1000)).toFixed(2);
+    audioRef.value!.currentTime = Number(currentTime);
+    console.log(currentTime, "秒");
+  }
 };
 </script>
 <style lang="scss" scoped>

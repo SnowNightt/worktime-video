@@ -52,7 +52,7 @@ export const useAudioPlayer = () => {
   const timeUpdate = (time: number) => {
     progressPercent.value = (((time * 1000) / currentSong.value!.time) * 100).toFixed(2);
     currentTime.value = time;
-    console.log(1111, progressPercent.value);
+    // console.log(1111, progressPercent.value);
   };
   return {
     currentSong,
