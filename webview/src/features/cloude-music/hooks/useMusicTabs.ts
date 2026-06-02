@@ -13,7 +13,6 @@ const myPlayList = ref<UserPlaylistItem[]>([]);
 const topList = ref<ToplistItem[]>([]);
 export const useMusicTabs = () => {
   const { userInfo } = useUserStore();
-  const uid = userInfo.value?.account.id;
   const queryMusicList = {
     playLists: async () => {
       const res = await getRecommendationPlayListApi({ limit: 30 });
@@ -26,6 +25,7 @@ export const useMusicTabs = () => {
     },
     // todo: 区分我喜欢和我的歌单和我收藏歌单
     myPlayList: async () => {
+      const uid = userInfo.value?.account.id;
       if (!uid) {
         return;
       }
@@ -38,9 +38,6 @@ export const useMusicTabs = () => {
       }
     },
     topList: async () => {
-      if (!uid) {
-        return;
-      }
       const res = await getTopList();
       if (res.code === 200) {
         topList.value = res.list;
@@ -51,8 +48,6 @@ export const useMusicTabs = () => {
     },
   };
   const loadCurrentList = async () => {
-    console.log(queryMusicList[activeName.value]);
-
     await queryMusicList[activeName.value]();
   };
   // 监听tab是否切换
