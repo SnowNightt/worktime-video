@@ -54,6 +54,9 @@ export const useAudioPlayer = () => {
     currentTime.value = time;
     // console.log(1111, progressPercent.value);
   };
+  const setProgressPercent = (percent: string) => {
+    progressPercent.value = percent;
+  };
   return {
     currentSong,
     currentUrl,
@@ -65,5 +68,6 @@ export const useAudioPlayer = () => {
     handlePrevMusic,
     handleNextMusic,
     timeUpdate,
+    setProgressPercent,
   };
 };

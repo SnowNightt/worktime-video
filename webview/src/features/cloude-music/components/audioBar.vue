@@ -28,6 +28,7 @@ const {
   handlePrevMusic,
   handleNextMusic,
   timeUpdate,
+  setProgressPercent,
 } = useAudioPlayer();
 const audioRef = ref<HTMLAudioElement>();
 watch(currentUrl, newVal => {
@@ -46,20 +47,33 @@ const handleSwitchStatus = () => {
   isPlaying.value ? audioRef.value?.play() : audioRef.value?.pause();
 };
 const progressBar = ref<HTMLElement>();
-// 点击进度条
-const handleMouseDown = (event: MouseEvent) => {
+const handleMouseUp = (event: MouseEvent) => {
   const clientX = event.clientX;
   const { left, width } = progressBar.value!.getBoundingClientRect();
   const activeWith = clientX - left;
   console.log(activeWith);
   const activePercent = (activeWith / width).toFixed(2);
   console.log("activePercent", activePercent);
-  progressPercent.value = activePercent;
   if (currentSong.value?.time) {
     const currentTime = (Number(activePercent) * (currentSong.value.time / 1000)).toFixed(2);
     audioRef.value!.currentTime = Number(currentTime);
     console.log(currentTime, "秒");
   }
+  document.removeEventListener("mousemove", handleMouseMove);
+};
+const handleMouseMove = (event: MouseEvent) => {
+  const clientX = event.clientX;
+  const { left, width } = progressBar.value!.getBoundingClientRect();
+  const activeWith = clientX - left;
+  const activePercent = ((activeWith / width) * 100).toFixed(2);
+  setProgressPercent(activePercent);
+  console.log(progressPercent.value);
+};
+
+// 点击进度条
+const handleMouseDown = (event: MouseEvent) => {
+  document.addEventListener("mousemove", handleMouseMove);
+  document.addEventListener("mouseup", handleMouseUp);
 };
 </script>
 <style lang="scss" scoped>
