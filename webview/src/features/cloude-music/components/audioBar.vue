@@ -38,6 +38,7 @@ watch(currentUrl, newVal => {
 });
 // 当前播放时间发生变化
 const handleTimeUpdate = () => {
+  if (isDragging.value) return;
   const currentTime = audioRef.value!.currentTime;
   timeUpdate(currentTime);
 };
@@ -46,6 +47,7 @@ const handleSwitchStatus = () => {
   switchPlayingStatus();
   isPlaying.value ? audioRef.value?.play() : audioRef.value?.pause();
 };
+const isDragging = ref(false);
 const progressBar = ref<HTMLElement>();
 const handleMouseUp = (event: MouseEvent) => {
   const clientX = event.clientX;
@@ -57,9 +59,10 @@ const handleMouseUp = (event: MouseEvent) => {
   if (currentSong.value?.time) {
     const currentTime = (Number(activePercent) * (currentSong.value.time / 1000)).toFixed(2);
     audioRef.value!.currentTime = Number(currentTime);
-    console.log(currentTime, "秒");
   }
+  isDragging.value = false;
   document.removeEventListener("mousemove", handleMouseMove);
+  document.removeEventListener("mouseup", handleMouseUp);
 };
 const handleMouseMove = (event: MouseEvent) => {
   const clientX = event.clientX;
@@ -72,6 +75,8 @@ const handleMouseMove = (event: MouseEvent) => {
 
 // 点击进度条
 const handleMouseDown = (event: MouseEvent) => {
+  isDragging.value = true;
+  handleMouseMove(event);
   document.addEventListener("mousemove", handleMouseMove);
   document.addEventListener("mouseup", handleMouseUp);
 };
