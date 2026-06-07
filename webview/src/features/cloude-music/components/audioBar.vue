@@ -22,15 +22,25 @@
       </div>
     </div>
     <div class="left-part">
-      <div class="prev controler" @click="handlePrevMusic">
-        {{ "⏮" }}
-      </div>
-      <div class="current-status controler" @click="handleSwitchStatus">
-        {{ isPlaying ? "⏸" : "▶" }}
-      </div>
-      <div class="next controler" @click="handleNextMusic">
-        {{ "⏭" }}
-      </div>
+      <button class="prev controler" type="button" aria-label="上一首" @click="handlePrevMusic">
+        <img class="control-icon" :src="prevIcon" alt="" aria-hidden="true" />
+      </button>
+      <button
+        class="current-status controler"
+        type="button"
+        :aria-label="isPlaying ? '暂停' : '播放'"
+        @click="handleSwitchStatus"
+      >
+        <img
+          class="control-icon"
+          :src="isPlaying ? playIcon : pauseIcon"
+          alt=""
+          aria-hidden="true"
+        />
+      </button>
+      <button class="next controler" type="button" aria-label="下一首" @click="handleNextMusic">
+        <img class="control-icon" :src="nextIcon" alt="" aria-hidden="true" />
+      </button>
     </div>
     <div class="right-part">
       <div class="time-tip">{{ timeTip }} / {{ totalTime }}</div>
@@ -39,6 +49,10 @@
 </template>
 <script lang="ts" setup>
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from "vue";
+import nextIcon from "../../../assets/next.png";
+import pauseIcon from "../../../assets/pause.png";
+import playIcon from "../../../assets/play.png";
+import prevIcon from "../../../assets/prev.png";
 import { useAudioPlayer } from "../hooks/useAudioPlayer";
 const {
   currentSong,
@@ -225,15 +239,55 @@ const handleMouseDown = (event: MouseEvent) => {
   .left-part {
     display: flex;
     flex: 0 0 auto;
+    align-items: center;
     justify-content: flex-end;
+    gap: 4px;
     .controler {
+      box-sizing: border-box;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      appearance: none;
+      background: transparent;
       cursor: pointer;
-      font-size: 22px;
-      padding-bottom: 5px;
       user-select: none;
+      transition:
+        background-color 0.16s ease,
+        transform 0.16s ease,
+        opacity 0.16s ease;
+      &:active {
+        transform: scale(0.94);
+      }
+
+      &:focus-visible {
+        outline: 2px solid rgba(105, 192, 255, 0.82);
+        outline-offset: 2px;
+      }
+    }
+    .control-icon {
+      display: block;
+      width: 24px;
+      height: 24px;
+      max-width: 82%;
+      max-height: 82%;
+      object-fit: contain;
+      pointer-events: none;
     }
     .current-status {
-      margin: 0 20px;
+      width: 46px;
+      height: 46px;
+
+      .control-icon {
+        width: 30px;
+        height: 30px;
+        max-width: 86%;
+        max-height: 86%;
+      }
     }
   }
   .right-part {
