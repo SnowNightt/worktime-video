@@ -47,7 +47,7 @@
 .music-tabs {
   min-height: calc(100dvh - 54px);
   width: 100%;
-  padding: 12px;
+  padding: 12px 12px 0;
   border-top: 1px solid var(--page-border);
   background:
     radial-gradient(circle at 12% 0%, var(--page-accent-soft), transparent 30%),
@@ -66,11 +66,23 @@
   padding: 0 8px;
 }
 
+.music-tabs :deep(.el-tabs__nav-scroll) {
+  width: 100%;
+}
+
+.music-tabs :deep(.el-tabs__nav) {
+  display: flex;
+  width: 100%;
+}
+
 .music-tabs :deep(.el-tabs__nav-wrap::after) {
   display: none;
 }
 
 .music-tabs :deep(.el-tabs__item) {
+  flex: 1 1 0;
+  justify-content: center;
+  min-width: 0;
   height: 36px;
   padding: 0 10px;
   color: rgba(215, 218, 224, 0.68);
