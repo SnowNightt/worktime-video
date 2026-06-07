@@ -185,6 +185,7 @@ const handleMouseDown = (event: MouseEvent) => {
   align-items: center;
   gap: 10px;
   position: fixed;
+  z-index: 99999;
   left: 0;
   right: 0;
   bottom: 0px;
