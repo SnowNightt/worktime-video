@@ -33,19 +33,19 @@ export const useAudioPlayer = () => {
 
   // 边界判断
   // 上一首
-  const handlePrevMusic = () => {
+  const handlePrevMusic = async () => {
     const id =
       playingList.value[
         --currentIndex.value < 0 ? playingList.value.length - 1 : currentIndex.value
       ].id;
-    getMusicUrl(id);
+    await getMusicUrl(id);
   };
   // 下一首
-  const handleNextMusic = () => {
+  const handleNextMusic = async () => {
     const id =
       playingList.value[++currentIndex.value === playingList.value.length ? 0 : currentIndex.value]
         .id;
-    getMusicUrl(id);
+    await getMusicUrl(id);
   };
 
   // 当前播放时间发生变化

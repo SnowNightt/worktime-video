@@ -1,6 +1,6 @@
 <template>
   <div class="audio-container">
-    <audio ref="audioRef" class="audio" @timeupdate="handleTimeUpdate" />
+    <audio ref="audioRef" class="audio" @timeupdate="handleTimeUpdate" @ended="handleEnded" />
     <div class="progress-bar" @mousedown="handleMouseDown" ref="progressBar">
       <div class="progress-active" :style="{ width: progressPercent + '%' }"></div>
     </div>
@@ -42,6 +42,11 @@ const handleTimeUpdate = () => {
   const currentTime = audioRef.value!.currentTime;
   timeUpdate(currentTime);
 };
+// 播放结束
+const handleEnded = async () => {
+  await handlePrevMusic();
+  handleSwitchStatus();
+};
 // 播放/暂停
 const handleSwitchStatus = () => {
   switchPlayingStatus();
@@ -53,9 +58,7 @@ const handleMouseUp = (event: MouseEvent) => {
   const clientX = event.clientX;
   const { left, width } = progressBar.value!.getBoundingClientRect();
   const activeWith = clientX - left;
-  console.log(activeWith);
   const activePercent = (activeWith / width).toFixed(2);
-  console.log("activePercent", activePercent);
   if (currentSong.value?.time) {
     const currentTime = (Number(activePercent) * (currentSong.value.time / 1000)).toFixed(2);
     audioRef.value!.currentTime = Number(currentTime);
@@ -70,7 +73,6 @@ const handleMouseMove = (event: MouseEvent) => {
   const activeWith = clientX - left;
   const activePercent = ((activeWith / width) * 100).toFixed(2);
   setProgressPercent(activePercent);
-  console.log(progressPercent.value);
 };
 
 // 点击进度条
