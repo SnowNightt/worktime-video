@@ -4,6 +4,7 @@ import { MusicUrlItem, Song } from "../type";
 // 当前音乐url、名称
 const currentUrl = ref("");
 const currentSong = ref<MusicUrlItem>();
+const currentSongInfo = ref<Song>();
 // 当前播放的时间
 const currentTime = ref();
 // 播放状态
@@ -20,6 +21,11 @@ export const useAudioPlayer = () => {
     if (musicList) {
       playingList.value = musicList;
     }
+    const song = playingList.value.find(item => item.id === id);
+    if (song) {
+      currentSongInfo.value = song;
+    }
+
     const res = await getMusicUrlApi({ id, level: "higher" });
     currentSong.value = res.data[0];
     currentUrl.value = res.data[0].url;
@@ -34,17 +40,20 @@ export const useAudioPlayer = () => {
   // 边界判断
   // 上一首
   const handlePrevMusic = async () => {
-    const id =
+    const song =
       playingList.value[
         --currentIndex.value < 0 ? playingList.value.length - 1 : currentIndex.value
-      ].id;
+      ];
+    const id = song.id;
+    currentSongInfo.value = song;
     await getMusicUrl(id);
   };
   // 下一首
   const handleNextMusic = async () => {
-    const id =
-      playingList.value[++currentIndex.value === playingList.value.length ? 0 : currentIndex.value]
-        .id;
+    const song =
+      playingList.value[++currentIndex.value === playingList.value.length ? 0 : currentIndex.value];
+    const id = song.id;
+    currentSongInfo.value = song;
     await getMusicUrl(id);
   };
 
@@ -63,6 +72,7 @@ export const useAudioPlayer = () => {
     isPlaying,
     progressPercent,
     currentTime,
+    currentSongInfo,
     getMusicUrl,
     switchPlayingStatus,
     handlePrevMusic,
