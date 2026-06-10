@@ -1,17 +1,26 @@
 <template>
   <div class="audio-container">
-    <audio ref="audioRef" class="audio" @timeupdate="handleTimeUpdate" @ended="handleEnded" />
+    <audio
+      ref="audioRef"
+      class="audio"
+      crossorigin="anonymous"
+      @timeupdate="handleTimeUpdate"
+      @ended="handleEnded"
+    />
     <div class="progress-bar" @mousedown="handleMouseDown" ref="progressBar">
       <div class="progress-active" :style="{ width: progressPercent + '%' }"></div>
     </div>
     <div class="song-meta">
-      <img
-        v-if="currentSongInfo?.al.picUrl"
-        class="song-cover"
-        :src="currentSongInfo.al.picUrl"
-        alt=""
-      />
-      <span v-else class="song-cover song-cover-placeholder" aria-hidden="true"></span>
+      <div class="song-cover-shell" :class="{ 'is-playing': isPlaying }">
+        <div ref="spectrumRef" class="song-spectrum" aria-hidden="true"></div>
+        <img
+          v-if="currentSongInfo?.al.picUrl"
+          class="song-cover"
+          :src="currentSongInfo.al.picUrl"
+          alt=""
+        />
+        <span v-else class="song-cover song-cover-placeholder" aria-hidden="true"></span>
+      </div>
       <div class="song-text">
         <el-tooltip :content="songName" placement="top" :disabled="!isSongNameOverflow">
           <span ref="songTitleRef" class="song-title">{{ songName }}</span>
@@ -48,6 +57,7 @@
   </div>
 </template>
 <script lang="ts" setup>
+import AudioMotionAnalyzer from "audiomotion-analyzer";
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from "vue";
 import nextIcon from "../../../assets/next.png";
 import pauseIcon from "../../../assets/pause.png";
@@ -68,6 +78,9 @@ const {
   setProgressPercent,
 } = useAudioPlayer();
 const audioRef = ref<HTMLAudioElement>();
+const spectrumRef = ref<HTMLElement>();
+let audioMotion: AudioMotionAnalyzer | undefined;
+let isSpectrumUnavailable = false;
 // 当前播放时间
 const timeTip = computed(() => {
   if (!currentTime.value) {
@@ -124,11 +137,12 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   songTextResizeObserver?.disconnect();
+  audioMotion?.destroy();
 });
 watch(currentUrl, newVal => {
   if (!newVal || !audioRef.value) return;
   audioRef.value.src = newVal;
-  handleSwitchStatus();
+  void handleSwitchStatus();
 });
 // 当前播放时间发生变化
 const handleTimeUpdate = () => {
@@ -139,12 +153,88 @@ const handleTimeUpdate = () => {
 // 播放结束
 const handleEnded = async () => {
   await handlePrevMusic();
-  handleSwitchStatus();
+  void handleSwitchStatus();
 };
+const initSpectrum = async () => {
+  if (audioMotion || isSpectrumUnavailable || !audioRef.value || !spectrumRef.value) {
+    return;
+  }
+
+  try {
+    audioMotion = new AudioMotionAnalyzer(spectrumRef.value, {
+      source: audioRef.value,
+      width: 62,
+      height: 62,
+      mode: 2,
+      radial: true,
+      radius: 0.55,
+      overlay: true,
+      showBgColor: false,
+      bgAlpha: 0,
+      showScaleX: false,
+      showScaleY: false,
+      showPeaks: false,
+      smoothing: 0.72,
+      fftSize: 2048,
+      minFreq: 45,
+      maxFreq: 14000,
+      maxFPS: 45,
+      spinSpeed: 0,
+      fillAlpha: 0.82,
+      lineWidth: 1,
+      start: false,
+    });
+
+    audioMotion.registerGradient("cover-spectrum", {
+      bgColor: "rgba(0, 0, 0, 0)",
+      colorStops: [
+        { pos: 0, color: "#7dd3fc" },
+        { pos: 0.45, color: "#c4b5fd" },
+        { pos: 1, color: "#fb7185" },
+      ],
+    });
+    audioMotion.gradient = "cover-spectrum";
+  } catch {
+    isSpectrumUnavailable = true;
+    audioMotion = undefined;
+  }
+};
+
+const syncSpectrumStatus = async () => {
+  if (!audioMotion) {
+    return;
+  }
+
+  if (isPlaying.value) {
+    if (audioMotion.audioCtx.state === "suspended") {
+      await audioMotion.audioCtx.resume();
+    }
+    audioMotion.start();
+    return;
+  }
+
+  audioMotion.stop();
+};
+
 // 播放/暂停
-const handleSwitchStatus = () => {
+const handleSwitchStatus = async () => {
+  await initSpectrum();
+  const shouldPlay = !isPlaying.value;
   switchPlayingStatus();
-  isPlaying.value ? audioRef.value?.play() : audioRef.value?.pause();
+
+  if (!shouldPlay) {
+    audioRef.value?.pause();
+    await syncSpectrumStatus();
+    return;
+  }
+
+  try {
+    await syncSpectrumStatus();
+    await audioRef.value?.play();
+  } catch {
+    switchPlayingStatus();
+    audioMotion?.stop();
+  }
 };
 const isDragging = ref(false);
 const progressBar = ref<HTMLElement>();
@@ -200,8 +290,57 @@ const handleMouseDown = (event: MouseEvent) => {
     align-items: center;
     gap: 8px;
   }
+  .song-cover-shell {
+    position: relative;
+    display: grid;
+    flex: 0 0 62px;
+    width: 62px;
+    height: 62px;
+    place-items: center;
+
+    &::before {
+      position: absolute;
+      inset: 7px;
+      border-radius: 12px;
+      background:
+        radial-gradient(circle at 25% 20%, rgba(125, 211, 252, 0.28), transparent 34%),
+        radial-gradient(circle at 78% 72%, rgba(251, 113, 133, 0.22), transparent 38%),
+        rgba(255, 255, 255, 0.05);
+      content: "";
+      opacity: 0.7;
+      filter: blur(5px);
+      transition:
+        opacity 0.18s ease,
+        transform 0.18s ease;
+    }
+
+    &.is-playing::before {
+      opacity: 0.95;
+      transform: scale(1.06);
+    }
+  }
+  .song-spectrum {
+    position: absolute;
+    inset: 0;
+    opacity: 0.52;
+    pointer-events: none;
+    transition:
+      opacity 0.18s ease,
+      transform 0.18s ease;
+
+    :deep(canvas) {
+      display: block;
+      width: 100% !important;
+      height: 100% !important;
+    }
+  }
+  .song-cover-shell.is-playing .song-spectrum {
+    opacity: 1;
+    transform: scale(1.02);
+  }
   .song-cover {
-    flex: 0 0 auto;
+    position: relative;
+    z-index: 1;
     width: 42px;
     height: 42px;
     object-fit: cover;
