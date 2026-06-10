@@ -11,6 +11,9 @@ importers:
       '@element-plus/icons-vue':
         specifier: ^2.3.2
         version: 2.3.2(vue@3.5.33(typescript@5.9.3))
+      audiomotion-analyzer:
+        specifier: ^4.5.4
+        version: 4.5.4
       axios:
         specifier: ^1.15.2
         version: 1.15.2
@@ -530,6 +533,9 @@ packages:
 
   asynckit@0.4.0:
     resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==}
+
+  audiomotion-analyzer@4.5.4:
+    resolution: {integrity: sha512-bBTIFr0VgM764MJN3ATIyKrv2BzGTfQgJugulIHNEIFT0+zbz7lb+2CvFTPvk6n3J06wwWiJBPZFEIt9OSxzfQ==}
 
   axios@1.15.2:
     resolution: {integrity: sha512-wLrXxPtcrPTsNlJmKjkPnNPK2Ihe0hn0wGSaTEiHRPxwjvJwT3hKmXF4dpqxmPO9SoNb2FsYXj/xEo0gHN+D5A==}
@@ -1146,6 +1152,8 @@ snapshots:
   async-validator@4.2.5: {}
 
   asynckit@0.4.0: {}
+
+  audiomotion-analyzer@4.5.4: {}
 
   axios@1.15.2:
     dependencies:
