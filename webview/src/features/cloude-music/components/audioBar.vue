@@ -12,14 +12,16 @@
     </div>
     <div class="song-meta">
       <div class="song-cover-shell" :class="{ 'is-playing': isPlaying }">
-        <div ref="spectrumRef" class="song-spectrum" aria-hidden="true"></div>
-        <img
-          v-if="currentSongInfo?.al.picUrl"
-          class="song-cover"
-          :src="currentSongInfo.al.picUrl"
-          alt=""
-        />
-        <span v-else class="song-cover song-cover-placeholder" aria-hidden="true"></span>
+        <div ref="spectrumRef" class="song-spectrum"></div>
+        <div class="song-disc">
+          <img
+            v-if="currentSongInfo?.al.picUrl"
+            class="song-cover"
+            :src="currentSongInfo.al.picUrl"
+            alt=""
+          />
+          <span v-else class="song-cover song-cover-placeholder"></span>
+        </div>
       </div>
       <div class="song-text">
         <el-tooltip :content="songName" placement="top" :disabled="!isSongNameOverflow">
@@ -31,24 +33,14 @@
       </div>
     </div>
     <div class="left-part">
-      <button class="prev controler" type="button" aria-label="上一首" @click="handlePrevMusic">
-        <img class="control-icon" :src="prevIcon" alt="" aria-hidden="true" />
+      <button class="prev controler" type="button" @click="handlePrevMusic">
+        <img class="control-icon" :src="prevIcon" alt="" />
       </button>
-      <button
-        class="current-status controler"
-        type="button"
-        :aria-label="isPlaying ? '暂停' : '播放'"
-        @click="handleSwitchStatus"
-      >
-        <img
-          class="control-icon"
-          :src="isPlaying ? playIcon : pauseIcon"
-          alt=""
-          aria-hidden="true"
-        />
+      <button class="current-status controler" type="button" @click="handleSwitchStatus">
+        <img class="control-icon" :src="isPlaying ? playIcon : pauseIcon" alt="" />
       </button>
-      <button class="next controler" type="button" aria-label="下一首" @click="handleNextMusic">
-        <img class="control-icon" :src="nextIcon" alt="" aria-hidden="true" />
+      <button class="next controler" type="button" @click="handleNextMusic">
+        <img class="control-icon" :src="nextIcon" alt="" />
       </button>
     </div>
     <div class="right-part">
@@ -142,7 +134,7 @@ onBeforeUnmount(() => {
 watch(currentUrl, newVal => {
   if (!newVal || !audioRef.value) return;
   audioRef.value.src = newVal;
-  void handleSwitchStatus();
+  handleSwitchStatus();
 });
 // 当前播放时间发生变化
 const handleTimeUpdate = () => {
@@ -152,8 +144,8 @@ const handleTimeUpdate = () => {
 };
 // 播放结束
 const handleEnded = async () => {
-  await handlePrevMusic();
-  void handleSwitchStatus();
+  await handleNextMusic();
+  handleSwitchStatus();
 };
 const initSpectrum = async () => {
   if (audioMotion || isSpectrumUnavailable || !audioRef.value || !spectrumRef.value) {
@@ -300,15 +292,15 @@ const handleMouseDown = (event: MouseEvent) => {
 
     &::before {
       position: absolute;
-      inset: 7px;
-      border-radius: 12px;
+      inset: 5px;
+      border-radius: 50%;
       background:
-        radial-gradient(circle at 25% 20%, rgba(125, 211, 252, 0.28), transparent 34%),
-        radial-gradient(circle at 78% 72%, rgba(251, 113, 133, 0.22), transparent 38%),
-        rgba(255, 255, 255, 0.05);
+        radial-gradient(circle at 28% 24%, rgba(125, 211, 252, 0.36), transparent 33%),
+        radial-gradient(circle at 74% 76%, rgba(251, 113, 133, 0.3), transparent 38%),
+        rgba(255, 255, 255, 0.06);
       content: "";
-      opacity: 0.7;
-      filter: blur(5px);
+      opacity: 0.76;
+      filter: blur(7px);
       transition:
         opacity 0.18s ease,
         transform 0.18s ease;
@@ -338,19 +330,78 @@ const handleMouseDown = (event: MouseEvent) => {
     opacity: 1;
     transform: scale(1.02);
   }
-  .song-cover {
+  .song-disc {
     position: relative;
     z-index: 1;
-    width: 42px;
-    height: 42px;
+    width: 46px;
+    height: 46px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.36);
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at center, rgba(255, 255, 255, 0.8) 0 7%, transparent 8%),
+      rgba(40, 44, 52, 0.46);
+    box-shadow:
+      0 8px 18px rgba(0, 0, 0, 0.18),
+      inset 0 0 0 3px rgba(255, 255, 255, 0.08);
+    animation: cover-spin 9s linear infinite;
+    animation-play-state: paused;
+    transform-origin: center;
+    transition:
+      box-shadow 0.18s ease,
+      transform 0.18s ease;
+    will-change: transform;
+
+    &::before,
+    &::after {
+      position: absolute;
+      border-radius: 50%;
+      content: "";
+      pointer-events: none;
+    }
+
+    &::before {
+      inset: 4px;
+      z-index: 2;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow:
+        inset 0 0 0 7px rgba(0, 0, 0, 0.08),
+        inset 0 0 14px rgba(0, 0, 0, 0.18);
+    }
+
+    &::after {
+      z-index: 3;
+      top: 50%;
+      left: 50%;
+      width: 11px;
+      height: 11px;
+      border: 1px solid rgba(255, 255, 255, 0.78);
+      background: radial-gradient(
+        circle,
+        rgba(40, 44, 52, 0.88) 0 30%,
+        rgba(255, 255, 255, 0.9) 32% 100%
+      );
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.22);
+      transform: translate(-50%, -50%);
+    }
+  }
+  .song-cover-shell.is-playing .song-disc {
+    animation-play-state: running;
+    box-shadow:
+      0 10px 22px rgba(0, 0, 0, 0.22),
+      0 0 0 4px rgba(105, 192, 255, 0.12),
+      inset 0 0 0 3px rgba(255, 255, 255, 0.1);
+  }
+  .song-cover {
+    display: block;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    border: 1px solid rgba(255, 255, 255, 0.22);
-    border-radius: 8px;
-    background: rgba(40, 44, 52, 0.42);
-    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.16);
   }
   .song-cover-placeholder {
     background:
+      radial-gradient(circle at 35% 28%, rgba(125, 211, 252, 0.38), transparent 34%),
+      radial-gradient(circle at 72% 72%, rgba(251, 113, 133, 0.28), transparent 38%),
       linear-gradient(135deg, rgba(97, 175, 239, 0.22), rgba(171, 178, 191, 0.1)),
       rgba(40, 44, 52, 0.42);
   }
@@ -458,6 +509,12 @@ const handleMouseDown = (event: MouseEvent) => {
   .progress-bar:hover .progress-active {
     height: 6px;
     // box-shadow: 2px 0 2px 4px rgba(140, 140, 140, 0.35);
+  }
+}
+
+@keyframes cover-spin {
+  to {
+    transform: rotate(360deg);
   }
 }
 </style>
