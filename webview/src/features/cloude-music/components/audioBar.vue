@@ -134,7 +134,7 @@ onBeforeUnmount(() => {
 watch(currentUrl, newVal => {
   if (!newVal || !audioRef.value) return;
   audioRef.value.src = newVal;
-  handleSwitchStatus();
+  switchAudioStatus();
 });
 // 当前播放时间发生变化
 const handleTimeUpdate = () => {
@@ -145,7 +145,6 @@ const handleTimeUpdate = () => {
 // 播放结束
 const handleEnded = async () => {
   await handleNextMusic();
-  handleSwitchStatus();
 };
 const initSpectrum = async () => {
   if (audioMotion || isSpectrumUnavailable || !audioRef.value || !spectrumRef.value) {
@@ -207,19 +206,12 @@ const syncSpectrumStatus = async () => {
 
   audioMotion.stop();
 };
-
-// 播放/暂停
-const handleSwitchStatus = async () => {
-  await initSpectrum();
-  const shouldPlay = !isPlaying.value;
-  switchPlayingStatus();
-
-  if (!shouldPlay) {
+const switchAudioStatus = async () => {
+  if (!isPlaying.value) {
     audioRef.value?.pause();
     await syncSpectrumStatus();
     return;
   }
-
   try {
     await syncSpectrumStatus();
     await audioRef.value?.play();
@@ -227,6 +219,12 @@ const handleSwitchStatus = async () => {
     switchPlayingStatus();
     audioMotion?.stop();
   }
+};
+// 播放/暂停
+const handleSwitchStatus = async () => {
+  await initSpectrum();
+  switchPlayingStatus();
+  switchAudioStatus();
 };
 const isDragging = ref(false);
 const progressBar = ref<HTMLElement>();

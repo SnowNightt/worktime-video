@@ -30,6 +30,7 @@ export const useAudioPlayer = () => {
     currentSong.value = res.data[0];
     currentUrl.value = res.data[0].url;
     currentIndex.value = playingList.value.findIndex(item => item.id === id);
+    isPlaying.value = true;
   };
 
   // 播放/暂停
@@ -47,6 +48,7 @@ export const useAudioPlayer = () => {
     const id = song.id;
     currentSongInfo.value = song;
     await getMusicUrl(id);
+    isPlaying.value = true;
   };
   // 下一首
   const handleNextMusic = async () => {
@@ -55,6 +57,7 @@ export const useAudioPlayer = () => {
     const id = song.id;
     currentSongInfo.value = song;
     await getMusicUrl(id);
+    isPlaying.value = true;
   };
 
   // 当前播放时间发生变化
