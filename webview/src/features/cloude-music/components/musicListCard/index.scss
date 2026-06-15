@@ -1,27 +1,27 @@
 .music-dialog {
-  --music-dialog-text: var(--login-text, #d7dae0);
-  --music-dialog-muted: var(--login-muted, rgba(215, 218, 224, 0.62));
+  --dialog-background: var(--vscode-editorWidget-background, var(--vscode-sideBar-background, #252932));
+  --dialog-surface: var(--vscode-list-inactiveSelectionBackground, rgba(255, 255, 255, 0.045));
+  --dialog-hover: var(--vscode-list-hoverBackground, rgba(255, 255, 255, 0.075));
+  --dialog-active: var(--vscode-list-activeSelectionBackground, rgba(97, 175, 239, 0.16));
+  --dialog-text: var(--vscode-foreground, #d7dae0);
+  --dialog-muted: var(--vscode-descriptionForeground, rgba(215, 218, 224, 0.62));
+  --dialog-border: var(--vscode-widget-border, rgba(171, 178, 191, 0.18));
+  --dialog-focus: var(--vscode-focusBorder, #61afef);
+  --dialog-ease: cubic-bezier(0.22, 1, 0.36, 1);
 
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(171, 178, 191, 0.2);
-  border-radius: 14px;
-  color: var(--music-dialog-text);
-  background:
-    radial-gradient(circle at 16% 0%, rgba(97, 175, 239, 0.16), transparent 34%),
-    linear-gradient(145deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.03) 42%),
-    rgba(40, 44, 52, 0.72);
-  box-shadow:
-    0 24px 56px rgba(0, 0, 0, 0.36),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(18px) saturate(120%);
-  -webkit-backdrop-filter: blur(18px) saturate(120%);
+  border: 1px solid var(--dialog-border);
+  border-radius: 12px;
+  color: var(--dialog-text);
+  background: var(--dialog-background);
+  box-shadow: 0 24px 58px rgba(0, 0, 0, 0.38);
 }
 
 .music-dialog-overlay {
-  background: rgba(12, 14, 18, 0.48);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
+  background: color-mix(in srgb, #000 52%, transparent);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
 }
 
 .music-dialog .el-dialog__header,
@@ -30,234 +30,475 @@
 }
 
 .music-dialog .el-dialog__header {
-  padding: 16px 16px 12px;
+  padding: 14px 16px 12px;
   margin: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--dialog-border) 74%, transparent);
 }
 
 .music-dialog .el-dialog__body {
-  padding: 0 16px 16px;
+  padding: 0;
 }
 
 .music-dialog .el-dialog__headerbtn {
-  top: 8px;
+  top: 10px;
   right: 10px;
   width: 30px;
   height: 30px;
-  border: 1px solid rgba(171, 178, 191, 0.14);
-  border-radius: 8px;
-  background: rgba(24, 26, 31, 0.36);
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  transition: background-color 160ms var(--dialog-ease);
 }
 
 .music-dialog .el-dialog__headerbtn:hover,
 .music-dialog .el-dialog__headerbtn:focus-visible {
-  border-color: rgba(97, 175, 239, 0.34);
-  background: rgba(24, 26, 31, 0.54);
+  background: var(--dialog-hover);
+}
+
+.music-dialog .el-dialog__headerbtn:focus-visible {
+  outline: 2px solid var(--dialog-focus);
+  outline-offset: 1px;
 }
 
 .music-dialog .el-dialog__close {
-  color: rgba(215, 218, 224, 0.72);
+  color: var(--dialog-muted);
 }
 
 .music-dialog-header {
-  display: flex;
+  display: grid;
+  min-width: 0;
+  grid-template-columns: 48px minmax(0, 1fr);
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding-right: 32px;
+  gap: 11px;
+  padding-right: 34px;
+}
+
+.dialog-chart-cover {
+  display: block;
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border: 1px solid color-mix(in srgb, var(--dialog-border) 84%, transparent);
+  border-radius: 8px;
+  background: var(--dialog-surface);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+}
+
+.dialog-chart-cover-placeholder {
+  background: var(--dialog-surface);
 }
 
 .music-dialog-title-group {
+  display: grid;
   min-width: 0;
-}
+  gap: 5px;
 
-.music-dialog h2 {
-  margin: 0;
-  overflow: hidden;
-  color: #f0f3f8;
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 1.2;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
+  h2,
+  p,
+  span {
+    min-width: 0;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 
-.music-dialog-stat {
-  display: inline-flex;
-  flex: 0 0 auto;
-  align-items: baseline;
-  gap: 4px;
-  padding: 6px 9px;
-  border: 1px solid rgba(171, 178, 191, 0.14);
-  border-radius: 10px;
-  background: rgba(24, 26, 31, 0.42);
-}
+  h2 {
+    color: var(--dialog-text);
+    font-size: 16px;
+    font-weight: 720;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
 
-.music-dialog-stat strong {
-  color: #f5f7fb;
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 1;
-}
-
-.music-dialog-stat span {
-  color: var(--music-dialog-muted);
-  font-size: 11px;
-  font-weight: 650;
+  p {
+    display: flex;
+    gap: 8px;
+    color: var(--dialog-muted);
+    font-size: 11px;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.25;
+  }
 }
 
 .music-list-panel {
+  position: relative;
   height: min(70vh, 560px);
   min-height: 320px;
   overflow: hidden;
-  border: 1px solid rgba(171, 178, 191, 0.14);
-  border-radius: 10px;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.02)),
-    rgba(24, 26, 31, 0.42);
-  box-shadow:
-    0 14px 34px rgba(0, 0, 0, 0.18),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  background: var(--dialog-background);
 }
 
-.music-dialog .el-table {
+.song-list,
+.music-list-skeleton {
   height: 100%;
-  color: var(--music-dialog-text);
-  background: transparent;
-  --el-table-border-color: transparent;
-  --el-table-row-border-color: transparent;
-  --el-table-current-row-bg-color: rgba(97, 175, 239, 0.12);
-  --el-table-header-bg-color: transparent;
-  --el-table-header-text-color: rgba(215, 218, 224, 0.64);
-  --el-table-row-hover-bg-color: rgba(97, 175, 239, 0.12);
-  --el-table-text-color: var(--music-dialog-text);
-  --el-text-color-regular: var(--music-dialog-text);
-  --el-border-color-lighter: transparent;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-color: color-mix(in srgb, var(--dialog-muted) 45%, transparent) transparent;
+  scrollbar-width: thin;
 }
 
-.music-dialog .el-table th,
-.music-dialog .el-table tr,
-.music-dialog .el-table td,
-.music-dialog .el-table .el-table__cell,
-.music-dialog .el-table__inner-wrapper,
-.music-dialog .el-table__body-wrapper,
-.music-dialog .el-table__header-wrapper {
-  border-bottom: none;
-  background: transparent;
+.song-list::-webkit-scrollbar,
+.music-list-skeleton::-webkit-scrollbar {
+  width: 6px;
 }
 
-.music-dialog .el-table th.el-table__cell {
-  height: 40px;
-  color: rgba(215, 218, 224, 0.62);
-  font-size: 12px;
-  font-weight: 700;
+.song-list::-webkit-scrollbar-thumb,
+.music-list-skeleton::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--dialog-muted) 45%, transparent);
 }
 
-.music-dialog .el-table td.el-table__cell {
-  height: 56px;
-  color: rgba(215, 218, 224, 0.82);
-}
-
-.music-dialog .el-table::before {
-  display: none;
-}
-
-.music-dialog .el-table .el-table__body tr:hover > td.el-table__cell {
-  background: rgba(97, 175, 239, 0.12) !important;
-}
-
-.music-dialog .el-table .el-table__body tr:hover .song-cover {
-  border-color: rgba(97, 175, 239, 0.38);
-}
-
-.song-cell {
-  display: flex;
+.song-row {
+  position: relative;
+  display: grid;
+  width: 100%;
   min-width: 0;
+  min-height: 62px;
+  grid-template-columns: 26px 38px minmax(0, 1fr) 50px;
   align-items: center;
   gap: 10px;
+  padding: 8px 14px;
+  cursor: pointer;
+  border: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--dialog-border) 60%, transparent);
+  color: var(--dialog-text);
+  background: transparent;
+  font: inherit;
+  text-align: left;
+  transition:
+    background-color 160ms var(--dialog-ease),
+    box-shadow 160ms var(--dialog-ease);
+
+  &:hover {
+    background: var(--dialog-hover);
+  }
+
+  &:focus-visible {
+    z-index: 1;
+    outline: 2px solid var(--dialog-focus);
+    outline-offset: -2px;
+  }
+
+  &.is-playing {
+    background: var(--dialog-active);
+    box-shadow: inset 3px 0 0 var(--dialog-focus);
+  }
+}
+
+.song-index {
+  color: var(--dialog-muted);
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
 }
 
 .song-cover {
-  flex: 0 0 auto;
-  width: 34px;
-  height: 34px;
+  display: block;
+  width: 38px;
+  height: 38px;
   object-fit: cover;
-  border: 1px solid rgba(171, 178, 191, 0.16);
-  border-radius: 8px;
-  background: rgba(24, 26, 31, 0.5);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
+  border-radius: 7px;
+  background: var(--dialog-surface);
 }
 
 .song-cover-placeholder {
-  background:
-    linear-gradient(135deg, rgba(97, 175, 239, 0.2), rgba(171, 178, 191, 0.08)),
-    rgba(24, 26, 31, 0.54);
+  background: var(--dialog-surface);
+}
+
+.song-info,
+.song-secondary,
+.song-title,
+.song-artist,
+.song-album {
+  min-width: 0;
 }
 
 .song-info {
   display: grid;
-  min-width: 0;
   gap: 4px;
 }
 
 .song-title,
-.song-artist {
-  min-width: 0;
+.song-artist,
+.song-album {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .song-title {
-  color: #f0f3f8;
-  font-size: 13px;
-  font-weight: 700;
+  color: var(--dialog-text);
+  font-size: 12px;
+  font-weight: 660;
+  line-height: 1.2;
 }
 
-.song-artist {
-  color: rgba(215, 218, 224, 0.56);
-  font-size: 12px;
+.song-secondary {
+  display: grid;
+  grid-template-columns: minmax(0, auto) minmax(0, 1fr);
+  align-items: center;
+  gap: 7px;
+  color: var(--dialog-muted);
+  font-size: 10px;
+  line-height: 1.2;
+}
+
+.song-album {
+  position: relative;
+  padding-left: 8px;
+
+  &::before {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    background: currentColor;
+    content: "";
+    transform: translateY(-50%);
+  }
 }
 
 .song-duration {
-  display: inline-flex;
-  justify-content: center;
-  min-width: 48px;
-  padding: 4px 6px;
-  border-radius: 999px;
-  color: rgba(215, 218, 224, 0.7);
-  background: rgba(24, 26, 31, 0.5);
-  font-size: 12px;
+  justify-self: end;
+  color: var(--dialog-muted);
+  font-size: 10px;
   font-variant-numeric: tabular-nums;
-  line-height: 1;
 }
 
-.music-dialog .el-table__empty-block {
-  min-height: 280px;
+.playing-indicator {
+  display: flex;
+  justify-self: end;
+  width: 22px;
+  height: 18px;
+  align-items: end;
+  justify-content: center;
+  gap: 2px;
+  color: var(--dialog-focus);
+
+  i {
+    display: block;
+    width: 2px;
+    height: 45%;
+    border-radius: 2px;
+    background: currentColor;
+    animation: playing-bar 820ms ease-in-out infinite alternate;
+
+    &:nth-child(2) {
+      height: 85%;
+      animation-delay: -260ms;
+    }
+
+    &:nth-child(3) {
+      height: 62%;
+      animation-delay: -510ms;
+    }
+  }
 }
 
-.music-dialog .el-table__empty-text {
-  color: rgba(215, 218, 224, 0.56);
-  font-weight: 650;
+.music-list-state {
+  display: grid;
+  min-height: 320px;
+  place-content: center;
+  justify-items: center;
+  gap: 7px;
+  padding: 24px;
+  color: var(--dialog-muted);
+  text-align: center;
+
+  strong {
+    color: var(--dialog-text);
+    font-size: 14px;
+  }
+
+  span {
+    font-size: 11px;
+  }
+
+  button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 32px;
+    margin-top: 7px;
+    padding: 0 12px;
+    cursor: pointer;
+    border: 1px solid var(--dialog-border);
+    border-radius: 7px;
+    color: var(--dialog-text);
+    background: var(--dialog-surface);
+    font: inherit;
+    font-size: 11px;
+    transition:
+      border-color 160ms var(--dialog-ease),
+      background-color 160ms var(--dialog-ease);
+
+    &:hover {
+      border-color: var(--dialog-focus);
+      background: var(--dialog-hover);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--dialog-focus);
+      outline-offset: 2px;
+    }
+  }
 }
 
-.music-dialog .el-table__row {
-  cursor: pointer;
+.music-list-skeleton {
+  padding: 2px 0;
+}
+
+.skeleton-row {
+  display: grid;
+  min-height: 62px;
+  grid-template-columns: 38px minmax(0, 1fr) 42px;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px 8px 50px;
+  border-bottom: 1px solid color-mix(in srgb, var(--dialog-border) 52%, transparent);
+}
+
+.skeleton-cover,
+.skeleton-lines i,
+.skeleton-time {
+  display: block;
+  overflow: hidden;
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--dialog-muted) 14%, var(--dialog-surface));
+
+  &::after {
+    display: block;
+    width: 48%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--dialog-text) 12%, transparent), transparent);
+    content: "";
+    animation: skeleton-shimmer 1.4s ease-in-out infinite;
+    transform: translateX(-140%);
+  }
+}
+
+.skeleton-cover {
+  width: 38px;
+  height: 38px;
+  border-radius: 7px;
+}
+
+.skeleton-lines {
+  display: grid;
+  gap: 7px;
+
+  i {
+    height: 8px;
+
+    &:last-child {
+      width: 62%;
+      height: 6px;
+    }
+  }
+}
+
+.skeleton-time {
+  justify-self: end;
+  width: 34px;
+  height: 7px;
+}
+
+@keyframes playing-bar {
+  to {
+    height: 30%;
+    opacity: 0.55;
+  }
+}
+
+@keyframes skeleton-shimmer {
+  to {
+    transform: translateX(260%);
+  }
 }
 
 @media (max-width: 360px) {
+  .music-dialog-overlay .el-overlay-dialog {
+    overflow: hidden;
+  }
+
   .music-dialog {
-    width: calc(100vw - 16px) !important;
+    position: fixed;
+    right: 0;
+    bottom: 65px;
+    left: 0;
+    width: 100% !important;
+    max-height: calc(100dvh - 81px);
+    margin: 0 !important;
+    border-right: 0;
+    border-left: 0;
+    border-radius: 12px;
   }
 
   .music-dialog .el-dialog__header {
-    padding: 14px 12px 10px;
+    padding: 12px 12px 10px;
   }
 
-  .music-dialog .el-dialog__body {
-    padding: 0 12px 12px;
+  .music-dialog-header {
+    grid-template-columns: 42px minmax(0, 1fr);
+    gap: 9px;
   }
 
-  .music-dialog-stat {
+  .dialog-chart-cover {
+    width: 42px;
+    height: 42px;
+  }
+
+  .music-list-panel {
+    height: min(66dvh, 520px);
+    min-height: 280px;
+  }
+
+  .song-row {
+    min-height: 58px;
+    grid-template-columns: 22px 36px minmax(0, 1fr) 42px;
+    gap: 8px;
+    padding: 7px 10px;
+  }
+
+  .song-cover {
+    width: 36px;
+    height: 36px;
+  }
+
+  .song-album {
     display: none;
   }
+
+  .song-secondary {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .skeleton-row {
+    padding-right: 10px;
+    padding-left: 40px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .playing-indicator i,
+  .skeleton-cover::after,
+  .skeleton-lines i::after,
+  .skeleton-time::after {
+    animation: none;
+  }
+
+  .song-row,
+  .music-list-state button,
+  .music-dialog .el-dialog__headerbtn {
+    transition-duration: 0.01ms;
+  }
+}
+
+body.vscode-high-contrast .music-dialog,
+body.vscode-high-contrast .song-row,
+body.vscode-high-contrast .music-list-state button {
+  border-color: var(--vscode-contrastBorder, var(--dialog-focus));
 }

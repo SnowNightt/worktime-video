@@ -377,6 +377,16 @@ export interface ToplistResponse {
   artistToplist: ArtistToplist;
 }
 
+export type ToplistDetailStatus = "idle" | "loading" | "success" | "error";
+
+export interface ToplistDialogMeta {
+  id: number;
+  name: string;
+  coverImgUrl: string;
+  updateFrequency: string;
+  trackCount: number;
+}
+
 export interface ToplistItem {
   subscribers: unknown[];
   subscribed: boolean | null;
