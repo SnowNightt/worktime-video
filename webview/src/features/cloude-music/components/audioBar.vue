@@ -50,51 +50,33 @@
 </template>
 <script lang="ts" setup>
 import AudioMotionAnalyzer from "audiomotion-analyzer";
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from "vue";
+import { nextTick, onBeforeUnmount, onMounted, ref, watch } from "vue";
 import nextIcon from "../../../assets/next.png";
 import pauseIcon from "../../../assets/pause.png";
 import playIcon from "../../../assets/play.png";
 import prevIcon from "../../../assets/prev.png";
 import { useAudioPlayer } from "../hooks/useAudioPlayer";
+const audioRef = ref<HTMLAudioElement>();
+const progressBar = ref<HTMLElement>();
 const {
-  currentSong,
   currentUrl,
   isPlaying,
   progressPercent,
-  currentTime,
   currentSongInfo,
   switchPlayingStatus,
   handlePrevMusic,
   handleNextMusic,
-  timeUpdate,
-  setProgressPercent,
-} = useAudioPlayer();
-const audioRef = ref<HTMLAudioElement>();
+  timeTip,
+  totalTime,
+  songName,
+  songArtist,
+  handleTimeUpdate,
+  handleEnded,
+  handleMouseDown,
+} = useAudioPlayer(audioRef, progressBar);
 const spectrumRef = ref<HTMLElement>();
 let audioMotion: AudioMotionAnalyzer | undefined;
 let isSpectrumUnavailable = false;
-// 当前播放时间
-const timeTip = computed(() => {
-  if (!currentTime.value) {
-    return "00:00";
-  }
-  const minutes = Math.floor(currentTime.value / 60);
-  const remainingSeconds = Math.floor(currentTime.value % 60);
-  return `${String(minutes).padStart(2, "0")}:${String(remainingSeconds).padStart(2, "0")}`;
-});
-// 总时长
-const totalTime = computed(() => {
-  if (!currentSong.value?.time) {
-    return "00:00";
-  }
-  const minutes = Math.floor(currentSong.value.time / 1000 / 60);
-  const remainingSeconds = Math.floor((currentSong.value.time / 1000) % 60);
-  return `${String(minutes).padStart(2, "0")}:${String(remainingSeconds).padStart(2, "0")}`;
-});
-const songName = computed(() => currentSongInfo.value?.name || "暂无播放");
-const songArtist = computed(
-  () => currentSongInfo.value?.ar.map(item => item.name).join(" / ") || "未知歌手"
-);
 const songTitleRef = ref<HTMLElement>();
 const songArtistRef = ref<HTMLElement>();
 const isSongNameOverflow = ref(false);
@@ -102,10 +84,7 @@ const isSongArtistOverflow = ref(false);
 let songTextResizeObserver: ResizeObserver | undefined;
 
 const isOverflow = (element?: HTMLElement) => {
-  if (!element) {
-    return false;
-  }
-  return element.scrollWidth > element.clientWidth;
+  return element!.scrollWidth > element!.clientWidth;
 };
 
 const updateSongTextOverflow = async () => {
@@ -118,6 +97,7 @@ watch([songName, songArtist], updateSongTextOverflow);
 
 onMounted(() => {
   updateSongTextOverflow();
+  // 监听歌曲名和歌手元素的尺寸变化
   songTextResizeObserver = new ResizeObserver(updateSongTextOverflow);
   if (songTitleRef.value) {
     songTextResizeObserver.observe(songTitleRef.value);
@@ -136,16 +116,6 @@ watch(currentUrl, newVal => {
   audioRef.value.src = newVal;
   switchAudioStatus();
 });
-// 当前播放时间发生变化
-const handleTimeUpdate = () => {
-  if (isDragging.value) return;
-  const currentTime = audioRef.value!.currentTime;
-  timeUpdate(currentTime);
-};
-// 播放结束
-const handleEnded = async () => {
-  await handleNextMusic();
-};
 const initSpectrum = async () => {
   if (audioMotion || isSpectrumUnavailable || !audioRef.value || !spectrumRef.value) {
     return;
@@ -225,36 +195,6 @@ const handleSwitchStatus = async () => {
   await initSpectrum();
   switchPlayingStatus();
   switchAudioStatus();
-};
-const isDragging = ref(false);
-const progressBar = ref<HTMLElement>();
-const handleMouseUp = (event: MouseEvent) => {
-  const clientX = event.clientX;
-  const { left, width } = progressBar.value!.getBoundingClientRect();
-  const activeWith = clientX - left;
-  const activePercent = (activeWith / width).toFixed(2);
-  if (currentSong.value?.time) {
-    const currentTime = (Number(activePercent) * (currentSong.value.time / 1000)).toFixed(2);
-    audioRef.value!.currentTime = Number(currentTime);
-  }
-  isDragging.value = false;
-  document.removeEventListener("mousemove", handleMouseMove);
-  document.removeEventListener("mouseup", handleMouseUp);
-};
-const handleMouseMove = (event: MouseEvent) => {
-  const clientX = event.clientX;
-  const { left, width } = progressBar.value!.getBoundingClientRect();
-  const activeWith = clientX - left;
-  const activePercent = ((activeWith / width) * 100).toFixed(2);
-  setProgressPercent(activePercent);
-};
-
-// 点击进度条
-const handleMouseDown = (event: MouseEvent) => {
-  isDragging.value = true;
-  handleMouseMove(event);
-  document.addEventListener("mousemove", handleMouseMove);
-  document.addEventListener("mouseup", handleMouseUp);
 };
 </script>
 <style lang="scss" scoped>
