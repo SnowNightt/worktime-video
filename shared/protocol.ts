@@ -31,7 +31,7 @@ export interface BridgeRequestPayload {
   url: string;
   method: "GET" | "POST";
   params?: object;
-  data?: Record<string, unknown>;
+  data?: object;
   isTimestamp?: boolean;
 }
 // 发送网络请求通信

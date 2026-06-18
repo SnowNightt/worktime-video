@@ -1,4 +1,4 @@
-import http from "@/utils/request";
+import { bridgeRequest } from "@/services/bridgeRequset";
 import {
   LoginParams,
   RecommendPlaylistResponse,
@@ -15,17 +15,16 @@ import {
   PlaylistDetailResponse,
 } from "./type";
 import { ResponseResult } from "@/types/request";
-import { bridgeRequest } from "@/services/bridgeRequset";
 // 退出登录
 export const logoutApi = async () => {
-  return http.request<{ code: number }>({
+  return bridgeRequest<{ code: number }>({
     url: "/logout",
     method: "POST",
   });
 };
 // 获取手机验证码
 export const getCaptchaApi = async (params: LoginParams) => {
-  return http.request<ResponseResult<boolean>>({
+  return bridgeRequest<ResponseResult<boolean>>({
     url: "/captcha/sent",
     method: "GET",
     params,
@@ -34,7 +33,7 @@ export const getCaptchaApi = async (params: LoginParams) => {
 
 // 验证验证码
 export const verifyCaptchaApi = async (data: LoginParams) => {
-  return http.request<ResponseResult<boolean>>({
+  return bridgeRequest<ResponseResult<boolean>>({
     url: "/captcha/verify",
     method: "POST",
     data,
@@ -42,7 +41,7 @@ export const verifyCaptchaApi = async (data: LoginParams) => {
 };
 // 登录
 export const loginApi = async (data: LoginParams) => {
-  return http.request<LoginResponse>({
+  return bridgeRequest<LoginResponse>({
     url: "/login/cellphone",
     method: "POST",
     data,
@@ -50,7 +49,7 @@ export const loginApi = async (data: LoginParams) => {
 };
 // 生成二维码key
 export const queryQRCodeKeyApi = async () => {
-  return http.request<ResponseResult<{ code: number; unikey: string }>>({
+  return bridgeRequest<ResponseResult<{ code: number; unikey: string }>>({
     url: "/login/qr/key",
     method: "GET",
     isTimestamp: true,
@@ -58,7 +57,7 @@ export const queryQRCodeKeyApi = async () => {
 };
 // 二维码生成
 export const queryQRCodeBase64Api = async (params: QRCodeParams) => {
-  return http.request<ResponseResult<{ qrimg: string; qrurl: string }>>({
+  return bridgeRequest<ResponseResult<{ qrimg: string; qrurl: string }>>({
     url: "/login/qr/create",
     method: "GET",
     params,
@@ -66,7 +65,7 @@ export const queryQRCodeBase64Api = async (params: QRCodeParams) => {
 };
 // 二维码检测扫码状态
 export const checkQRCodeApi = async (params: QRCodeParams) => {
-  return http.request<{ code: number; cookie: string; message: string }>({
+  return bridgeRequest<{ code: number; cookie: string; message: string }>({
     url: "/login/qr/check",
     method: "GET",
     params,
@@ -75,7 +74,7 @@ export const checkQRCodeApi = async (params: QRCodeParams) => {
 };
 // 推荐歌单
 export const getRecommendationPlayListApi = async (params: PlaylistParams = { limit: 30 }) => {
-  return http.request<RecommendPlaylistResponse>({
+  return bridgeRequest<RecommendPlaylistResponse>({
     url: "/personalized",
     method: "GET",
     params,
@@ -84,7 +83,7 @@ export const getRecommendationPlayListApi = async (params: PlaylistParams = { li
 };
 // 歌单详情
 export const getDetailPlayList = async (params: DetailPlayListParams) => {
-  return http.request<PlaylistDetailResponse>({
+  return bridgeRequest<PlaylistDetailResponse>({
     url: "/playlist/detail",
     method: "GET",
     params,
@@ -92,7 +91,7 @@ export const getDetailPlayList = async (params: DetailPlayListParams) => {
 };
 // 获取音乐url
 export const getMusicUrlApi = async (params: MusicUrlParams) => {
-  return http.request<ResponseResult<MusicUrlItem[]>>({
+  return bridgeRequest<ResponseResult<MusicUrlItem[]>>({
     url: "/song/url/v1",
     method: "GET",
     params,
@@ -100,7 +99,7 @@ export const getMusicUrlApi = async (params: MusicUrlParams) => {
 };
 // 登录状态
 export const getLoginStatusApi = async (data: { ua: string }) => {
-  return http.request<LoginUserInfoResponse>({
+  return bridgeRequest<LoginUserInfoResponse>({
     url: "/login/status",
     method: "POST",
     data,
@@ -109,7 +108,7 @@ export const getLoginStatusApi = async (data: { ua: string }) => {
 };
 // 获取用户详情
 export const getUserInfoApi = async (params: { uid: number }) => {
-  return http.request<any>({
+  return bridgeRequest<any>({
     url: "/user/detail",
     method: "GET",
     params,
@@ -118,7 +117,7 @@ export const getUserInfoApi = async (params: { uid: number }) => {
 };
 // 获取账号信息
 export const getAccountInfoApi = async () => {
-  return http.request<AccountDetailResult>({
+  return bridgeRequest<AccountDetailResult>({
     url: "/user/account",
     method: "GET",
     isTimestamp: true,
@@ -126,7 +125,7 @@ export const getAccountInfoApi = async () => {
 };
 // 获取用户信息 , 歌单，收藏，mv, dj 数量
 // export const getUserPlayList = async () => {
-//   return http.request<any>({
+//   return bridgeRequest<any>({
 //     url: "/user/subcount",
 //     method: "GET",
 //     isTimestamp: true,
@@ -135,7 +134,7 @@ export const getAccountInfoApi = async () => {
 
 // 获取用户歌单
 export const getPlayList = async (params: { uid: number }) => {
-  return http.request<UserPlaylistResponse>({
+  return bridgeRequest<UserPlaylistResponse>({
     url: "/user/playlist",
     method: "GET",
     params,
@@ -144,7 +143,7 @@ export const getPlayList = async (params: { uid: number }) => {
 };
 // 获取所有榜单
 export const getTopList = async () => {
-  return http.request<ToplistResponse>({
+  return bridgeRequest<ToplistResponse>({
     url: "/toplist",
     method: "GET",
   });
