@@ -18,6 +18,7 @@ export default defineConfig({
 	server: {
 		host: DEV_SERVER_HOST,
 		port: DEV_SERVER_PORT,
+		origin: `http://${DEV_SERVER_HOST}:${DEV_SERVER_PORT}`,
 		strictPort: true,
 		cors: true,
 		hmr: {
