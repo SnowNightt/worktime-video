@@ -1,7 +1,5 @@
 :global(.cloud-music-login-overlay) {
-  background:
-    radial-gradient(circle at 26% 22%, rgba(97, 175, 239, 0.14), transparent 34%),
-    rgba(12, 14, 18, 0.48);
+  background: color-mix(in srgb, var(--worktime-bg, #1f2329) 72%, transparent);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
 }
@@ -15,14 +13,12 @@
   border: 1px solid var(--login-glass-border, rgba(171, 178, 191, 0.22));
   border-radius: 16px;
   background:
-    radial-gradient(circle at 20% 0%, rgba(97, 175, 239, 0.14), transparent 34%),
-    linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.035) 42%),
-    var(--login-glass-bg, rgba(40, 44, 52, 0.72));
+    linear-gradient(180deg, color-mix(in srgb, var(--login-glass-bg, #282c34) 88%, var(--login-text, #d7dae0) 12%), var(--login-glass-bg, #282c34));
   box-shadow:
     0 24px 56px rgba(0, 0, 0, 0.36),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(18px) saturate(120%);
-  -webkit-backdrop-filter: blur(18px) saturate(120%);
+  backdrop-filter: blur(10px) saturate(105%);
+  -webkit-backdrop-filter: blur(10px) saturate(105%);
 }
 
 :global(.cloud-music-login-dialog .el-dialog__header) {
@@ -70,11 +66,9 @@
   border: 1px solid rgba(171, 178, 191, 0.22);
   border-radius: 16px;
   background:
-    radial-gradient(circle at 28% 18%, rgba(255, 255, 255, 0.2), transparent 22%),
-    linear-gradient(145deg, rgba(171, 178, 191, 0.16), rgba(24, 26, 31, 0.46));
+    linear-gradient(145deg, color-mix(in srgb, var(--login-glass-bg, #282c34) 76%, var(--login-text, #d7dae0) 24%), var(--login-glass-bg, #282c34));
   box-shadow:
     0 12px 26px rgba(0, 0, 0, 0.24),
-    0 0 28px rgba(97, 175, 239, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 

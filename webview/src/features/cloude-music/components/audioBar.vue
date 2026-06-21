@@ -206,13 +206,23 @@ const handleSwitchStatus = async () => {
   gap: 10px;
   position: fixed;
   z-index: 99999;
-  left: 0;
-  right: 0;
-  bottom: 0px;
+  left: 12px;
+  right: 12px;
+  bottom: 10px;
   height: 65px;
   padding: 8px 12px 6px;
-  background-color: rgba(191, 191, 191, 0.5);
-  backdrop-filter: blur(10px);
+  overflow: hidden;
+  border-radius: 20px;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--vscode-foreground, #d7dae0) 13%, transparent), transparent 42%),
+    linear-gradient(180deg, color-mix(in srgb, var(--worktime-bg, #1f2329) 62%, transparent), color-mix(in srgb, var(--worktime-bg, #1f2329) 82%, transparent)),
+    color-mix(in srgb, var(--worktime-bg, #1f2329) 76%, var(--vscode-foreground, #d7dae0) 24%);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--vscode-foreground, #d7dae0) 16%, transparent),
+    inset 0 0 0 1px color-mix(in srgb, var(--vscode-foreground, #d7dae0) 10%, transparent),
+    0 18px 42px rgba(5, 8, 12, 0.32);
+  backdrop-filter: blur(18px) saturate(112%);
+  -webkit-backdrop-filter: blur(18px) saturate(112%);
   .song-meta {
     display: flex;
     flex: 1 1 auto;
@@ -433,20 +443,38 @@ const handleSwitchStatus = async () => {
 
   .progress-bar {
     position: absolute;
-    left: 0;
-    right: 0;
+    left: 18px;
+    right: 18px;
     width: auto;
-    top: 0;
+    top: 7px;
+    height: 3px;
+    overflow: hidden;
+    border-radius: 999px;
     cursor: pointer;
-    background-color: #d9d9d9;
+    background-color: color-mix(in srgb, var(--vscode-foreground, #d7dae0) 15%, transparent);
     .progress-active {
-      background-color: #69c0ff;
-      height: 3px;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--vscode-focusBorder, #61afef) 72%, #f5f7fb 28%),
+        var(--vscode-focusBorder, #61afef)
+      );
     }
   }
   .progress-bar:hover .progress-active {
-    height: 6px;
+    height: 100%;
     // box-shadow: 2px 0 2px 4px rgba(140, 140, 140, 0.35);
+  }
+}
+
+@media (max-width: 340px) {
+  .audio-container {
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    padding-inline: 10px;
+    border-radius: 17px;
   }
 }
 

@@ -1,29 +1,56 @@
 .cloud-music-page {
-  --page-bg: #1e2229;
-  --page-surface: rgba(33, 37, 44, 0.72);
-  --page-border: rgba(171, 178, 191, 0.16);
+  --page-bg: var(--worktime-bg, var(--vscode-sideBar-background, #1f2329));
+  --page-surface: color-mix(in srgb, var(--page-bg) 76%, var(--page-text) 24%);
+  --page-surface-soft: color-mix(in srgb, var(--page-bg) 88%, var(--page-text) 12%);
+  --page-surface-muted: color-mix(in srgb, var(--page-bg) 94%, var(--page-text) 6%);
+  --page-border: color-mix(in srgb, var(--page-text) 11%, transparent);
   --page-text: #d7dae0;
   --page-muted: rgba(215, 218, 224, 0.62);
-  --page-accent: #61afef;
-  --page-accent-soft: rgba(97, 175, 239, 0.16);
-  --page-green-soft: rgba(152, 195, 121, 0.1);
-  --page-warm: rgba(229, 192, 123, 0.1);
+  --page-accent: var(--vscode-focusBorder, #61afef);
+  --page-accent-soft: color-mix(in srgb, var(--page-accent) 12%, transparent);
+  --page-glass: color-mix(in srgb, var(--page-surface) 64%, transparent);
   --login-primary: #abb2bf;
   --login-primary-strong: #7f848e;
   --login-text: var(--page-text);
   --login-muted: var(--page-muted);
-  --login-glass-bg: rgba(40, 44, 52, 0.72);
-  --login-glass-border: rgba(171, 178, 191, 0.22);
+  --login-glass-bg: color-mix(in srgb, var(--page-bg) 78%, var(--page-text) 22%);
+  --login-glass-border: color-mix(in srgb, var(--page-text) 22%, transparent);
 
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  min-height: 100dvh;
+  box-sizing: border-box;
+  height: 100%;
+  min-height: 0;
+  padding: 12px 0 88px;
   overflow: hidden;
+  position: relative;
+  isolation: isolate;
   color: var(--page-text);
+  background: transparent;
+}
+
+.cloud-music-page::before {
+  display: none;
+}
+
+.cloud-music-page > * {
+  position: relative;
+  z-index: 1;
+}
+
+.cloud-music-page :deep(.top-bar-container) {
+  min-height: 44px;
+  padding: 0 8px 0 10px;
+  border-radius: 18px;
   background:
-    radial-gradient(ellipse at 16% 10%, rgba(97, 175, 239, 0.18), transparent 34%),
-    radial-gradient(ellipse at 86% 14%, rgba(152, 195, 121, 0.1), transparent 30%),
-    radial-gradient(ellipse at 50% 92%, rgba(171, 178, 191, 0.14), transparent 42%),
-    linear-gradient(132deg, #181a1f, #282c34 44%, #1e2229);
+    linear-gradient(135deg, color-mix(in srgb, var(--page-text) 8%, transparent), transparent 42%),
+    color-mix(in srgb, var(--page-surface-soft) 70%, transparent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--page-text) 9%, transparent),
+    0 12px 30px rgba(5, 8, 12, 0.14);
+  backdrop-filter: blur(14px) saturate(108%);
+  -webkit-backdrop-filter: blur(14px) saturate(108%);
 }
 
 :global(.cloud-music-page),
@@ -45,25 +72,41 @@
 }
 
 .music-tabs {
-  min-height: calc(100dvh - 54px);
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
   width: 100%;
-  padding: 12px 12px 0;
-  border-top: 1px solid var(--page-border);
+  margin-top: 10px;
+  padding: 12px;
+  overflow: hidden;
+  border-radius: 22px;
   background:
-    radial-gradient(circle at 12% 0%, var(--page-accent-soft), transparent 30%),
-    radial-gradient(circle at 88% 8%, var(--page-warm), transparent 28%),
-    linear-gradient(145deg, rgba(255, 255, 255, 0.06), transparent 34%),
-    linear-gradient(180deg, var(--page-surface), rgba(24, 26, 31, 0.62));
+    linear-gradient(145deg, color-mix(in srgb, var(--page-text) 9%, transparent), transparent 36%),
+    linear-gradient(180deg, var(--page-glass) 0, color-mix(in srgb, var(--page-surface-muted) 72%, transparent) 100%);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--page-text) 13%, transparent),
+    inset 0 0 0 1px var(--page-border),
+    0 22px 48px rgba(5, 8, 12, 0.18);
+  backdrop-filter: blur(18px) saturate(112%);
+  -webkit-backdrop-filter: blur(18px) saturate(112%);
 }
 
 .music-tabs :deep(.el-tabs__header) {
-  margin-bottom: 12px;
-  border-radius: 10px;
-  background: rgba(24, 26, 31, 0.34);
+  flex: 0 0 auto;
+  padding: 4px;
+  margin-bottom: 14px;
+  border-radius: 16px;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--page-text) 7%, transparent), transparent 44%),
+    color-mix(in srgb, var(--page-bg) 48%, transparent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--page-text) 7%, transparent),
+    inset 0 0 0 1px color-mix(in srgb, var(--page-text) 8%, transparent);
 }
 
 .music-tabs :deep(.el-tabs__nav-wrap) {
-  padding: 0 8px;
+  padding: 0 4px;
 }
 
 .music-tabs :deep(.el-tabs__nav-scroll) {
@@ -83,7 +126,7 @@
   flex: 1 1 0;
   justify-content: center;
   min-width: 0;
-  height: 36px;
+  height: 38px;
   padding: 0 10px;
   color: rgba(215, 218, 224, 0.68);
   font-size: 13px;
@@ -99,16 +142,42 @@
 .music-tabs :deep(.el-tabs__active-bar) {
   height: 2px;
   border-radius: 999px;
-  background: var(--page-accent);
+  background: linear-gradient(90deg, transparent, var(--page-accent), transparent);
+  opacity: 0.86;
 }
 
 .music-tabs :deep(.el-tabs__content) {
+  flex: 1 1 auto;
   min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.music-tabs :deep(.el-tab-pane) {
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.music-tabs :deep(.play-list-container),
+.music-tabs :deep(.my-playlist-panel),
+.music-tabs :deep(.top-list-panel) {
+  height: 100%;
+  min-height: 0;
+}
+
+.music-tabs :deep(.empty-state) {
+  min-height: 100%;
 }
 
 @media (max-width: 340px) {
+  .cloud-music-page {
+    padding: 8px 0 84px;
+  }
+
   .music-tabs {
     padding: 8px;
+    border-radius: 18px;
   }
 
   .music-tabs :deep(.el-tabs__item) {
