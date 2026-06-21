@@ -21,6 +21,7 @@
   --ranking-divider: var(--vscode-widget-border, rgba(171, 178, 191, 0.12));
   --ranking-focus: var(--vscode-focusBorder, #61afef);
   --ranking-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ranking-reveal-ease: cubic-bezier(0.16, 1, 0.3, 1);
 
   width: 100%;
   height: calc(100dvh - 104px);
@@ -78,6 +79,23 @@ button {
 
 .top-section {
   min-width: 0;
+  transform-origin: center top;
+}
+
+.scroll-reveal {
+  opacity: 0;
+  transform: translate3d(0, 86px, 0);
+  transition:
+    opacity 760ms var(--ranking-reveal-ease),
+    transform 980ms var(--ranking-reveal-ease);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.scroll-reveal.is-revealed {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  will-change: auto;
 }
 
 .section-heading {
@@ -770,6 +788,13 @@ button {
   .hero-fluid,
   .category-row {
     animation: none;
+  }
+
+  .scroll-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    will-change: auto;
   }
 
   .featured-hero,

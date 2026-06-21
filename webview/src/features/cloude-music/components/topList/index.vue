@@ -12,7 +12,12 @@
     </header>
 
     <div v-if="lists.length" class="ranking-content">
-      <section v-if="featuredTopLists.length" class="top-section featured-section">
+      <section
+        v-if="featuredTopLists.length"
+        v-reveal
+        class="top-section featured-section"
+        :style="getRevealStyle(0)"
+      >
         <div class="section-heading">
           <h2>榜单推荐</h2>
           <span>{{ featuredTopLists.length }}</span>
@@ -74,7 +79,12 @@
         </div>
       </section>
 
-      <section v-if="primaryOfficialTopLists.length" class="top-section official-section">
+      <section
+        v-if="primaryOfficialTopLists.length"
+        v-reveal
+        class="top-section official-section"
+        :style="getRevealStyle(1)"
+      >
         <div class="section-heading">
           <h2>官方榜</h2>
           <span>{{ primaryOfficialTopLists.length }}</span>
@@ -116,7 +126,12 @@
         </div>
       </section>
 
-      <section v-if="categoryGroups.length" class="top-section category-section">
+      <section
+        v-if="categoryGroups.length"
+        v-reveal
+        class="top-section category-section"
+        :style="getRevealStyle(2)"
+      >
         <div class="section-heading category-heading">
           <h2>分类浏览</h2>
           <span>{{ activeCategoryGroup?.items.length ?? 0 }}</span>
@@ -189,7 +204,7 @@
 
 <script lang="ts" setup>
 import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
-import type { CSSProperties } from "vue";
+import type { CSSProperties, Directive } from "vue";
 import { ElMessage } from "element-plus";
 import { VideoPlay } from "@element-plus/icons-vue";
 import { getDetailPlayList } from "../../api";
@@ -227,6 +242,7 @@ const isDocumentVisible = ref(!document.hidden);
 const firstTrackCovers = ref<Record<number, string>>({});
 const topListDetailCache = new Map<number, Song[]>();
 const topListDetailRequests = new Map<number, Promise<Song[]>>();
+const revealObservers = new WeakMap<HTMLElement, IntersectionObserver>();
 let detailRequestId = 0;
 
 const lists = computed(() => props.topList ?? []);
@@ -456,6 +472,48 @@ const retryTopList = () => {
 
 const getStaggerStyle = (index: number) => {
   return { "--item-index": Math.min(index, 3) } as CSSProperties;
+};
+
+const getRevealStyle = (index: number) => {
+  return { "--reveal-delay": `${Math.min(index, 4) * 140}ms` } as CSSProperties;
+};
+
+const vReveal: Directive<HTMLElement> = {
+  beforeMount(el) {
+    el.classList.add("scroll-reveal");
+  },
+  mounted(el) {
+    if (
+      !("IntersectionObserver" in window) ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      el.classList.add("is-revealed");
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      entries => {
+        if (!entries.some(entry => entry.isIntersecting)) return;
+
+        el.classList.add("is-revealed");
+        observer.unobserve(el);
+        observer.disconnect();
+        revealObservers.delete(el);
+      },
+      {
+        root: el.closest(".top-list-panel"),
+        rootMargin: "0px 0px -10% 0px",
+        threshold: 0.06,
+      }
+    );
+
+    revealObservers.set(el, observer);
+    observer.observe(el);
+  },
+  beforeUnmount(el) {
+    revealObservers.get(el)?.disconnect();
+    revealObservers.delete(el);
+  },
 };
 
 const syncDocumentVisibility = () => {
