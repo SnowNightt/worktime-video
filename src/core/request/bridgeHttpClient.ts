@@ -9,6 +9,42 @@ interface CustomInternalAxiosRequestConfig extends InternalAxiosRequestConfig {
   isTimestamp?: boolean;
 }
 const COOKIE_KEY = "music.cookie";
+
+const COOKIE_ATTRIBUTE_NAMES = new Set([
+  "domain",
+  "expires",
+  "httponly",
+  "max-age",
+  "path",
+  "samesite",
+  "secure",
+]);
+
+function normalizeCookie(cookie: string): string {
+  const cookieJar = new Map<string, string>();
+
+  cookie
+    .replace(/^cookie:\s*/i, "")
+    .split(";")
+    .map(item => item.trim())
+    .filter(Boolean)
+    .forEach(item => {
+      const splitIndex = item.indexOf("=");
+      if (splitIndex <= 0) {
+        return;
+      }
+
+      const name = item.slice(0, splitIndex).trim();
+      if (!name || COOKIE_ATTRIBUTE_NAMES.has(name.toLowerCase())) {
+        return;
+      }
+
+      cookieJar.set(name, `${name}=${item.slice(splitIndex + 1).trim()}`);
+    });
+
+  return Array.from(cookieJar.values()).join("; ");
+}
+
 export class BridgeHttpClient {
   private instance: AxiosInstance;
   constructor(private readonly secrets: vscode.SecretStorage) {
@@ -17,6 +53,18 @@ export class BridgeHttpClient {
       timeout: 30000,
     });
     this.interceptors();
+  }
+  private async saveCookie(response: axios.AxiosResponse) {
+    if (
+      response.config.url === "/login/qr/check" &&
+      response.data.code === 803 &&
+      typeof response.data.cookie === "string"
+    ) {
+      const cookie = normalizeCookie(response.data.cookie);
+      if (cookie) {
+        await this.secrets.store(COOKIE_KEY, cookie);
+      }
+    }
   }
   private interceptors() {
     this.interceptorsRequest();
@@ -58,8 +106,9 @@ export class BridgeHttpClient {
         // 请求头加cookie
         const cookie = await this.secrets.get(COOKIE_KEY);
         if (cookie) {
-          config.headers.Cookie = cookie;
+          config.headers.set("Cookie", cookie);
         }
+
         return config;
       },
       error => {
@@ -71,11 +120,7 @@ export class BridgeHttpClient {
     // 添加响应拦截器
     this.instance.interceptors.response.use(
       async (response: axios.AxiosResponse) => {
-        const setCookie = response.headers["set-cookie"];
-        if (setCookie) {
-          const cookie = setCookie.map(item => item.split(";")[0]).join("; ");
-          await this.secrets.store(COOKIE_KEY, cookie);
-        }
+        await this.saveCookie(response);
         return response;
       },
       error => {
