@@ -16,7 +16,11 @@
           :src="topListMeta.coverImgUrl"
           alt=""
         />
-        <span v-else class="dialog-chart-cover dialog-chart-cover-placeholder" aria-hidden="true"></span>
+        <span
+          v-else
+          class="dialog-chart-cover dialog-chart-cover-placeholder"
+          aria-hidden="true"
+        ></span>
 
         <div class="music-dialog-title-group">
           <h2 :title="topListMeta?.name || '歌曲列表'">
@@ -31,7 +35,12 @@
     </template>
 
     <section class="music-list-panel" :aria-busy="status === 'loading'">
-      <div v-if="status === 'loading'" class="music-list-skeleton" role="status" aria-label="正在加载歌曲">
+      <div
+        v-if="status === 'loading'"
+        class="music-list-skeleton"
+        role="status"
+        aria-label="正在加载歌曲"
+      >
         <div v-for="index in 7" :key="index" class="skeleton-row">
           <span class="skeleton-cover"></span>
           <span class="skeleton-lines">
@@ -71,7 +80,9 @@
           @keydown.enter.prevent="handleSelectMusic(row)"
           @keydown.space.prevent="handleSelectMusic(row)"
         >
-          <span class="song-index" aria-hidden="true">{{ String(index + 1).padStart(2, "0") }}</span>
+          <span class="song-index" aria-hidden="true">{{
+            String(index + 1).padStart(2, "0")
+          }}</span>
           <img v-if="row.albumPic" class="song-cover" :src="row.albumPic" alt="" />
           <span v-else class="song-cover song-cover-placeholder" aria-hidden="true"></span>
 
@@ -103,7 +114,7 @@ import type { Song, ToplistDetailStatus, ToplistDialogMeta } from "../../type";
 interface Props {
   musicList: Song[];
   topListMeta: ToplistDialogMeta | null;
-  status: ToplistDetailStatus;
+  status?: ToplistDetailStatus;
 }
 
 interface MusicItem {

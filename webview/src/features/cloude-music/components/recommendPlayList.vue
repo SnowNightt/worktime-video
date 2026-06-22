@@ -23,13 +23,17 @@
       </div>
     </article>
   </div>
-  <MusicListCard v-model="musicListVisible" :musicList="musicList"></MusicListCard>
+  <MusicListCard
+    v-model="musicListVisible"
+    :musicList="musicList"
+    :top-list-meta="selectedMusicList!"
+  ></MusicListCard>
 </template>
 
 <script lang="ts" setup>
 import { ref } from "vue";
 import { getDetailPlayList } from "../api";
-import { RecommendPlaylistItem, Song } from "../type";
+import { RecommendPlaylistItem, Song, ToplistDialogMeta } from "../type";
 import { ElMessage } from "element-plus";
 import MusicListCard from "./musicListCard/index.vue";
 
@@ -38,7 +42,7 @@ interface Props {
 }
 
 defineProps<Props>();
-
+const selectedMusicList = ref<ToplistDialogMeta>();
 const musicListVisible = ref(false);
 const musicList = ref<Song[]>([]);
 
@@ -67,6 +71,14 @@ const handleClickList = async (event: PointerEvent) => {
   if (res.code) {
     musicList.value = res.playlist?.tracks;
     musicListVisible.value = true;
+    selectedMusicList.value = {
+      id: res.playlist.id,
+      name: res.playlist.name,
+      coverImgUrl: res.playlist.coverImgUrl,
+      updateFrequency: res.playlist.updateFrequency as string,
+      trackCount: res.playlist.trackCount,
+    };
+    console.log(11111, res);
   } else {
     musicList.value = [];
     ElMessage.warning("获取歌曲列表失败~");

@@ -48,20 +48,24 @@
     </div>
   </section>
 
-  <MusicListCard v-model="musicListVisible" :musicList="musicList"></MusicListCard>
+  <MusicListCard
+    v-model="musicListVisible"
+    :musicList="musicList"
+    :top-list-meta="selectedMusicList!"
+  ></MusicListCard>
 </template>
 <script lang="ts" setup>
 import { computed, ref } from "vue";
 import { ElMessage } from "element-plus";
 import { FolderOpened, Headset, List } from "@element-plus/icons-vue";
 import { getDetailPlayList } from "../../api";
-import { Song, UserPlaylistItem } from "../../type";
+import { Song, ToplistDialogMeta, UserPlaylistItem } from "../../type";
 import MusicListCard from "../musicListCard/index.vue";
 
 const props = defineProps<{
   myPlayList: UserPlaylistItem[];
 }>();
-
+const selectedMusicList = ref<ToplistDialogMeta>();
 const musicListVisible = ref(false);
 const musicList = ref<Song[]>([]);
 
@@ -128,6 +132,13 @@ const openPlaylist = async (id: number) => {
   if (res.code === 200) {
     musicList.value = res.playlist?.tracks ?? [];
     musicListVisible.value = true;
+    selectedMusicList.value = {
+      id: res.playlist.id,
+      name: res.playlist.name,
+      coverImgUrl: res.playlist.coverImgUrl,
+      updateFrequency: res.playlist.updateFrequency as string,
+      trackCount: res.playlist.trackCount,
+    };
   } else {
     musicList.value = [];
     ElMessage.warning("获取歌曲列表失败~");
