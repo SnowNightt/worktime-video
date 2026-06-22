@@ -76,9 +76,14 @@ const handleClickList = async (event: PointerEvent) => {
 
 <style lang="scss" scoped>
 .play-list-container {
+  --playlist-grid-gap: 10px;
+
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(min(112px, max(0px, calc((100% - var(--playlist-grid-gap)) / 2))), 1fr)
+  );
+  gap: var(--playlist-grid-gap);
   height: calc(100dvh - 122px);
   padding: 2px 2px 18px;
   grid-auto-rows: max-content;
