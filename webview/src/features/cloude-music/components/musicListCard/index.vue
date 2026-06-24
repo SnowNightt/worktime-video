@@ -7,6 +7,7 @@
     class="music-dialog"
     modal-class="music-dialog-overlay"
     align-center
+    :lock-scroll="false"
   >
     <template #header>
       <div class="music-dialog-header">
