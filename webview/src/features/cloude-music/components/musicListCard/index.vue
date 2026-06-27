@@ -65,41 +65,68 @@
         <span>这个榜单目前还没有可播放内容</span>
       </div>
 
-      <div v-else class="song-list" role="list" aria-label="榜单歌曲">
-        <button
-          v-for="(row, index) in tableConfig.tableData"
-          :key="row.id"
-          class="song-row"
-          :class="{ 'is-playing': isCurrentSong(row.id) }"
-          type="button"
-          role="listitem"
-          :aria-label="`${row.title}，${row.singer}，双击或按 Enter 播放`"
-          :aria-current="isCurrentSong(row.id) ? 'true' : undefined"
-          title="双击或按 Enter 播放"
-          @dblclick="handleSelectMusic(row)"
-          @keydown.enter.prevent="handleSelectMusic(row)"
-          @keydown.space.prevent="handleSelectMusic(row)"
-        >
-          <span class="song-index" aria-hidden="true">{{
-            String(index + 1).padStart(2, "0")
-          }}</span>
-          <img v-if="row.albumPic" class="song-cover" :src="row.albumPic" alt="" />
-          <span v-else class="song-cover song-cover-placeholder" aria-hidden="true"></span>
-
-          <span class="song-info">
-            <span class="song-title">{{ row.title }}</span>
-            <span class="song-secondary">
-              <span class="song-artist">{{ row.singer }}</span>
-              <span class="song-album">{{ row.album }}</span>
+      <el-table
+        v-else
+        class="song-table"
+        :data="tableConfig.tableData"
+        height="100%"
+        width="100%"
+        row-key="id"
+        :show-header="false"
+        :row-class-name="getRowClassName"
+        aria-label="榜单歌曲"
+        @row-dblclick="handleSelectMusic"
+        :tooltip-options="{
+          appendTo: 'body',
+          popperClass: 'music-table-tooltip',
+        }"
+      >
+        <el-table-column label="#" width="50" align="right" class-name="song-index-column">
+          <template #default="{ $index }">
+            <span class="song-index" aria-hidden="true">
+              {{ String($index + 1).padStart(2, "0") }}
             </span>
-          </span>
+          </template>
+        </el-table-column>
 
-          <span v-if="isCurrentSong(row.id)" class="playing-indicator" aria-label="正在播放">
-            <i></i><i></i><i></i>
-          </span>
-          <time v-else class="song-duration">{{ row.duration }}</time>
-        </button>
-      </div>
+        <el-table-column
+          prop="title"
+          label="歌曲"
+          min-width="260"
+          class-name="song-main-column"
+          :show-overflow-tooltip="true"
+        >
+          <template #default="{ row }">
+            <div class="song-cell" :title="`${row.title}，${row.singer}`">
+              <img v-if="row.albumPic" class="song-cover" :src="row.albumPic" alt="" />
+              <span v-else class="song-cover song-cover-placeholder" aria-hidden="true"></span>
+
+              <span class="song-info">
+                <span class="song-title">{{ row.title }}</span>
+                <span class="song-secondary">
+                  <span class="song-artist">{{ row.singer }}</span>
+                  <span class="song-album">{{ row.album }}</span>
+                </span>
+              </span>
+            </div>
+          </template>
+        </el-table-column>
+
+        <el-table-column
+          prop="duration"
+          label="时长"
+          width="64"
+          align="right"
+          class-name="song-duration-column"
+        >
+          <template #default="{ row }">
+            <span v-if="isCurrentSong(row.id)" class="playing-indicator" aria-label="正在播放">
+              <i></i><i></i><i></i>
+            </span>
+            <time v-else class="song-duration">{{ row.duration }}</time>
+          </template>
+        </el-table-column>
+      </el-table>
     </section>
   </el-dialog>
 </template>
@@ -172,6 +199,10 @@ const handleClose = () => {
 };
 
 const isCurrentSong = (id: number) => currentSongInfo.value?.id === id;
+
+const getRowClassName = ({ row }: { row: MusicItem }) => {
+  return isCurrentSong(row.id) ? "is-playing" : "";
+};
 
 const handleSelectMusic = async (row: MusicItem) => {
   await getMusicUrl(row.id, props.musicList);

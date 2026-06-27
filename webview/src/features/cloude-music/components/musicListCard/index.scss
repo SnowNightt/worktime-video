@@ -134,7 +134,6 @@
   background: transparent;
 }
 
-.song-list,
 .music-list-skeleton {
   height: 100%;
   overflow-x: hidden;
@@ -143,52 +142,117 @@
   scrollbar-width: thin;
 }
 
-.song-list::-webkit-scrollbar,
 .music-list-skeleton::-webkit-scrollbar {
   width: 6px;
 }
 
-.song-list::-webkit-scrollbar-thumb,
 .music-list-skeleton::-webkit-scrollbar-thumb {
   border-radius: 6px;
   background: color-mix(in srgb, var(--dialog-muted) 45%, transparent);
 }
 
-.song-row {
-  position: relative;
-  display: grid;
-  width: 100%;
-  min-width: 0;
-  min-height: 62px;
-  grid-template-columns: 26px 38px minmax(0, 1fr) 50px;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 14px;
-  cursor: pointer;
-  border: 0;
-  border-bottom: 1px solid color-mix(in srgb, var(--dialog-border) 60%, transparent);
+.music-dialog .song-table {
+  height: 100%;
   color: var(--dialog-text);
   background: transparent;
-  font: inherit;
-  text-align: left;
+  --el-bg-color: transparent;
+  --el-border-color-lighter: transparent;
+  --el-fill-color-blank: transparent;
+  --el-table-border-color: transparent;
+  --el-table-current-row-bg-color: var(--dialog-active);
+  --el-table-header-bg-color: transparent;
+  --el-table-header-text-color: var(--dialog-muted);
+  --el-table-row-border-color: transparent;
+  --el-table-row-hover-bg-color: transparent;
+  --el-table-text-color: var(--dialog-text);
+  --el-table-tr-bg-color: transparent;
+  --el-text-color-regular: var(--dialog-text);
+}
+
+.music-dialog .song-table,
+.music-dialog .song-table tr,
+.music-dialog .song-table th,
+.music-dialog .song-table td,
+.music-dialog .song-table .el-table__cell,
+.music-dialog .song-table .el-table__inner-wrapper,
+.music-dialog .song-table .el-table__body-wrapper,
+.music-dialog .song-table .el-table__header-wrapper {
+  background: transparent;
+}
+
+.music-dialog .song-table::before,
+.music-dialog .song-table .el-table__inner-wrapper::before {
+  display: none;
+}
+
+.music-dialog .song-table .el-scrollbar__bar.is-vertical {
+  width: 6px;
+}
+
+.music-dialog .song-table .el-scrollbar__thumb {
+  background: color-mix(in srgb, var(--dialog-muted) 45%, transparent);
+  opacity: 1;
+}
+
+.music-dialog .song-table .el-table__body tr {
+  cursor: pointer;
+}
+
+.music-dialog .song-table .el-table__body tr > td.el-table__cell {
+  height: 62px;
+  padding: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--dialog-border) 60%, transparent);
+  color: var(--dialog-text);
   transition:
     background-color 160ms var(--dialog-ease),
     box-shadow 160ms var(--dialog-ease);
+}
 
-  &:hover {
-    background: var(--dialog-hover);
-  }
+.music-dialog .song-table .el-table__body tr:hover > td.el-table__cell {
+  background: var(--dialog-hover) !important;
+}
 
-  &:focus-visible {
-    z-index: 1;
-    outline: 2px solid var(--dialog-focus);
-    outline-offset: -2px;
-  }
+.music-dialog .song-table .el-table__body tr.is-playing > td.el-table__cell {
+  background: var(--dialog-active) !important;
+}
 
-  &.is-playing {
-    background: var(--dialog-active);
-    box-shadow: inset 3px 0 0 var(--dialog-focus);
-  }
+.music-dialog .song-table .el-table__body tr.is-playing > td.el-table__cell:first-child {
+  box-shadow: inset 3px 0 0 var(--dialog-focus);
+}
+
+.music-dialog .song-table .cell {
+  display: flex;
+  min-width: 0;
+  height: 100%;
+  align-items: center;
+  overflow: hidden;
+  padding: 8px 0;
+  line-height: 1.2;
+}
+
+.music-dialog .song-table .song-index-column .cell {
+  justify-content: flex-end;
+  padding-right: 0;
+  padding-left: 14px;
+}
+
+.music-dialog .song-table .song-main-column .cell {
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.music-dialog .song-table .song-duration-column .cell {
+  justify-content: flex-end;
+  padding-right: 14px;
+  padding-left: 0;
+}
+
+.song-cell {
+  display: flex;
+  min-width: 0;
+  width: 100%;
+  align-items: center;
+  gap: 10px;
 }
 
 .song-index {
@@ -267,10 +331,13 @@
 }
 
 .song-duration {
+  display: block;
   justify-self: end;
+  margin-left: auto;
   color: var(--dialog-muted);
   font-size: 10px;
   font-variant-numeric: tabular-nums;
+  line-height: 1.2;
 }
 
 .playing-indicator {
@@ -281,6 +348,7 @@
   align-items: end;
   justify-content: center;
   gap: 2px;
+  margin-left: auto;
   color: var(--dialog-focus);
 
   i {
@@ -437,7 +505,7 @@
     animation: none;
   }
 
-  .song-row,
+  .music-dialog .song-table .el-table__body tr > td.el-table__cell,
   .music-list-state button,
   .music-dialog .el-dialog__headerbtn {
     transition-duration: 0.01ms;
@@ -445,7 +513,7 @@
 }
 
 body.vscode-high-contrast .music-dialog,
-body.vscode-high-contrast .song-row,
+body.vscode-high-contrast .music-dialog .song-table .el-table__body tr > td.el-table__cell,
 body.vscode-high-contrast .music-list-state button {
   border-color: var(--vscode-contrastBorder, var(--dialog-focus));
 }
