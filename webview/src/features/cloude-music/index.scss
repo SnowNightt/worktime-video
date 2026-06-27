@@ -1,4 +1,5 @@
 .cloud-music-page {
+  --audio-bar-space: 0px;
   --page-bg: var(--worktime-bg, var(--vscode-sideBar-background, #1f2329));
   --page-surface: color-mix(in srgb, var(--page-bg) 76%, var(--page-text) 24%);
   --page-surface-soft: color-mix(in srgb, var(--page-bg) 88%, var(--page-text) 12%);
@@ -22,12 +23,17 @@
   box-sizing: border-box;
   height: 100%;
   min-height: 0;
-  padding: 12px 0 88px;
+  padding: 12px 0 var(--audio-bar-space);
   overflow: hidden;
   position: relative;
   isolation: isolate;
   color: var(--page-text);
   background: transparent;
+  transition: padding-bottom 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.cloud-music-page.has-audio-bar {
+  --audio-bar-space: 88px;
 }
 
 .cloud-music-page::before {
@@ -90,6 +96,13 @@
     0 22px 48px rgba(5, 8, 12, 0.18);
   backdrop-filter: blur(18px) saturate(112%);
   -webkit-backdrop-filter: blur(18px) saturate(112%);
+  transition:
+    transform 320ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 320ms ease;
+}
+
+.cloud-music-page.has-audio-bar .music-tabs {
+  transform: translateY(-2px);
 }
 
 .music-tabs :deep(.el-tabs__header) {
@@ -170,9 +183,32 @@
   min-height: 100%;
 }
 
+:global(.audio-bar-enter-active),
+:global(.audio-bar-leave-active) {
+  transition:
+    transform 320ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 220ms ease;
+}
+
+:global(.audio-bar-enter-from),
+:global(.audio-bar-leave-to) {
+  transform: translateY(110%);
+  opacity: 0;
+}
+
+:global(.audio-bar-enter-to),
+:global(.audio-bar-leave-from) {
+  transform: translateY(0);
+  opacity: 1;
+}
+
 @media (max-width: 340px) {
   .cloud-music-page {
-    padding: 8px 0 84px;
+    padding-top: 8px;
+  }
+
+  .cloud-music-page.has-audio-bar {
+    --audio-bar-space: 84px;
   }
 
   .music-tabs {

@@ -1,5 +1,5 @@
 <template>
-  <section class="cloud-music-page">
+  <section class="cloud-music-page" :class="{ 'has-audio-bar': hasCurrentSong }">
     <TopBar @visibleLoginCard="handleVisibleLoginCard" @successLogout="handleLogout"></TopBar>
     <el-tabs v-model="activeName" class="music-tabs">
       <el-tab-pane label="歌单广场" name="playLists">
@@ -13,7 +13,9 @@
       </el-tab-pane>
     </el-tabs>
   </section>
-  <AudioBar></AudioBar>
+  <Transition name="audio-bar">
+    <AudioBar v-if="hasCurrentSong"></AudioBar>
+  </Transition>
   <LoginCard v-model="isVisible" @loginSuccess="handleLoginSuccess"></LoginCard>
 </template>
 
@@ -27,9 +29,11 @@ import AudioBar from "./components/audioBar.vue";
 import TopBar from "./components/topBar.vue";
 import { useUserStore } from "./hooks/useUserStore";
 import { useMusicTabs } from "./hooks/useMusicTabs";
+import { useAudioPlayer } from "./hooks/useAudioPlayer";
 
 const { getLoginStatus } = useUserStore();
 const { activeName, recommendPlayList, myPlayList, topList, loadCurrentList } = useMusicTabs();
+const { hasCurrentSong } = useAudioPlayer();
 const isVisible = ref(false);
 
 const handleVisibleLoginCard = () => {

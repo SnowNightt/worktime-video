@@ -105,6 +105,11 @@ onMounted(() => {
   if (songArtistRef.value) {
     songTextResizeObserver.observe(songArtistRef.value);
   }
+  // 组件创建时currentUrl已经有值，watch无法监听。
+  if (currentUrl.value && audioRef.value) {
+    audioRef.value.src = currentUrl.value;
+    void switchAudioStatus();
+  }
 });
 
 onBeforeUnmount(() => {
@@ -214,8 +219,16 @@ const handleSwitchStatus = async () => {
   overflow: hidden;
   border-radius: 20px;
   background:
-    linear-gradient(135deg, color-mix(in srgb, var(--vscode-foreground, #d7dae0) 13%, transparent), transparent 42%),
-    linear-gradient(180deg, color-mix(in srgb, var(--worktime-bg, #1f2329) 62%, transparent), color-mix(in srgb, var(--worktime-bg, #1f2329) 82%, transparent)),
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--vscode-foreground, #d7dae0) 13%, transparent),
+      transparent 42%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--worktime-bg, #1f2329) 62%, transparent),
+      color-mix(in srgb, var(--worktime-bg, #1f2329) 82%, transparent)
+    ),
     color-mix(in srgb, var(--worktime-bg, #1f2329) 76%, var(--vscode-foreground, #d7dae0) 24%);
   box-shadow:
     inset 0 1px 0 color-mix(in srgb, var(--vscode-foreground, #d7dae0) 16%, transparent),

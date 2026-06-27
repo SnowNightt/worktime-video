@@ -41,6 +41,7 @@ export const useAudioPlayer = (
   const songArtist = computed(
     () => currentSongInfo.value?.ar.map(item => item.name).join(" / ") || "未知歌手"
   );
+  const hasCurrentSong = computed(() => Boolean(currentUrl.value && currentSongInfo.value));
   // 获取音乐url
   const getMusicUrl = async (id: number, musicList?: Song[]) => {
     if (musicList) {
@@ -140,6 +141,7 @@ export const useAudioPlayer = (
     progressPercent,
     currentTime,
     currentSongInfo,
+    hasCurrentSong,
     getMusicUrl,
     switchPlayingStatus,
     handlePrevMusic,
