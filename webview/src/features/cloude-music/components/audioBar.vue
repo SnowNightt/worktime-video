@@ -247,8 +247,8 @@ const handleSwitchStatus = async () => {
     position: relative;
     display: grid;
     flex: 0 0 62px;
-    width: 62px;
-    height: 62px;
+    width: 42px;
+    height: 42px;
     place-items: center;
 
     &::before {
@@ -455,6 +455,9 @@ const handleSwitchStatus = async () => {
   }
 
   .progress-bar {
+    --progress-active-start: #a7f3d0;
+    --progress-active-mid: #67e8f9;
+    --progress-active-end: #bae6fd;
     position: absolute;
     left: 18px;
     right: 18px;
@@ -465,32 +468,28 @@ const handleSwitchStatus = async () => {
     border-radius: 999px;
     cursor: pointer;
     background-color: color-mix(in srgb, var(--vscode-foreground, #d7dae0) 15%, transparent);
+    transition:
+      height 0.16s ease,
+      top 0.16s ease,
+      background-color 0.16s ease;
     .progress-active {
       height: 100%;
       border-radius: inherit;
       background: linear-gradient(
         90deg,
-        color-mix(in srgb, var(--vscode-focusBorder, #61afef) 72%, #f5f7fb 28%),
-        var(--vscode-focusBorder, #61afef)
+        var(--progress-active-start) 0%,
+        var(--progress-active-mid) 52%,
+        var(--progress-active-end) 100%
       );
+      box-shadow: 0 0 10px color-mix(in srgb, var(--progress-active-start) 44%, transparent);
     }
   }
-  .progress-bar:hover .progress-active {
-    height: 100%;
-    // box-shadow: 2px 0 2px 4px rgba(140, 140, 140, 0.35);
+  .progress-bar:hover {
+    top: 5px;
+    height: 6px;
+    background-color: color-mix(in srgb, var(--vscode-foreground, #d7dae0) 24%, transparent);
   }
 }
-
-@media (max-width: 340px) {
-  .audio-container {
-    left: 8px;
-    right: 8px;
-    bottom: 8px;
-    padding-inline: 10px;
-    border-radius: 17px;
-  }
-}
-
 @keyframes cover-spin {
   to {
     transform: rotate(360deg);
