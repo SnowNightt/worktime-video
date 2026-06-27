@@ -3,7 +3,6 @@
     v-model="dialogVisible"
     width="min(520px, calc(100vw - 20px))"
     :before-close="handleClose"
-    top="24px"
     class="music-dialog"
     modal-class="music-dialog-overlay"
     align-center

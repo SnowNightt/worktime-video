@@ -1,5 +1,8 @@
 .music-dialog {
-  --dialog-background: var(--vscode-editorWidget-background, var(--vscode-sideBar-background, #252932));
+  --dialog-background: var(
+    --vscode-editorWidget-background,
+    var(--vscode-sideBar-background, #252932)
+  );
   --dialog-surface: var(--vscode-list-inactiveSelectionBackground, rgba(255, 255, 255, 0.045));
   --dialog-hover: var(--vscode-list-hoverBackground, rgba(255, 255, 255, 0.075));
   --dialog-active: var(--vscode-list-activeSelectionBackground, rgba(97, 175, 239, 0.16));
@@ -14,8 +17,9 @@
   border: 1px solid var(--dialog-border);
   border-radius: 12px;
   color: var(--dialog-text);
-  background: var(--dialog-background);
+  background: color-mix(in srgb, var(--dialog-background) 72%, transparent);
   box-shadow: 0 24px 58px rgba(0, 0, 0, 0.38);
+  backdrop-filter: blur(18px) saturate(112%);
 }
 
 .music-dialog-overlay {
@@ -127,6 +131,7 @@
   min-height: 320px;
   overflow: hidden;
   background: var(--dialog-background);
+  background: transparent;
 }
 
 .song-list,
@@ -373,7 +378,12 @@
     display: block;
     width: 48%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--dialog-text) 12%, transparent), transparent);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in srgb, var(--dialog-text) 12%, transparent),
+      transparent
+    );
     content: "";
     animation: skeleton-shimmer 1.4s ease-in-out infinite;
     transform: translateX(-140%);
@@ -416,69 +426,6 @@
 @keyframes skeleton-shimmer {
   to {
     transform: translateX(260%);
-  }
-}
-
-@media (max-width: 360px) {
-  .music-dialog-overlay .el-overlay-dialog {
-    overflow: hidden;
-  }
-
-  .music-dialog {
-    position: fixed;
-    right: 0;
-    bottom: 65px;
-    left: 0;
-    width: 100% !important;
-    max-height: calc(100dvh - 81px);
-    margin: 0 !important;
-    border-right: 0;
-    border-left: 0;
-    border-radius: 12px;
-  }
-
-  .music-dialog .el-dialog__header {
-    padding: 12px 12px 10px;
-  }
-
-  .music-dialog-header {
-    grid-template-columns: 42px minmax(0, 1fr);
-    gap: 9px;
-  }
-
-  .dialog-chart-cover {
-    width: 42px;
-    height: 42px;
-  }
-
-  .music-list-panel {
-    height: min(66dvh, 520px);
-    min-height: 280px;
-  }
-
-  .song-row {
-    min-height: 58px;
-    grid-template-columns: 22px 36px minmax(0, 1fr) 42px;
-    gap: 8px;
-    padding: 7px 10px;
-  }
-
-  .song-cover {
-    width: 36px;
-    height: 36px;
-  }
-
-  .song-album {
-    display: none;
-  }
-
-  .song-secondary {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .skeleton-row {
-    padding-right: 10px;
-    padding-left: 40px;
   }
 }
 
