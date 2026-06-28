@@ -44,19 +44,22 @@ const handleLogout = async () => {
 <style lang="scss" scoped>
 .top-bar-container {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
   min-height: 42px;
-  padding: 0 12px;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 0;
+  padding-bottom: 0;
 
   .login-status {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
     height: 100%;
     min-height: 34px;
     width: 34px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
 
     :deep(.el-dropdown) {
       display: inline-flex;
@@ -66,10 +69,11 @@ const handleLogout = async () => {
     }
 
     .avatar {
-      width: 28px;
       height: 28px;
+      width: 28px;
+      border-radius: 9999px;
       object-fit: cover;
-      border-radius: 50%;
+
       border: 1px solid rgba(171, 178, 191, 0.32);
       background: rgba(24, 26, 31, 0.62);
       transition: border-color 0.18s ease;
@@ -84,23 +88,27 @@ const handleLogout = async () => {
 
 :global(.cloud-music-user-dropdown.el-popper),
 :global(.cloud-music-user-dropdown.el-popper.is-light) {
-  border: 1px solid rgba(171, 178, 191, 0.2);
   border-radius: 10px;
+
+  border: 1px solid rgba(171, 178, 191, 0.2);
   background: rgba(24, 26, 31, 0.96);
   box-shadow: 0 14px 32px rgba(0, 0, 0, 0.36);
 }
 
 :global(.cloud-music-user-dropdown .el-dropdown-menu) {
   min-width: 104px;
+  border-width: 0;
+  background-color: transparent;
   padding: 6px;
-  border: 0;
-  background: transparent;
   box-shadow: none;
+
+  background: transparent;
 }
 
 :global(.cloud-music-user-dropdown .el-dropdown-menu__item) {
   height: 32px;
   border-radius: 7px;
+
   color: rgba(215, 218, 224, 0.78);
   font-weight: 600;
   transition:

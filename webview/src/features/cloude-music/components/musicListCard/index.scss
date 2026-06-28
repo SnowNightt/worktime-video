@@ -13,9 +13,14 @@
   --dialog-ease: cubic-bezier(0.22, 1, 0.36, 1);
 
   position: relative;
+
+
   overflow: hidden;
-  border: 1px solid var(--dialog-border);
+
+
   border-radius: 12px;
+
+  border: 1px solid var(--dialog-border);
   color: var(--dialog-text);
   background: color-mix(in srgb, var(--dialog-background) 72%, transparent);
   box-shadow: 0 24px 58px rgba(0, 0, 0, 0.38);
@@ -34,8 +39,12 @@
 }
 
 .music-dialog .el-dialog__header {
-  padding: 14px 16px 12px;
   margin: 0;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 14px;
+  padding-bottom: 12px;
+
   border-bottom: 1px solid color-mix(in srgb, var(--dialog-border) 74%, transparent);
 }
 
@@ -46,10 +55,11 @@
 .music-dialog .el-dialog__headerbtn {
   top: 10px;
   right: 10px;
-  width: 30px;
   height: 30px;
-  border: 0;
+  width: 30px;
   border-radius: 7px;
+  border-width: 0;
+
   background: transparent;
   transition: background-color 160ms var(--dialog-ease);
 }
@@ -71,19 +81,21 @@
 .music-dialog-header {
   display: grid;
   min-width: 0;
-  grid-template-columns: 48px minmax(0, 1fr);
   align-items: center;
   gap: 11px;
   padding-right: 34px;
+
+  grid-template-columns: 48px minmax(0, 1fr);
 }
 
 .dialog-chart-cover {
   display: block;
-  width: 48px;
   height: 48px;
-  object-fit: cover;
-  border: 1px solid color-mix(in srgb, var(--dialog-border) 84%, transparent);
+  width: 48px;
   border-radius: 8px;
+  object-fit: cover;
+
+  border: 1px solid color-mix(in srgb, var(--dialog-border) 84%, transparent);
   background: var(--dialog-surface);
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
 }
@@ -100,8 +112,8 @@
   h2,
   p,
   span {
-    min-width: 0;
     margin: 0;
+    min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -118,6 +130,7 @@
   p {
     display: flex;
     gap: 8px;
+
     color: var(--dialog-muted);
     font-size: 11px;
     font-variant-numeric: tabular-nums;
@@ -127,9 +140,10 @@
 
 .music-list-panel {
   position: relative;
+  overflow: hidden;
+
   height: min(70vh, 560px);
   min-height: 320px;
-  overflow: hidden;
   background: var(--dialog-background);
   background: transparent;
 }
@@ -138,6 +152,7 @@
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
+
   scrollbar-color: color-mix(in srgb, var(--dialog-muted) 45%, transparent) transparent;
   scrollbar-width: thin;
 }
@@ -153,6 +168,7 @@
 
 .music-dialog .song-table {
   height: 100%;
+
   color: var(--dialog-text);
   background: transparent;
   --el-bg-color: transparent;
@@ -222,11 +238,13 @@
 
 .music-dialog .song-table .cell {
   display: flex;
-  min-width: 0;
   height: 100%;
+  min-width: 0;
   align-items: center;
   overflow: hidden;
-  padding: 8px 0;
+  padding-top: 8px;
+  padding-bottom: 8px;
+
   line-height: 1.2;
 }
 
@@ -249,8 +267,8 @@
 
 .song-cell {
   display: flex;
-  min-width: 0;
   width: 100%;
+  min-width: 0;
   align-items: center;
   gap: 10px;
 }
@@ -264,10 +282,11 @@
 
 .song-cover {
   display: block;
-  width: 38px;
   height: 38px;
-  object-fit: cover;
+  width: 38px;
   border-radius: 7px;
+  object-fit: cover;
+
   background: var(--dialog-surface);
 }
 
@@ -305,9 +324,10 @@
 
 .song-secondary {
   display: grid;
-  grid-template-columns: minmax(0, auto) minmax(0, 1fr);
   align-items: center;
   gap: 7px;
+
+  grid-template-columns: minmax(0, auto) minmax(0, 1fr);
   color: var(--dialog-muted);
   font-size: 10px;
   line-height: 1.2;
@@ -321,9 +341,10 @@
     position: absolute;
     top: 50%;
     left: 0;
-    width: 2px;
     height: 2px;
-    border-radius: 50%;
+    width: 2px;
+    border-radius: 9999px;
+
     background: currentColor;
     content: "";
     transform: translateY(-50%);
@@ -331,9 +352,10 @@
 }
 
 .song-duration {
+  margin-left: auto;
   display: block;
   justify-self: end;
-  margin-left: auto;
+
   color: var(--dialog-muted);
   font-size: 10px;
   font-variant-numeric: tabular-nums;
@@ -341,21 +363,23 @@
 }
 
 .playing-indicator {
+  margin-left: auto;
   display: flex;
-  justify-self: end;
-  width: 22px;
   height: 18px;
-  align-items: end;
+  width: 22px;
+  align-items: flex-end;
   justify-content: center;
   gap: 2px;
-  margin-left: auto;
+  justify-self: end;
+
   color: var(--dialog-focus);
 
   i {
     display: block;
     width: 2px;
-    height: 45%;
     border-radius: 2px;
+
+    height: 45%;
     background: currentColor;
     animation: playing-bar 820ms ease-in-out infinite alternate;
 
@@ -378,8 +402,9 @@
   justify-items: center;
   gap: 7px;
   padding: 24px;
-  color: var(--dialog-muted);
   text-align: center;
+
+  color: var(--dialog-muted);
 
   strong {
     color: var(--dialog-text);
@@ -391,15 +416,19 @@
   }
 
   button {
+    margin-top: 7px;
     display: inline-flex;
+    min-height: 32px;
+    cursor: pointer;
     align-items: center;
     gap: 6px;
-    min-height: 32px;
-    margin-top: 7px;
-    padding: 0 12px;
-    cursor: pointer;
-    border: 1px solid var(--dialog-border);
     border-radius: 7px;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 0;
+    padding-bottom: 0;
+
+    border: 1px solid var(--dialog-border);
     color: var(--dialog-text);
     background: var(--dialog-surface);
     font: inherit;
@@ -421,16 +450,23 @@
 }
 
 .music-list-skeleton {
-  padding: 2px 0;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 2px;
+  padding-bottom: 2px;
 }
 
 .skeleton-row {
   display: grid;
   min-height: 62px;
-  grid-template-columns: 38px minmax(0, 1fr) 42px;
   align-items: center;
   gap: 10px;
-  padding: 8px 14px 8px 50px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-right: 14px;
+  padding-left: 50px;
+
+  grid-template-columns: 38px minmax(0, 1fr) 42px;
   border-bottom: 1px solid color-mix(in srgb, var(--dialog-border) 52%, transparent);
 }
 
@@ -440,12 +476,14 @@
   display: block;
   overflow: hidden;
   border-radius: 5px;
+
   background: color-mix(in srgb, var(--dialog-muted) 14%, var(--dialog-surface));
 
   &::after {
     display: block;
-    width: 48%;
     height: 100%;
+    width: 48%;
+
     background: linear-gradient(
       90deg,
       transparent,
@@ -459,8 +497,8 @@
 }
 
 .skeleton-cover {
-  width: 38px;
   height: 38px;
+  width: 38px;
   border-radius: 7px;
 }
 
@@ -472,16 +510,16 @@
     height: 8px;
 
     &:last-child {
-      width: 62%;
       height: 6px;
+      width: 62%;
     }
   }
 }
 
 .skeleton-time {
-  justify-self: end;
-  width: 34px;
   height: 7px;
+  width: 34px;
+  justify-self: end;
 }
 
 @keyframes playing-bar {

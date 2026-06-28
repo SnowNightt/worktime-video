@@ -204,20 +204,24 @@ const handleSwitchStatus = async () => {
 </script>
 <style lang="scss" scoped>
 .audio-container {
-  box-sizing: border-box;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
   position: fixed;
-  z-index: 99999;
-  left: 12px;
   right: 12px;
   bottom: 10px;
+  left: 12px;
+  z-index: 99999;
+  box-sizing: border-box;
+  display: flex;
   height: 65px;
-  padding: 8px 12px 6px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
   overflow: hidden;
   border-radius: 20px;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 8px;
+  padding-bottom: 6px;
+
   background:
     linear-gradient(
       135deg,
@@ -238,23 +242,24 @@ const handleSwitchStatus = async () => {
   -webkit-backdrop-filter: blur(18px) saturate(112%);
   .song-meta {
     display: flex;
-    flex: 1 1 auto;
     min-width: 0;
+    flex: 1 1 auto;
     align-items: center;
     gap: 8px;
   }
   .song-cover-shell {
     position: relative;
     display: grid;
-    flex: 0 0 62px;
-    width: 42px;
     height: 42px;
+    width: 42px;
+    flex: 0 0 62px;
     place-items: center;
 
     &::before {
       position: absolute;
       inset: 5px;
-      border-radius: 50%;
+      border-radius: 9999px;
+
       background:
         radial-gradient(circle at 28% 24%, rgba(125, 211, 252, 0.36), transparent 33%),
         radial-gradient(circle at 74% 76%, rgba(251, 113, 133, 0.3), transparent 38%),
@@ -273,16 +278,18 @@ const handleSwitchStatus = async () => {
     }
   }
   .song-spectrum {
+    pointer-events: none;
     position: absolute;
     inset: 0;
+
     opacity: 0.52;
-    pointer-events: none;
     transition:
       opacity 0.18s ease,
       transform 0.18s ease;
 
     :deep(canvas) {
       display: block;
+
       width: 100% !important;
       height: 100% !important;
     }
@@ -294,11 +301,12 @@ const handleSwitchStatus = async () => {
   .song-disc {
     position: relative;
     z-index: 1;
-    width: 46px;
     height: 46px;
+    width: 46px;
     overflow: hidden;
+    border-radius: 9999px;
+
     border: 1px solid rgba(255, 255, 255, 0.36);
-    border-radius: 50%;
     background:
       radial-gradient(circle at center, rgba(255, 255, 255, 0.8) 0 7%, transparent 8%),
       rgba(40, 44, 52, 0.46);
@@ -316,7 +324,8 @@ const handleSwitchStatus = async () => {
     &::before,
     &::after {
       position: absolute;
-      border-radius: 50%;
+      border-radius: 9999px;
+
       content: "";
       pointer-events: none;
     }
@@ -324,6 +333,7 @@ const handleSwitchStatus = async () => {
     &::before {
       inset: 4px;
       z-index: 2;
+
       border: 1px solid rgba(255, 255, 255, 0.2);
       box-shadow:
         inset 0 0 0 7px rgba(0, 0, 0, 0.08),
@@ -331,11 +341,12 @@ const handleSwitchStatus = async () => {
     }
 
     &::after {
-      z-index: 3;
       top: 50%;
       left: 50%;
-      width: 11px;
+      z-index: 3;
       height: 11px;
+      width: 11px;
+
       border: 1px solid rgba(255, 255, 255, 0.78);
       background: radial-gradient(
         circle,
@@ -355,8 +366,8 @@ const handleSwitchStatus = async () => {
   }
   .song-cover {
     display: block;
-    width: 100%;
     height: 100%;
+    width: 100%;
     object-fit: cover;
   }
   .song-cover-placeholder {
@@ -375,9 +386,10 @@ const handleSwitchStatus = async () => {
   .song-artist {
     min-width: 0;
     overflow: hidden;
-    line-height: 1.15;
     text-overflow: ellipsis;
     white-space: nowrap;
+
+    line-height: 1.15;
   }
   .song-title {
     color: rgba(255, 255, 255, 0.92);
@@ -390,24 +402,26 @@ const handleSwitchStatus = async () => {
   }
   .left-part {
     display: flex;
-    flex: 0 0 auto;
+    flex: none;
     align-items: center;
     justify-content: flex-end;
     gap: 4px;
+
     .controler {
       box-sizing: border-box;
       display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 38px;
       height: 38px;
-      padding: 0;
-      border: 0;
-      border-radius: 50%;
-      appearance: none;
-      background: transparent;
+      width: 38px;
       cursor: pointer;
       user-select: none;
+      align-items: center;
+      justify-content: center;
+      border-radius: 9999px;
+      border-width: 0;
+      background-color: transparent;
+      padding: 0;
+
+      appearance: none;
       transition:
         background-color 0.16s ease,
         transform 0.16s ease,
@@ -422,35 +436,37 @@ const handleSwitchStatus = async () => {
       }
     }
     .control-icon {
-      display: block;
-      width: 24px;
-      height: 24px;
-      max-width: 82%;
-      max-height: 82%;
-      object-fit: contain;
       pointer-events: none;
+      display: block;
+      height: 24px;
+      width: 24px;
+      max-height: 82%;
+      max-width: 82%;
+      object-fit: contain;
     }
     .current-status {
-      width: 46px;
       height: 46px;
+      width: 46px;
 
       .control-icon {
-        width: 30px;
         height: 30px;
-        max-width: 86%;
+        width: 30px;
         max-height: 86%;
+        max-width: 86%;
       }
     }
   }
   .right-part {
     display: flex;
-    flex: 0 0 auto;
+    flex: none;
     justify-content: flex-end;
+
     .time-tip {
       min-width: 74px;
-      font-size: 12px;
-      font-variant-numeric: tabular-nums;
       text-align: right;
+      font-variant-numeric: tabular-nums;
+
+      font-size: 12px;
     }
   }
 
@@ -459,13 +475,14 @@ const handleSwitchStatus = async () => {
     --progress-active-mid: #67e8f9;
     --progress-active-end: #bae6fd;
     position: absolute;
-    left: 18px;
     right: 18px;
+    left: 18px;
+    overflow: hidden;
+    border-radius: 9999px;
+
     width: auto;
     top: 7px;
     height: 3px;
-    overflow: hidden;
-    border-radius: 999px;
     cursor: pointer;
     background-color: color-mix(in srgb, var(--vscode-foreground, #d7dae0) 15%, transparent);
     transition:
@@ -475,6 +492,7 @@ const handleSwitchStatus = async () => {
     .progress-active {
       height: 100%;
       border-radius: inherit;
+
       background: linear-gradient(
         90deg,
         var(--progress-active-start) 0%,

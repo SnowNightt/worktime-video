@@ -91,24 +91,34 @@ const handleClickList = async (event: PointerEvent) => {
   --playlist-grid-gap: 10px;
 
   display: grid;
+
+  overflow-y: auto;
+
+  padding-left: 2px;
+
+  padding-right: 2px;
+
+  padding-top: 2px;
+
+  padding-bottom: 18px;
+
   grid-template-columns: repeat(
     auto-fill,
     minmax(min(112px, max(0px, calc((100% - var(--playlist-grid-gap)) / 2))), 1fr)
   );
   gap: var(--playlist-grid-gap);
   height: calc(100dvh - 122px);
-  padding: 2px 2px 18px;
   grid-auto-rows: max-content;
-  overflow-y: auto;
 }
 
 .playlist-card {
   position: relative;
   min-width: 0;
-  overflow: hidden;
   cursor: pointer;
-  border: 1px solid rgba(171, 178, 191, 0.14);
+  overflow: hidden;
   border-radius: 10px;
+
+  border: 1px solid rgba(171, 178, 191, 0.14);
   background: rgba(24, 26, 31, 0.42);
   transition:
     border-color 180ms ease,
@@ -126,32 +136,43 @@ const handleClickList = async (event: PointerEvent) => {
 
 .cover-wrap {
   position: relative;
-  overflow: hidden;
   aspect-ratio: 1 / 1;
+  overflow: hidden;
+
   background: rgba(24, 26, 31, 0.5);
 }
 
 .cover {
   display: block;
-  width: 100%;
   height: 100%;
+  width: 100%;
   object-fit: cover;
 }
 
 .cover-shade {
   position: absolute;
-  inset: auto 0 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
   justify-content: flex-end;
-  padding: 34px 10px 9px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 34px;
+  padding-bottom: 9px;
+
   background: linear-gradient(180deg, transparent, rgba(12, 14, 18, 0.78));
 }
 
 .play-count {
   max-width: 100%;
   overflow: hidden;
-  padding: 3px 7px;
-  border-radius: 999px;
+  border-radius: 9999px;
+  padding-left: 7px;
+  padding-right: 7px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+
   color: rgba(245, 247, 251, 0.92);
   background: rgba(24, 26, 31, 0.58);
   font-size: 11px;
@@ -166,10 +187,11 @@ const handleClickList = async (event: PointerEvent) => {
 }
 
 .list-name {
-  display: -webkit-box;
-  min-height: 38px;
   margin: 0;
+  min-height: 38px;
   overflow: hidden;
+
+  display: -webkit-box;
   color: #e5e8ee;
   font-size: 13px;
   font-weight: 700;
@@ -181,9 +203,10 @@ const handleClickList = async (event: PointerEvent) => {
 }
 
 .playlist-meta {
+  margin-top: 9px;
   display: grid;
   gap: 4px;
-  margin-top: 9px;
+
   color: rgba(215, 218, 224, 0.58);
   font-size: 11px;
   line-height: 1.45;

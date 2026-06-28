@@ -8,10 +8,13 @@
   --el-dialog-padding-primary: 0;
 
   position: relative;
+
   overflow: hidden;
+
+  border-radius: 16px;
+
   color: var(--login-text, #d7dae0);
   border: 1px solid var(--login-glass-border, rgba(171, 178, 191, 0.22));
-  border-radius: 16px;
   background:
     linear-gradient(180deg, color-mix(in srgb, var(--login-glass-bg, #282c34) 88%, var(--login-text, #d7dae0) 12%), var(--login-glass-bg, #282c34));
   box-shadow:
@@ -26,18 +29,19 @@
   top: 10px;
   right: 10px;
   z-index: 2;
-  width: 30px;
-  height: 30px;
-  padding: 0;
   margin: 0;
+  height: 30px;
+  width: 30px;
+  padding: 0;
 }
 
 :global(.cloud-music-login-dialog .el-dialog__headerbtn) {
   position: static;
-  width: 30px;
   height: 30px;
-  border: 1px solid rgba(171, 178, 191, 0.14);
+  width: 30px;
   border-radius: 8px;
+
+  border: 1px solid rgba(171, 178, 191, 0.14);
   background: rgba(24, 26, 31, 0.36);
 }
 
@@ -58,13 +62,17 @@
 
 .brand-mark {
   position: relative;
+  auto: undefined;
+  margin-right: auto;
+  margin-top: 0;
+  margin-bottom: 18px;
   display: grid;
-  width: 56px;
   height: 56px;
-  margin: 0 auto 18px;
+  width: 56px;
   place-items: center;
-  border: 1px solid rgba(171, 178, 191, 0.22);
   border-radius: 16px;
+
+  border: 1px solid rgba(171, 178, 191, 0.22);
   background:
     linear-gradient(145deg, color-mix(in srgb, var(--login-glass-bg, #282c34) 76%, var(--login-text, #d7dae0) 24%), var(--login-glass-bg, #282c34));
   box-shadow:
@@ -73,20 +81,22 @@
 }
 
 .brand-mark__ring {
-  width: 30px;
   height: 30px;
+  width: 30px;
+  border-radius: 9999px;
+
   border: 6px solid rgba(171, 178, 191, 0.78);
   border-right-color: rgba(97, 175, 239, 0.48);
-  border-radius: 50%;
 }
 
 .brand-mark__note {
   position: absolute;
   right: 15px;
   bottom: 12px;
-  width: 9px;
   height: 20px;
-  border-radius: 999px;
+  width: 9px;
+  border-radius: 9999px;
+
   background: linear-gradient(180deg, #d7dae0, #61afef);
   transform: rotate(18deg);
 
@@ -94,10 +104,11 @@
     position: absolute;
     right: -7px;
     bottom: -3px;
-    width: 14px;
     height: 9px;
+    width: 14px;
+    border-radius: 9999px;
+
     content: "";
-    border-radius: 999px;
     background: inherit;
   }
 }
@@ -108,7 +119,9 @@
 }
 
 .eyebrow {
-  margin: 0 0 8px;
+  margin-top: 0;
+  margin-bottom: 8px;
+
   color: rgba(97, 175, 239, 0.92);
   font-size: 12px;
   font-weight: 700;
@@ -116,6 +129,7 @@
 
 .title {
   margin: 0;
+
   color: var(--login-text, #d7dae0);
   font-size: 22px;
   font-weight: 700;
@@ -123,7 +137,9 @@
 }
 
 .subtitle {
-  margin: 8px 0 0;
+  margin-top: 8px;
+  margin-bottom: 0;
+
   color: var(--login-muted, rgba(215, 218, 224, 0.62));
   font-size: 13px;
   line-height: 1.6;
@@ -149,9 +165,13 @@
 
   :deep(.el-input__wrapper) {
     min-height: 42px;
-    padding: 0 12px;
-    border: 1px solid rgba(171, 178, 191, 0.18);
     border-radius: 10px;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 0;
+    padding-bottom: 0;
+
+    border: 1px solid rgba(171, 178, 191, 0.18);
     background: rgba(24, 26, 31, 0.42);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.06),
@@ -178,16 +198,18 @@
 
 .captcha-box {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 104px;
-  gap: 8px;
   width: 100%;
+  gap: 8px;
+
+  grid-template-columns: minmax(0, 1fr) 104px;
 }
 
 .query-captcha-btn,
 .countdown {
   min-height: 42px;
-  border: 1px solid rgba(171, 178, 191, 0.18);
   border-radius: 10px;
+
+  border: 1px solid rgba(171, 178, 191, 0.18);
   font-weight: 700;
 }
 
@@ -206,34 +228,40 @@
 
 .countdown {
   display: grid;
+  place-items: center;
+
   color: rgba(215, 218, 224, 0.64);
   background: rgba(24, 26, 31, 0.38);
-  place-items: center;
 }
 
 .qr-code-panel {
   display: flex;
-  justify-content: center;
   width: 100%;
-  padding: 16px 0 4px;
+  justify-content: center;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 16px;
+  padding-bottom: 4px;
 }
 
 .qr-code-image {
   display: block;
-  width: min(200px, 100%);
   height: auto;
+
+  width: min(200px, 100%);
 }
 
 .dialog-footer {
-  display: flex;
   margin-top: 22px;
+  display: flex;
 }
 
 .login-btn {
-  width: 100%;
   min-height: 44px;
-  border: 1px solid rgba(97, 175, 239, 0.3);
+  width: 100%;
   border-radius: 11px;
+
+  border: 1px solid rgba(97, 175, 239, 0.3);
   color: #f5f7fb;
   background:
     linear-gradient(135deg, rgba(97, 175, 239, 0.38), rgba(171, 178, 191, 0.18)),
