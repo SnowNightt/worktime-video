@@ -79,6 +79,7 @@ export const getRecommendationPlayListApi = async (params: PlaylistParams = { li
     method: "GET",
     params,
     isTimestamp: true,
+    showLoading: true,
   });
 };
 // 歌单详情

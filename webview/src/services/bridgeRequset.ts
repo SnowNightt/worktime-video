@@ -1,6 +1,8 @@
 import type { BridgeRequestPayload, ExtensionToWebviewMessage } from "@shared/protocol";
 import { postMessage } from "./vscode";
+import { useLoading } from "@/features/cloude-music/hooks/useLoading";
 
+const { startLoad, stopLoad } = useLoading();
 interface PendingRequest {
   resolve: (value: unknown) => void;
   reject: (reason?: unknown) => void;
@@ -16,7 +18,7 @@ window.addEventListener("message", (event: MessageEvent<ExtensionToWebviewMessag
     return;
   }
   const reqId = data.reqId;
-  const res = pendingRequest.get(reqId);
+  const res = pendingRequest.get(reqId)!;
   pendingRequest.delete(reqId);
   console.log("[bridge:webview] response", {
     reqId,
@@ -24,10 +26,12 @@ window.addEventListener("message", (event: MessageEvent<ExtensionToWebviewMessag
     status: data.payload.status,
   });
   if (data.payload.ok) {
-    res?.resolve(data.payload.data);
+    res.resolve(data.payload.data);
   } else {
-    res?.reject(new Error(data.payload.message));
+    res.reject(new Error(data.payload.message));
   }
+
+  stopLoad();
 });
 const pendingRequest = new Map<string, PendingRequest>();
 export const bridgeRequest = <T = unknown>(config: BridgeRequestPayload): Promise<T> => {
@@ -49,6 +53,9 @@ export const bridgeRequest = <T = unknown>(config: BridgeRequestPayload): Promis
       reqId,
       payload: config,
     });
+    if (config.showLoading) {
+      startLoad();
+    }
   });
 };
 

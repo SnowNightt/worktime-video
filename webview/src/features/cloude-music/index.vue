@@ -4,6 +4,7 @@
     <el-tabs v-model="activeName" class="music-tabs">
       <el-tab-pane label="歌单广场" name="playLists">
         <RecommendPlayList :recommendPlayList="recommendPlayList"></RecommendPlayList>
+        <Loading :visible="isLoading"></Loading>
       </el-tab-pane>
       <el-tab-pane label="排行榜" name="topList"
         ><TopList :topList="topList"></TopList
@@ -27,15 +28,18 @@ import MyPlayList from "./components/myPlayList/index.vue";
 import TopList from "./components/topList/index.vue";
 import AudioBar from "./components/audioBar.vue";
 import TopBar from "./components/topBar.vue";
+import Loading from "./components/loading.vue";
 import { useUserStore } from "./hooks/useUserStore";
 import { useMusicTabs } from "./hooks/useMusicTabs";
 import { useAudioPlayer } from "./hooks/useAudioPlayer";
+import { useLoading } from "./hooks/useLoading";
 
 const { getLoginStatus } = useUserStore();
 const { activeName, recommendPlayList, myPlayList, topList, loadCurrentList } = useMusicTabs();
 const { hasCurrentSong } = useAudioPlayer();
 const isVisible = ref(false);
 
+const { isLoading } = useLoading();
 const handleVisibleLoginCard = () => {
   isVisible.value = true;
 };

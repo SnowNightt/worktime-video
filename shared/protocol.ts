@@ -33,6 +33,7 @@ export interface BridgeRequestPayload {
   params?: object;
   data?: object;
   isTimestamp?: boolean;
+  showLoading?: boolean;
 }
 // 发送网络请求通信
 export interface BridgeRequestMessage {
